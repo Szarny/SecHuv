@@ -1,3 +1,5 @@
+<img src="./resource/logo/logo.007.png" alt="SecHuv-logo" style="width: 650px" />
+
 # SecHuv
 Security Hub for Human-vulnerabilities.
 
