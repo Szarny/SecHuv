@@ -1,0 +1,961 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "SecHuv",
+    "description": "Security Hub for Human-vulnerabilities.",
+    "contact": {
+      "email": "tsubasa.umeuchi@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "general",
+      "description": "システム全体に関するエンドポイント"
+    },
+    {
+      "name": "web",
+      "description": "Webの事例に関するエンドポイント"
+    },
+    {
+      "name": "mail",
+      "description": "メールの事例に関するエンドポイント"
+    },
+    {
+      "name": "other",
+      "description": "その他の事例に関するエンドポイント"
+    },
+    {
+      "name": "vuln",
+      "description": "人的脆弱性に関するエンドポイント"
+    }
+  ],
+  "paths": {
+    "/case": {
+      "get": {
+        "tags": [
+          "general"
+        ],
+        "summary": "全ての事例を取得",
+        "parameters": [
+          {
+            "name": "length",
+            "in": "query",
+            "description": "取得する件数",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "web": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/WebCase"
+                      }
+                    },
+                    "mail": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MailCase"
+                      }
+                    },
+                    "other": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/OtherCase"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "general"
+        ],
+        "summary": "指定した事例を削除",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "削除する事例のID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/web/case": {
+      "get": {
+        "tags": [
+          "web"
+        ],
+        "summary": "Webに関する事例を取得",
+        "parameters": [
+          {
+            "name": "length",
+            "in": "query",
+            "description": "取得する件数",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WebCase"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "web"
+        ],
+        "summary": "Webに関する事例を投稿",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebCasePost"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "post_date": {
+                      "type": "string",
+                      "format": "yyyymmddhhmmss"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/web/check": {
+      "post": {
+        "tags": [
+          "web"
+        ],
+        "summary": "Webコンテンツの危険度をチェック",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebSpec"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "vulns": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Vulnerability"
+                      }
+                    },
+                    "samples": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/WebCase"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mail/case": {
+      "get": {
+        "tags": [
+          "mail"
+        ],
+        "summary": "メールに関する事例を取得",
+        "parameters": [
+          {
+            "name": "length",
+            "in": "query",
+            "description": "取得する件数",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MailCase"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "mail"
+        ],
+        "summary": "メールに関する事例を投稿",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MailCasePost"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "post_date": {
+                      "type": "string",
+                      "format": "yyyymmddhhmmss"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mail/check": {
+      "post": {
+        "tags": [
+          "mail"
+        ],
+        "summary": "メールコンテンツの危険度をチェック",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MailSpec"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "vulns": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Vulnerability"
+                      }
+                    },
+                    "samples": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MailCase"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/other/case": {
+      "get": {
+        "tags": [
+          "other"
+        ],
+        "summary": "その他の事例を取得",
+        "parameters": [
+          {
+            "name": "length",
+            "in": "query",
+            "description": "取得する件数",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OtherCase"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "other"
+        ],
+        "summary": "その他の事例を投稿",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OtherCasePost"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "post_date": {
+                      "type": "string",
+                      "format": "yyyymmddhhmmss"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/other/check": {
+      "post": {
+        "tags": [
+          "other"
+        ],
+        "summary": "その他のコンテンツの危険度をチェック",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OtherSpec"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "vulns": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Vulnerability"
+                      }
+                    },
+                    "samples": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/OtherCase"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vuln": {
+      "get": {
+        "tags": [
+          "vuln"
+        ],
+        "summary": "人的脆弱性の一覧を取得",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Vulnerability"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "vuln"
+        ],
+        "summary": "人的脆弱性のタイプを追加",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Vulnerability"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "vuln"
+        ],
+        "summary": "指定した人的脆弱性のタイプを削除",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "削除する人的脆弱性のタイプ",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/vuln/{vulntype}": {
+      "get": {
+        "tags": [
+          "vuln"
+        ],
+        "summary": "指定した人的脆弱性を突いた事例を取得",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "vulntype",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "人的脆弱性のタイプ"
+          },
+          {
+            "name": "length",
+            "in": "query",
+            "description": "取得する件数",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "vuln": {
+                      "$ref": "#/components/schemas/Vulnerability"
+                    },
+                    "cases": {
+                      "type": "object",
+                      "properties": {
+                        "web": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/WebCase"
+                          }
+                        },
+                        "mail": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/MailCase"
+                          }
+                        },
+                        "other": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/OtherCase"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vuln/{vulntype}/web": {
+      "get": {
+        "tags": [
+          "vuln"
+        ],
+        "summary": "指定した人的脆弱性を突いたWebの事例を取得",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "vulntype",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "人的脆弱性のタイプ"
+          },
+          {
+            "name": "length",
+            "in": "query",
+            "description": "取得する件数",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "vuln": {
+                      "$ref": "#/components/schemas/Vulnerability"
+                    },
+                    "cases": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/WebCase"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vuln/{vulntype}/mail": {
+      "get": {
+        "tags": [
+          "vuln"
+        ],
+        "summary": "指定した人的脆弱性を突いたメールの事例を取得",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "vulntype",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "人的脆弱性のタイプ"
+          },
+          {
+            "name": "length",
+            "in": "query",
+            "description": "取得する件数",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "vuln": {
+                      "$ref": "#/components/schemas/Vulnerability"
+                    },
+                    "cases": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MailCase"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vuln/{vulntype}/other": {
+      "get": {
+        "tags": [
+          "vuln"
+        ],
+        "summary": "指定した人的脆弱性を突いたその他の事例を取得",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "vulntype",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "人的脆弱性のタイプ"
+          },
+          {
+            "name": "length",
+            "in": "query",
+            "description": "取得する件数",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "vuln": {
+                      "$ref": "#/components/schemas/Vulnerability"
+                    },
+                    "cases": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/OtherCase"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Case": {
+        "type": "object",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/WebCase"
+          },
+          {
+            "$ref": "#/components/schemas/MailCase"
+          },
+          {
+            "$ref": "#/components/schemas/OtherCase"
+          }
+        ]
+      },
+      "WebCase": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "post_date": {
+            "type": "string",
+            "format": "yyyymmddhhmmss"
+          },
+          "vulns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Vulnerability"
+            }
+          },
+          "spec": {
+            "$ref": "#/components/schemas/WebSpec"
+          }
+        }
+      },
+      "WebCasePost": {
+        "type": "object",
+        "properties": {
+          "vulns": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "spec": {
+            "$ref": "#/components/schemas/WebSpec"
+          }
+        }
+      },
+      "WebSpec": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string"
+          },
+          "ip_addr": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "raw_body": {
+            "type": "string"
+          }
+        }
+      },
+      "MailCase": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "post_date": {
+            "type": "string",
+            "format": "yyyymmddhhmmss"
+          },
+          "vulns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Vulnerability"
+            }
+          },
+          "spec": {
+            "$ref": "#/components/schemas/MailSpec"
+          }
+        }
+      },
+      "MailCasePost": {
+        "type": "object",
+        "properties": {
+          "vulns": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "spec": {
+            "$ref": "#/components/schemas/MailSpec"
+          }
+        }
+      },
+      "MailSpec": {
+        "type": "object",
+        "properties": {
+          "from_addr": {
+            "type": "string"
+          },
+          "spf_status": {
+            "type": "string",
+            "enum": [
+              "pass",
+              "fail",
+              "softfail",
+              "neutral",
+              "unknown"
+            ]
+          },
+          "dkim_status": {
+            "type": "string",
+            "enum": [
+              "none",
+              "neutral",
+              "pass",
+              "policy",
+              "hardfail",
+              "temperror",
+              "permerror",
+              "unknown"
+            ]
+          },
+          "is_html": {
+            "type": "boolean"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string",
+            "description": "HTML形式の場合のみ"
+          },
+          "raw_body": {
+            "type": "string"
+          }
+        }
+      },
+      "OtherCase": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "post_date": {
+            "type": "string",
+            "format": "yyyymmddhhmmss"
+          },
+          "vulns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Vulnerability"
+            }
+          },
+          "spec": {
+            "$ref": "#/components/schemas/OtherSpec"
+          }
+        }
+      },
+      "OtherCasePost": {
+        "type": "object",
+        "properties": {
+          "vulns": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "spec": {
+            "$ref": "#/components/schemas/OtherSpec"
+          }
+        }
+      },
+      "OtherSpec": {
+        "type": "object",
+        "properties": {
+          "media": {
+            "type": "string"
+          },
+          "metadata": {
+            "type": "string"
+          },
+          "payload": {
+            "type": "string"
+          }
+        }
+      },
+      "Vulnerability": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
