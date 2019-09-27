@@ -1,0 +1,26 @@
+<HeartClient>:
+    chat_view: chat_view
+    input_form: input_form
+ 
+    orientation: "vertical"
+ 
+    TextInput:
+        id: chat_view
+        text: ""
+        readonly: True
+    
+    BoxLayout:
+        size_hint_y: None
+        height: "40dp"
+
+        TextInput:
+            id: input_form
+            size_hint_x: 80
+            text: ""
+            multiline: False
+        
+        Button:
+            id: input_button
+            size_hint_x: 20
+            on_press: root.send_chat()
+            text: "送信"
