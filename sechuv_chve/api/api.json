@@ -182,6 +182,78 @@
         }
       }
     },
+    "/web/valid": {
+      "get": {
+        "tags": [
+          "web"
+        ],
+        "summary": "Webに関する正当なコンテンツを取得",
+        "parameters": [
+          {
+            "name": "length",
+            "in": "query",
+            "description": "取得する件数",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WebValidCase"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "web"
+        ],
+        "summary": "Webに関する正当なコンテンツを取得",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebSpec"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "post_date": {
+                      "type": "string",
+                      "format": "yyyymmddhhmmss"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/web/check": {
       "post": {
         "tags": [
@@ -298,6 +370,78 @@
         }
       }
     },
+    "/mail/valid": {
+      "get": {
+        "tags": [
+          "mail"
+        ],
+        "summary": "メールに関する正当なコンテンツを取得",
+        "parameters": [
+          {
+            "name": "length",
+            "in": "query",
+            "description": "取得する件数",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MailValidCase"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "mail"
+        ],
+        "summary": "メールに関する正当なコンテンツを投稿",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MailSpec"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "post_date": {
+                      "type": "string",
+                      "format": "yyyymmddhhmmss"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/mail/check": {
       "post": {
         "tags": [
@@ -385,6 +529,78 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/OtherCasePost"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "post_date": {
+                      "type": "string",
+                      "format": "yyyymmddhhmmss"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/other/valid": {
+      "get": {
+        "tags": [
+          "other"
+        ],
+        "summary": "その他の正当なコンテンツを取得",
+        "parameters": [
+          {
+            "name": "length",
+            "in": "query",
+            "description": "取得する件数",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OtherValidCase"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "other"
+        ],
+        "summary": "その他の正当なコンテンツを投稿",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OtherSpec"
               }
             }
           },
@@ -804,14 +1020,27 @@
           "url": {
             "type": "string"
           },
-          "ip_addr": {
-            "type": "string"
-          },
           "body": {
             "type": "string"
           },
           "raw_body": {
             "type": "string"
+          }
+        }
+      },
+      "WebValidCase": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "post_date": {
+            "type": "string",
+            "format": "yyyymmddhhmmss"
+          },
+          "spec": {
+            "$ref": "#/components/schemas/WebSpec"
           }
         }
       },
@@ -895,6 +1124,22 @@
           }
         }
       },
+      "MailValidCase": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "post_date": {
+            "type": "string",
+            "format": "yyyymmddhhmmss"
+          },
+          "spec": {
+            "$ref": "#/components/schemas/MailSpec"
+          }
+        }
+      },
       "OtherCase": {
         "type": "object",
         "properties": {
@@ -942,6 +1187,22 @@
           },
           "payload": {
             "type": "string"
+          }
+        }
+      },
+      "OtherValidCase": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "post_date": {
+            "type": "string",
+            "format": "yyyymmddhhmmss"
+          },
+          "spec": {
+            "$ref": "#/components/schemas/OtherSpec"
           }
         }
       },

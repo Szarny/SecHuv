@@ -111,6 +111,51 @@ paths:
                   post_date:
                     type: string
                     format: yyyymmddhhmmss
+  /web/valid:
+    get:
+      tags:
+        - web
+      summary: Webに関する正当なコンテンツを取得
+      parameters:
+        - name: length
+          in: query
+          description: 取得する件数
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WebValidCase'
+    post:
+      tags:
+        - web
+      summary: Webに関する正当なコンテンツを取得
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebSpec'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  post_date:
+                    type: string
+                    format: yyyymmddhhmmss
   /web/check:
     post:
       tags:
@@ -183,6 +228,51 @@ paths:
                   post_date:
                     type: string
                     format: yyyymmddhhmmss
+  /mail/valid:
+    get:
+      tags:
+        - mail
+      summary: メールに関する正当なコンテンツを取得
+      parameters:
+        - name: length
+          in: query
+          description: 取得する件数
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MailValidCase'
+    post:
+      tags:
+        - mail
+      summary: メールに関する正当なコンテンツを投稿
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailSpec'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  post_date:
+                    type: string
+                    format: yyyymmddhhmmss
   /mail/check:
     post:
       tags:
@@ -240,6 +330,51 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/OtherCasePost'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  post_date:
+                    type: string
+                    format: yyyymmddhhmmss
+  /other/valid:
+    get:
+      tags:
+        - other
+      summary: その他の正当なコンテンツを取得
+      parameters:
+        - name: length
+          in: query
+          description: 取得する件数
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OtherValidCase'
+    post:
+      tags:
+        - other
+      summary: その他の正当なコンテンツを投稿
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OtherSpec'
         required: true
       responses:
         '200':
@@ -499,12 +634,21 @@ components:
       properties:
         url:
           type: string
-        ip_addr:
-          type: string
         body:
           type: string
         raw_body:
           type: string
+    WebValidCase:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        post_date:
+          type: string
+          format: yyyymmddhhmmss
+        spec:
+          $ref: '#/components/schemas/WebSpec'
     MailCase:
       type: object
       properties:
@@ -562,6 +706,17 @@ components:
           description: HTML形式の場合のみ
         raw_body:
           type: string
+    MailValidCase:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        post_date:
+          type: string
+          format: yyyymmddhhmmss
+        spec:
+          $ref: '#/components/schemas/MailSpec'
     OtherCase:
       type: object
       properties:
@@ -595,6 +750,17 @@ components:
           type: string
         payload:
           type: string
+    OtherValidCase:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        post_date:
+          type: string
+          format: yyyymmddhhmmss
+        spec:
+          $ref: '#/components/schemas/OtherSpec'
     Vulnerability:
       type: object
       properties:
