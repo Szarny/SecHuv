@@ -5,6 +5,7 @@ from kivy.uix.label import Label
 from kivy.core.text import LabelBase, DEFAULT_FONT
 from kivy.resources import resource_add_path
 
+import time
 
 resource_add_path("../font")
 LabelBase.register(DEFAULT_FONT, "mplus-2c-regular.ttf")
@@ -14,6 +15,7 @@ class HeartClient(BoxLayout):
     chat_view: ObjectProperty = ObjectProperty()
     input_form: ObjectProperty = ObjectProperty()
     chat_history: ListProperty = ListProperty()
+    phase: int = 0
 
 
     def add_chat(self, chat: str) -> None:
@@ -39,8 +41,26 @@ class HeartClient(BoxLayout):
 
     
     def generate_reply(self, chat_raw: str) -> None:
-        # TODO: 現在の状態とユーザの入力をもとにした返信を行うエンジンを実装する
-        self.add_master_chat("{}なんですね．".format(chat_raw))
+        if self.phase == 0:
+            self.add_master_chat("フィッシングサイトのチェックですね．")
+            self.add_master_chat("対象のWebサイトのURLを教えてください．")
+            self.phase += 1
+            return
+
+        if self.phase == 1:
+            self.add_master_chat("データを取得しています")
+            self.add_master_chat("データを解析しています")
+            self.add_master_chat("対象のWebサイトからフィッシングサイトと思わしき以下の特徴が発見されました．")
+            self.add_master_chat("~~~~")
+            self.add_master_chat("~~~~")
+            self.add_master_chat("このサイトをデータベースに登録しますか？")
+            self.phase += 1
+            return
+
+        if self.phase == 2:
+            self.add_master_chat("対象のサイトをデータベースに登録しました．")
+
+
 
     
     def welcome(self) -> None:
