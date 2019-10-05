@@ -638,6 +638,8 @@ components:
           type: string
         raw_body:
           type: string
+        screenshot:
+          type: string
     WebValidCase:
       type: object
       properties:
@@ -706,6 +708,11 @@ components:
           description: HTML形式の場合のみ
         raw_body:
           type: string
+        webcase_ptrs:
+          type: array
+          items:
+            type: string
+            format: uuid
     MailValidCase:
       type: object
       properties:

@@ -1025,6 +1025,9 @@
           },
           "raw_body": {
             "type": "string"
+          },
+          "screenshot": {
+            "type": "string"
           }
         }
       },
@@ -1121,6 +1124,13 @@
           },
           "raw_body": {
             "type": "string"
+          },
+          "webcase_ptrs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
           }
         }
       },
