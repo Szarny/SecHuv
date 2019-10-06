@@ -1219,7 +1219,7 @@
       "Vulnerability": {
         "type": "object",
         "properties": {
-          "type": {
+          "kind": {
             "type": "string"
           },
           "description": {

@@ -771,7 +771,7 @@ components:
     Vulnerability:
       type: object
       properties:
-        type:
+        kind:
           type: string
         description:
           type: string
