@@ -1,7 +1,9 @@
 import json
 
 from flask import Flask, jsonify, request
-from typing import Optional
+from typing import Optional, Dict
+
+from tinydb import TinyDB, Query
 
 from model.webcasepost import WebCasePost
 from model.webspec import WebSpec
@@ -12,13 +14,26 @@ from model.otherspec import OtherSpec
 from model.vulnerability import Vulnerability
 
 
-app = Flask(__name__)
+app: Flask = Flask(__name__)
+
+
+db: Dict[str, TinyDB] = {
+    "web": TinyDB("db/web.json"),
+    "webvalid": TinyDB("db/webvalid.json"),
+    "mail": TinyDB("db/mail.json"),
+    "mailvalid": TinyDB("db/mailvalid.json"),
+    "other": TinyDB("db/other.json"),
+    "othervalid": TinyDB("db/othervalid.json"),
+    "vulnerability": TinyDB("db/vulnerability.json"),
+}
 
 
 # general
 @app.route("/", methods=["GET"])
 def get():
     length: int = request.args.get("length", -1)
+
+
 
 
 @app.route("/case", methods=["GET"])
