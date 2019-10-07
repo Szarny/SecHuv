@@ -1,7 +1,7 @@
 from typing import List
 
-from .vulnerability import Vulnerability
-from .webspec import WebSpec
+from model.vulnerability import Vulnerability
+from model.webspec import WebSpec
 
 class WebCase:
     def __init__(self, 

@@ -1,6 +1,6 @@
 from typing import List
 
-from .webspec import WebSpec
+from model.webspec import WebSpec
 
 class WebValidCase:
     def __init__(self, 

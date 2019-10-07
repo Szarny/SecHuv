@@ -1,6 +1,6 @@
 from typing import List
 
-from .mailspec import MailSpec
+from model.mailspec import MailSpec
 
 class MailValidCase:
     def __init__(self, 

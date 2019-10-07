@@ -1,6 +1,6 @@
 from typing import List
 
-from .otherspec import OtherSpec
+from model.otherspec import OtherSpec
 
 class OtherValidCase:
     def __init__(self, 
