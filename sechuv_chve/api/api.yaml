@@ -57,9 +57,9 @@ paths:
         - general
       summary: 指定した事例を取得
       parameters:
-        - name: id
+        - name: uuid
           in: query
-          description: 取得する事例のID
+          description: 取得する事例のUUID
           required: true
           schema:
             type: string
@@ -76,9 +76,9 @@ paths:
         - general
       summary: 指定した事例を削除
       parameters:
-        - name: id
+        - name: uuid
           in: query
-          description: 削除する事例のID
+          description: 削除する事例のUUID
           required: true
           schema:
             type: string
@@ -125,7 +125,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  id:
+                  uuid:
                     type: string
                     format: uuid
                   post_date:
@@ -170,7 +170,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  id:
+                  uuid:
                     type: string
                     format: uuid
                   post_date:
@@ -242,7 +242,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  id:
+                  uuid:
                     type: string
                     format: uuid
                   post_date:
@@ -287,7 +287,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  id:
+                  uuid:
                     type: string
                     format: uuid
                   post_date:
@@ -359,7 +359,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  id:
+                  uuid:
                     type: string
                     format: uuid
                   post_date:
@@ -404,7 +404,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  id:
+                  uuid:
                     type: string
                     format: uuid
                   post_date:
@@ -628,7 +628,7 @@ components:
     WebCase:
       type: object
       properties:
-        id:
+        uuid:
           type: string
           format: uuid
         post_date:
@@ -663,7 +663,7 @@ components:
     WebValidCase:
       type: object
       properties:
-        id:
+        uuid:
           type: string
           format: uuid
         post_date:
@@ -674,7 +674,7 @@ components:
     MailCase:
       type: object
       properties:
-        id:
+        uuid:
           type: string
           format: uuid
         post_date:
@@ -736,7 +736,7 @@ components:
     MailValidCase:
       type: object
       properties:
-        id:
+        uuid:
           type: string
           format: uuid
         post_date:
@@ -747,7 +747,7 @@ components:
     OtherCase:
       type: object
       properties:
-        id:
+        uuid:
           type: string
           format: uuid
         post_date:
@@ -780,7 +780,7 @@ components:
     OtherValidCase:
       type: object
       properties:
-        id:
+        uuid:
           type: string
           format: uuid
         post_date:
