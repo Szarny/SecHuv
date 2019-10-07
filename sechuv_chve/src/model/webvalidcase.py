@@ -1,6 +1,6 @@
 from typing import List
 
-from webspec import WebSpec
+from .webspec import WebSpec
 
 class WebCase:
     def __init__(self, 

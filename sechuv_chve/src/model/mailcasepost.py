@@ -1,7 +1,7 @@
 from typing import List
 
-from vulnerability import Vulnerability
-from mailspec import MailSpec
+from .vulnerability import Vulnerability
+from .mailspec import MailSpec
 
 class MailCasePost:
     def __init__(self, 

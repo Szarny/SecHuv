@@ -1,7 +1,7 @@
 from typing import List
 
-from vulnerability import Vulnerability
-from webspec import WebSpec
+from .vulnerability import Vulnerability
+from .webspec import WebSpec
 
 class WebCasePost:
     def __init__(self, 

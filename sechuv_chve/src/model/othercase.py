@@ -1,7 +1,7 @@
 from typing import List
 
-from vulnerability import Vulnerability
-from otherspec import OtherSpec
+from .vulnerability import Vulnerability
+from .otherspec import OtherSpec
 
 class OtherCase:
     def __init__(self, 
