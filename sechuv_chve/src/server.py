@@ -14,6 +14,7 @@ from model.vulnerability import Vulnerability
 
 app = Flask(__name__)
 
+
 # general
 @app.route("/", methods=["GET"])
 def get():
