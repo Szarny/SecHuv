@@ -1,9 +1,10 @@
 from typing import List
 
+from model.case import Case
 from model.vulnerability import Vulnerability
 from model.mailspec import MailSpec
 
-class MailCase:
+class MailCase(Case):
     def __init__(self, 
                  uuid: str,
                  post_date: str,

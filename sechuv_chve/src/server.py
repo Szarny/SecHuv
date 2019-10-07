@@ -1,10 +1,11 @@
 import json
 
 from flask import Flask, jsonify, request
-from typing import Optional, Dict
+from typing import Optional, Dict, List
 
 from tinydb import TinyDB, Query
 
+from model.case import Case
 from model.webcasepost import WebCasePost
 from model.webspec import WebSpec
 from model.mailcasepost import MailCasePost
@@ -12,6 +13,8 @@ from model.mailspec import MailSpec
 from model.othercasepost import OtherCasePost
 from model.otherspec import OtherSpec
 from model.vulnerability import Vulnerability
+
+import handler
 
 
 app: Flask = Flask(__name__)
@@ -30,10 +33,11 @@ db: Dict[str, TinyDB] = {
 
 # general
 @app.route("/", methods=["GET"])
-def get():
+def index_get():
     length: int = request.args.get("length", -1)
+    cases: Dict[str, List[Case]] = handler.general.index_get.handle(db=db, length=length)
 
-
+    return jsonify(cases)
 
 
 @app.route("/case", methods=["GET"])
