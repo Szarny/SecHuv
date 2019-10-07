@@ -19,7 +19,7 @@ tags:
   - name: vuln
     description: 人的脆弱性に関するエンドポイント
 paths:
-  /case:
+  /:
     get:
       tags:
         - general
@@ -51,6 +51,26 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/OtherCase'
+  /case:
+    get:
+      tags:
+        - general
+      summary: 指定した事例を取得
+      parameters:
+        - name: id
+          in: query
+          description: 取得する事例のID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Case'
     delete:
       tags:
         - general

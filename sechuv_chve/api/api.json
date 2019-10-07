@@ -36,7 +36,7 @@
     }
   ],
   "paths": {
-    "/case": {
+    "/": {
       "get": {
         "tags": [
           "general"
@@ -80,6 +80,38 @@
                       }
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/case": {
+      "get": {
+        "tags": [
+          "general"
+        ],
+        "summary": "指定した事例を取得",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "取得する事例のID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Case"
                 }
               }
             }
