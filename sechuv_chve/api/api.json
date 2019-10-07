@@ -756,7 +756,7 @@
         "summary": "指定した人的脆弱性のタイプを削除",
         "parameters": [
           {
-            "name": "type",
+            "name": "vulntype",
             "in": "query",
             "description": "削除する人的脆弱性のタイプ",
             "required": true,
@@ -1251,7 +1251,7 @@
       "Vulnerability": {
         "type": "object",
         "properties": {
-          "kind": {
+          "vulntype": {
             "type": "string"
           },
           "description": {
