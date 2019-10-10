@@ -133,6 +133,21 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Parameter missing",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -174,6 +189,21 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Parameter missing",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -804,6 +834,21 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Parameter missing",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }

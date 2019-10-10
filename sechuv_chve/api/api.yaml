@@ -83,6 +83,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Case'
+        '400':
+          description: Parameter missing
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
     delete:
       tags:
         - general
@@ -110,6 +119,15 @@ paths:
       responses:
         '200':
           description: OK
+        '400':
+          description: Parameter missing
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
   /web/case:
     get:
       tags:
@@ -502,6 +520,15 @@ paths:
       responses:
         '200':
           description: OK
+        '400':
+          description: Parameter missing
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
   '/vuln/{vulntype}':
     get:
       tags:
