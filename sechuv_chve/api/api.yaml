@@ -758,7 +758,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  vuln:
+                  vulnerability:
                     $ref: '#/components/schemas/Vulnerability'
                   cases:
                     type: object
@@ -775,6 +775,15 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/OtherCase'
+        '400':
+          description: Parameter error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
         '500':
           description: Server error
           content:
@@ -810,12 +819,21 @@ paths:
               schema:
                 type: object
                 properties:
-                  vuln:
+                  vulnerability:
                     $ref: '#/components/schemas/Vulnerability'
                   cases:
                     type: array
                     items:
                       $ref: '#/components/schemas/WebCase'
+        '400':
+          description: Parameter error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
         '500':
           description: Server error
           content:
@@ -851,12 +869,21 @@ paths:
               schema:
                 type: object
                 properties:
-                  vuln:
+                  vulnerability:
                     $ref: '#/components/schemas/Vulnerability'
                   cases:
                     type: array
                     items:
                       $ref: '#/components/schemas/MailCase'
+        '400':
+          description: Parameter error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
         '500':
           description: Server error
           content:
@@ -892,12 +919,21 @@ paths:
               schema:
                 type: object
                 properties:
-                  vuln:
+                  vulnerability:
                     $ref: '#/components/schemas/Vulnerability'
                   cases:
                     type: array
                     items:
                       $ref: '#/components/schemas/OtherCase'
+        '400':
+          description: Parameter error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
         '500':
           description: Server error
           content:

@@ -1226,7 +1226,7 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "vuln": {
+                    "vulnerability": {
                       "$ref": "#/components/schemas/Vulnerability"
                     },
                     "cases": {
@@ -1251,6 +1251,21 @@
                           }
                         }
                       }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Parameter error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
                     }
                   }
                 }
@@ -1309,7 +1324,7 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "vuln": {
+                    "vulnerability": {
                       "$ref": "#/components/schemas/Vulnerability"
                     },
                     "cases": {
@@ -1317,6 +1332,21 @@
                       "items": {
                         "$ref": "#/components/schemas/WebCase"
                       }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Parameter error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
                     }
                   }
                 }
@@ -1375,7 +1405,7 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "vuln": {
+                    "vulnerability": {
                       "$ref": "#/components/schemas/Vulnerability"
                     },
                     "cases": {
@@ -1383,6 +1413,21 @@
                       "items": {
                         "$ref": "#/components/schemas/MailCase"
                       }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Parameter error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
                     }
                   }
                 }
@@ -1441,7 +1486,7 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "vuln": {
+                    "vulnerability": {
                       "$ref": "#/components/schemas/Vulnerability"
                     },
                     "cases": {
@@ -1449,6 +1494,21 @@
                       "items": {
                         "$ref": "#/components/schemas/OtherCase"
                       }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Parameter error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
                     }
                   }
                 }
