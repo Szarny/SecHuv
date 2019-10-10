@@ -52,6 +52,6 @@ def handle(db: Dict[str, TinyDB], uuid: str, kind: str, is_valid: bool) -> Tuple
     case: List[Case] = _db.search(query.uuid == uuid)
 
     if len(case) == 1:
-        return True, case
+        return (True, case)
     else:
-        return False, "Not found."
+        return (False, "Not found.")

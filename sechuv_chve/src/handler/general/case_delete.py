@@ -53,6 +53,6 @@ def handle(db: Dict[str, TinyDB], uuid: str, kind: str, is_valid: bool) -> Tuple
 
     if len(case) == 1:
         _db.remove(query.uuid == uuid)
-        return True, ""
+        return (True, "")
     else:
-        return False, "Not found."
+        return (False, "Not found.")
