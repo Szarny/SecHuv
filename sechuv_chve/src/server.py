@@ -56,7 +56,7 @@ def case_get():
 
     _is_valid: bool = is_valid == "true"
 
-    ok, data = handler.general.case_get(db=db, uuid=uuid, kind=kind, is_valid=_is_valid)
+    ok, data = handler.general.case_get.handle(db=db, uuid=uuid, kind=kind, is_valid=_is_valid)
     if not ok:
         abort(400, {"message": data})
 
