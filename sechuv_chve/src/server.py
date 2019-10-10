@@ -223,20 +223,62 @@ def vuln_delete():
 def vuln_vulntype_get(vulntype: str):
     length: int = request.args.get("length", default=-1, type=int)
 
+    ok: bool
+    message: str
+
+    ok, message = handler.vuln.vuln_vulntype_get.validation(db=db, vulntype=vulntype)
+    if not ok:
+        abort(400, {"message": message})
+
+    data: Dict[str, Union[Vulnerability, Dict[str, List[Case]]]] = handler.vuln.vuln_vulntype_get.handle(db=db, length=length, vulntype=vulntype)
+
+    return jsonify(data)
 
 @app.route("/vuln/<vulntype>/web", methods=["GET"])
 def vuln_vulntype_web_get(vulntype: str):
     length: int = request.args.get("length", default=-1, type=int)
+
+    ok: bool
+    message: str
+
+    ok, message = handler.vuln.vuln_vulntype_web_get.validation(db=db, vulntype=vulntype)
+    if not ok:
+        abort(400, {"message": message})
+
+    data: Dict[str, Union[Vulnerability, List[WebCase]]] = handler.vuln.vuln_vulntype_web_get.handle(db=db, length=length, vulntype=vulntype)
+
+    return jsonify(data)
 
 
 @app.route("/vuln/<vulntype>/mail", methods=["GET"])
 def vuln_vulntype_mail_get(vulntype: str):
     length: int = request.args.get("length", default=-1, type=int)
 
+    ok: bool
+    message: str
+
+    ok, message = handler.vuln.vuln_vulntype_mail_get.validation(db=db, vulntype=vulntype)
+    if not ok:
+        abort(400, {"message": message})
+
+    data: Dict[str, Union[Vulnerability, List[MailCase]]] = handler.vuln.vuln_vulntype_mail_get.handle(db=db, length=length, vulntype=vulntype)
+
+    return jsonify(data)
 
 @app.route("/vuln/<vulntype>/other", methods=["GET"])
 def vuln_vulntype_other_get(vulntype: str):
     length: int = request.args.get("length", default=-1, type=int)
+
+    ok: bool
+    message: str
+
+    ok, message = handler.vuln.vuln_vulntype_other_get.validation(db=db, vulntype=vulntype)
+    if not ok:
+        abort(400, {"message": message})
+    
+    data: Dict[str, Union[Vulnerability, List[OtherCase]]] = handler.vuln.vuln_vulntype_other_get.handle(db=db, length=length, vulntype=vulntype)
+
+    return jsonify(data)
 
 
 @app.errorhandler(400)
