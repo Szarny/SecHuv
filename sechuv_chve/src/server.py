@@ -6,12 +6,22 @@ from typing import Optional, Dict, List, Tuple, Union
 from tinydb import TinyDB, Query
 
 from model.case import Case
+
+from model.webcase import WebCase
+from model.webvalidcase import WebValidCase
 from model.webcasepost import WebCasePost
 from model.webspec import WebSpec
+
+from model.mailcase import MailCase
+from model.mailvalidcase import MailValidCase
 from model.mailcasepost import MailCasePost
 from model.mailspec import MailSpec
+
+from model.othercase import OtherCase
+from model.othervalidcase import OtherValidCase
 from model.othercasepost import OtherCasePost
 from model.otherspec import OtherSpec
+
 from model.vulnerability import Vulnerability
 
 import handler
@@ -34,7 +44,7 @@ db: Dict[str, TinyDB] = {
 # general
 @app.route("/", methods=["GET"])
 def index_get():
-    length: int = request.args.get("length", -1)
+    length: int = request.args.get("length", default=-1, type=int)
     cases: Dict[str, List[Case]] = handler.general.index_get.handle(db=db, length=length)
 
     return jsonify(cases)
@@ -89,18 +99,23 @@ def case_delete():
 # web
 @app.route("/web/case", methods=["GET"])
 def web_case_get():
-    length: int = request.args.get("length", -1)
+    length: int = request.args.get("length", default=-1, type=int)
+    web_cases: List[WebCase] = handler.web.web_case_get.handle(db=db, length=length)
+
+    return jsonify(web_cases)
 
 
 @app.route("/web/case", methods=["POST"])
 def web_case_post():
-    webcasepost: WebCasePost = json.loads(request.json)
+    web_case_post: WebCasePost = json.loads(request.json)
 
 
 @app.route("/web/valid", methods=["GET"])
 def web_valid_get():
-    length: int = request.args.get("length", -1)
+    length: int = request.args.get("length", default=-1, type=int)
+    web_valid_cases: List[WebValidCase] = handler.web.web_valid_get.handle(db=db, length=length)
 
+    return jsonify(web_valid_cases)
 
 @app.route("/web/valid", methods=["POST"])
 def web_valid_post():
@@ -115,7 +130,7 @@ def web_check_post():
 # mail
 @app.route("/mail/case", methods=["GET"])
 def mail_case_get():
-    length: int = request.args.get("length", -1)
+    length: int = request.args.get("length", default=-1, type=int)
 
 
 @app.route("/mail/case", methods=["POST"])
@@ -125,7 +140,7 @@ def mail_case_post():
 
 @app.route("/mail/valid", methods=["GET"])
 def mail_valid_get():
-    length: int = request.args.get("length", -1)
+    length: int = request.args.get("length", default=-1, type=int)
 
 
 @app.route("/mail/valid", methods=["POST"])
@@ -141,7 +156,7 @@ def mail_check_post():
 # other
 @app.route("/other/case", methods=["GET"])
 def other_case_get():
-    length: int = request.args.get("length", -1)
+    length: int = request.args.get("length", default=-1, type=int)
 
 
 @app.route("/other/case", methods=["POST"])
@@ -151,7 +166,7 @@ def other_case_post():
 
 @app.route("/other/valid", methods=["GET"])
 def other_valid_get():
-    length: int = request.args.get("length", -1)
+    length: int = request.args.get("length", default=-1, type=int)
 
 
 @app.route("/other/valid", methods=["POST"])
@@ -185,22 +200,22 @@ def vuln_delete():
 
 @app.route("/vuln/<vulntype>", methods=["GET"])
 def vuln_vulntype_get(vulntype: str):
-    length: int = request.args.get("length", -1)
+    length: int = request.args.get("length", default=-1, type=int)
 
 
 @app.route("/vuln/<vulntype>/web", methods=["GET"])
 def vuln_vulntype_web_get(vulntype: str):
-    length: int = request.args.get("length", -1)
+    length: int = request.args.get("length", default=-1, type=int)
 
 
 @app.route("/vuln/<vulntype>/mail", methods=["GET"])
 def vuln_vulntype_mail_get(vulntype: str):
-    length: int = request.args.get("length", -1)
+    length: int = request.args.get("length", default=-1, type=int)
 
 
 @app.route("/vuln/<vulntype>/other", methods=["GET"])
 def vuln_vulntype_other_get(vulntype: str):
-    length: int = request.args.get("length", -1)
+    length: int = request.args.get("length", default=-1, type=int)
 
 
 @app.errorhandler(400)
