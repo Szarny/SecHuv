@@ -1,7 +1,7 @@
 import json
 
 from flask import Flask, jsonify, request, abort
-from typing import Optional, Dict, List
+from typing import Optional, Dict, List, Tuple, Union
 
 from tinydb import TinyDB, Query
 
@@ -42,34 +42,49 @@ def index_get():
 
 @app.route("/case", methods=["GET"])
 def case_get():
+    ok: bool
+    message: str
+    data: Union[Case, str]
+
     uuid: Optional[str] = request.args.get("uuid", None)
     kind: Optional[str] = request.args.get("kind", None)
-    is_valid: Optional[int] = request.args.get("is_valid", None)
+    is_valid: Optional[str] = request.args.get("is_valid", None)
 
-    if uuid is None:
-        abort(400, {"message": "uuid is missing."})
+    ok, message = handler.general.case_get.validation(uuid=uuid, kind=kind, is_valid=is_valid)
+    if not ok:
+        abort(400, {"message": message})
 
-    if kind is None:
-        abort(400, {"message": "kind is missing."})
+    _is_valid: bool = is_valid == "true"
 
-    if is_valid is None:
-        abort(400, {"message": "is_valid is missing."})
+    ok, data = handler.general.case_get(db=db, uuid=uuid, kind=kind, is_valid=_is_valid)
+    if not ok:
+        abort(400, {"message": data})
+
+    return jsonify(data)
 
 
 @app.route("/case", methods=["DELETE"])
 def case_delete():
+    ok: bool
+    message: str
+    data: str
+
     uuid: Optional[str] = request.args.get("uuid", None)
     kind: Optional[str] = request.args.get("kind", None)
-    is_valid: Optional[int] = request.args.get("is_valid", None)
+    is_valid: Optional[str] = request.args.get("is_valid", None)
 
-    if uuid is None:
-        abort(400, {"message": "uuid is missing."})
+    ok, message = handler.general.case_delete.validation(uuid=uuid, kind=kind, is_valid=is_valid)
+    if not ok:
+        abort(400, {"message": message})
 
-    if kind is None:
-        abort(400, {"message": "kind is missing."})
+    _is_valid: bool = is_valid == "true"
 
-    if is_valid is None:
-        abort(400, {"message": "is_valid is missing."})
+    ok, data = handler.general.case_delete.handle(db=db, uuid=uuid, kind=kind, is_valid=_is_valid)
+    if not ok:
+        abort(400, {"message": data})
+
+    return jsonify({"uuid": uuid})
+
 
 # web
 @app.route("/web/case", methods=["GET"])
