@@ -163,6 +163,9 @@ def mail_check_post():
 @app.route("/other/case", methods=["GET"])
 def other_case_get():
     length: int = request.args.get("length", default=-1, type=int)
+    other_cases: List[OtherCase] = handler.other.other_case_get.handle(db=db, length=length)
+
+    return jsonify(other_cases)
 
 
 @app.route("/other/case", methods=["POST"])
@@ -173,6 +176,9 @@ def other_case_post():
 @app.route("/other/valid", methods=["GET"])
 def other_valid_get():
     length: int = request.args.get("length", default=-1, type=int)
+    other_valid_cases: List[OtherValidCase] = handler.other.other_valid_get.handle(db=db, length=length)
+
+    return jsonify(other_valid_cases)
 
 
 @app.route("/other/valid", methods=["POST"])
