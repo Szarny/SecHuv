@@ -1,6 +1,6 @@
 import json
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, abort
 from typing import Optional, Dict, List
 
 from tinydb import TinyDB, Query
@@ -42,18 +42,34 @@ def index_get():
 
 @app.route("/case", methods=["GET"])
 def case_get():
-    id: Optional[str] = request.args.get("id", None)
+    uuid: Optional[str] = request.args.get("uuid", None)
+    kind: Optional[str] = request.args.get("kind", None)
+    is_valid: Optional[int] = request.args.get("is_valid", None)
 
-    if id is None:
-        pass
+    if uuid is None:
+        abort(400, {"message": "uuid is missing."})
+
+    if kind is None:
+        abort(400, {"message": "kind is missing."})
+
+    if is_valid is None:
+        abort(400, {"message": "is_valid is missing."})
 
 
 @app.route("/case", methods=["DELETE"])
 def case_delete():
-    id: Optional[str] = request.args.get("id", None)
+    uuid: Optional[str] = request.args.get("uuid", None)
+    kind: Optional[str] = request.args.get("kind", None)
+    is_valid: Optional[int] = request.args.get("is_valid", None)
 
-    if id is None:
-        pass
+    if uuid is None:
+        abort(400, {"message": "uuid is missing."})
+
+    if kind is None:
+        abort(400, {"message": "kind is missing."})
+
+    if is_valid is None:
+        abort(400, {"message": "is_valid is missing."})
 
 # web
 @app.route("/web/case", methods=["GET"])

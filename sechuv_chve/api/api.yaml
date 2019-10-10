@@ -64,6 +64,18 @@ paths:
           schema:
             type: string
             format: uuid
+        - name: kind
+          in: query
+          description: 取得する事例のメディア
+          required: true
+          schema:
+            type: string
+        - name: is_valid
+          in: query
+          description: 正当な事例であるかどうか
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
           description: OK
@@ -83,6 +95,18 @@ paths:
           schema:
             type: string
             format: uuid
+        - name: kind
+          in: query
+          description: 取得する事例のメディア
+          required: true
+          schema:
+            type: string
+        - name: is_valid
+          in: query
+          description: 正当な事例であるかどうか
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
           description: OK
