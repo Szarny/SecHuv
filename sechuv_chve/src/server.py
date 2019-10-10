@@ -131,6 +131,9 @@ def web_check_post():
 @app.route("/mail/case", methods=["GET"])
 def mail_case_get():
     length: int = request.args.get("length", default=-1, type=int)
+    mail_cases: List[MailCase] = handler.mail.mail_case_get.handle(db=db, length=length)
+
+    return jsonify(mail_cases)
 
 
 @app.route("/mail/case", methods=["POST"])
@@ -141,6 +144,9 @@ def mail_case_post():
 @app.route("/mail/valid", methods=["GET"])
 def mail_valid_get():
     length: int = request.args.get("length", default=-1, type=int)
+    mail_valid_cases: List[MailValidCase] = handler.mail.mail_valid_get.handle(db=db, length=length)
+
+    return jsonify(mail_valid_cases)
 
 
 @app.route("/mail/valid", methods=["POST"])
