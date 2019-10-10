@@ -51,6 +51,15 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/OtherCase'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
   /case:
     get:
       tags:
@@ -75,7 +84,7 @@ paths:
           description: 正当な事例であるかどうか
           required: true
           schema:
-            type: integer
+            type: string
       responses:
         '200':
           description: OK
@@ -84,7 +93,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/Case'
         '400':
-          description: Parameter missing
+          description: Parameter error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          description: Server error
           content:
             application/json:
               schema:
@@ -115,12 +133,28 @@ paths:
           description: 正当な事例であるかどうか
           required: true
           schema:
-            type: integer
+            type: string
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  uuid:
+                    type: string
         '400':
-          description: Parameter missing
+          description: Parameter error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          description: Server error
           content:
             application/json:
               schema:
@@ -149,6 +183,15 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/WebCase'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
     post:
       tags:
         - web
@@ -173,6 +216,15 @@ paths:
                   post_date:
                     type: string
                     format: yyyymmddhhmmss
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
   /web/valid:
     get:
       tags:
@@ -194,6 +246,15 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/WebValidCase'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
     post:
       tags:
         - web
@@ -218,6 +279,15 @@ paths:
                   post_date:
                     type: string
                     format: yyyymmddhhmmss
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
   /web/check:
     post:
       tags:
@@ -245,6 +315,15 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/WebCase'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
   /mail/case:
     get:
       tags:
@@ -266,6 +345,15 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/MailCase'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
     post:
       tags:
         - mail
@@ -290,6 +378,15 @@ paths:
                   post_date:
                     type: string
                     format: yyyymmddhhmmss
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
   /mail/valid:
     get:
       tags:
@@ -311,6 +408,15 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/MailValidCase'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
     post:
       tags:
         - mail
@@ -335,6 +441,15 @@ paths:
                   post_date:
                     type: string
                     format: yyyymmddhhmmss
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
   /mail/check:
     post:
       tags:
@@ -362,6 +477,15 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/MailCase'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
   /other/case:
     get:
       tags:
@@ -383,6 +507,15 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/OtherCase'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
     post:
       tags:
         - other
@@ -407,6 +540,15 @@ paths:
                   post_date:
                     type: string
                     format: yyyymmddhhmmss
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
   /other/valid:
     get:
       tags:
@@ -428,6 +570,15 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/OtherValidCase'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
     post:
       tags:
         - other
@@ -452,6 +603,15 @@ paths:
                   post_date:
                     type: string
                     format: yyyymmddhhmmss
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
   /other/check:
     post:
       tags:
@@ -479,6 +639,15 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/OtherCase'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
   /vuln:
     get:
       tags:
@@ -493,6 +662,15 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Vulnerability'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
     post:
       tags:
         - vuln
@@ -506,6 +684,15 @@ paths:
       responses:
         '200':
           description: OK
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
     delete:
       tags:
         - vuln
@@ -520,8 +707,24 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  vulntype:
+                    type: string
         '400':
-          description: Parameter missing
+          description: Parameter error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          description: Server error
           content:
             application/json:
               schema:
@@ -572,6 +775,15 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/OtherCase'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
   '/vuln/{vulntype}/web':
     get:
       tags:
@@ -604,6 +816,15 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/WebCase'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
   '/vuln/{vulntype}/mail':
     get:
       tags:
@@ -636,6 +857,15 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/MailCase'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
   '/vuln/{vulntype}/other':
     get:
       tags:
@@ -668,6 +898,15 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/OtherCase'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
 components:
   schemas:
     Case:
