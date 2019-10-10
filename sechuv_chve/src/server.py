@@ -194,7 +194,9 @@ def other_check_post():
 # vuln
 @app.route("/vuln", methods=["GET"])
 def vuln_get():
-    pass
+    vulnerabilities: List[Vulnerability] = handler.vuln.vuln_get.handle(db=db)
+
+    return jsonify(vulnerabilities)
 
 
 @app.route("/vuln", methods=["POST"])
@@ -206,8 +208,15 @@ def vuln_post():
 def vuln_delete():
     vulntype: Optional[str] = request.args.get("vulntype", None)
 
-    if vulntype is None:
-        pass
+    ok, message = handler.vuln.vuln_delete.validation(vulntype=vulntype)
+    if not ok:
+        abort(400, {"message": message})
+
+    ok, data = handler.vuln.vuln_delete.handle(db=db, vulntype=vulntype)
+    if not ok:
+        abort(400, {"message": data})
+
+    return jsonify({"vulntype": vulntype})
 
 
 @app.route("/vuln/<vulntype>", methods=["GET"])
