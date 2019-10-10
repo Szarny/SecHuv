@@ -203,5 +203,12 @@ def vuln_vulntype_other_get(vulntype: str):
     length: int = request.args.get("length", -1)
 
 
+@app.errorhandler(400)
+@app.errorhandler(500)
+def error_handler(error):
+    response = jsonify({ 'message': error.description['message']})
+    return response, error.code
+
+
 if __name__ == '__main__':
     app.run()
