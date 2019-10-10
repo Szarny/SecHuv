@@ -119,12 +119,12 @@ def web_valid_get():
 
 @app.route("/web/valid", methods=["POST"])
 def web_valid_post():
-    webspec: WebSpec = json.loads(request.json)
+    web_spec: WebSpec = json.loads(request.json)
 
 
 @app.route("/web/check", methods=["POST"])
 def web_check_post():
-    webspec: WebSpec = json.loads(request.json)
+    web_spec: WebSpec = json.loads(request.json)
     
 
 # mail
@@ -138,7 +138,7 @@ def mail_case_get():
 
 @app.route("/mail/case", methods=["POST"])
 def mail_case_post():
-    mailcasepost: MailCasePost = json.loads(request.json)
+    mail_case_post: MailCasePost = json.loads(request.json)
 
 
 @app.route("/mail/valid", methods=["GET"])
@@ -151,12 +151,12 @@ def mail_valid_get():
 
 @app.route("/mail/valid", methods=["POST"])
 def mail_valid_post():
-    mailspec: MailSpec = json.loads(request.json)
+    mail_spec: MailSpec = json.loads(request.json)
 
 
 @app.route("/mail/check", methods=["POST"])
 def mail_check_post():
-    mailspec: MailSpec = json.loads(request.json)
+    mail_spec: MailSpec = json.loads(request.json)
 
 
 # other
@@ -170,7 +170,7 @@ def other_case_get():
 
 @app.route("/other/case", methods=["POST"])
 def other_case_post():
-    othercasepost: OtherCasePost = json.loads(request.json)
+    other_case_post: OtherCasePost = json.loads(request.json)
 
 
 @app.route("/other/valid", methods=["GET"])
@@ -183,12 +183,12 @@ def other_valid_get():
 
 @app.route("/other/valid", methods=["POST"])
 def other_valid_post():
-    otherspec: OtherSpec = json.loads(request.json)
+    other_spec: OtherSpec = json.loads(request.json)
 
 
 @app.route("/other/check", methods=["POST"])
 def other_check_post():
-    otherspec: OtherSpec = json.loads(request.json)
+    other_spec: OtherSpec = json.loads(request.json)
 
 
 # vuln
