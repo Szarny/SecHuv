@@ -1,13 +1,13 @@
 from tinydb import TinyDB
 
 db = {
-    "web": TinyDB("db/web.json"),
-    "webvalid": TinyDB("db/webvalid.json"),
-    "mail": TinyDB("db/mail.json"),
-    "mailvalid": TinyDB("db/mailvalid.json"),
-    "other": TinyDB("db/other.json"),
-    "othervalid": TinyDB("db/othervalid.json"),
-    "vulnerability": TinyDB("db/vulnerability.json"),
+    "web": TinyDB("./web.json"),
+    "webvalid": TinyDB("./webvalid.json"),
+    "mail": TinyDB("./mail.json"),
+    "mailvalid": TinyDB("./mailvalid.json"),
+    "other": TinyDB("./other.json"),
+    "othervalid": TinyDB("./othervalid.json"),
+    "vulnerability": TinyDB("./vulnerability.json"),
 }
 
 for db_name in db.keys():

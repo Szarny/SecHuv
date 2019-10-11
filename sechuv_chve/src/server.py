@@ -1,7 +1,7 @@
 import json
 
 from flask import Flask, jsonify, request, abort
-from typing import Optional, Dict, List, Tuple, Union
+from typing import Optional, Dict, List, Tuple, Union, Any
 
 from tinydb import TinyDB, Query
 
@@ -107,7 +107,19 @@ def web_case_get():
 
 @app.route("/web/case", methods=["POST"])
 def web_case_post():
-    web_case_post: WebCasePost = json.loads(request.json)
+    ok: bool
+    data: Dict[str, str]
+
+    ok = handler.web.web_case_post.validation(post_data=request.json)
+    if not ok:
+        abort(400, {"message": "Posted value is invalid."})
+
+    web_case_post: WebCasePost = request.json
+    ok, data = handler.web.web_case_post.handle(db=db, web_case_post=web_case_post)
+    if not ok:
+        abort(500, {"message": "Server error."})
+
+    return jsonify(data)
 
 
 @app.route("/web/valid", methods=["GET"])
