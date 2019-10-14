@@ -130,7 +130,20 @@ def web_valid_get():
 
 @app.route("/web/valid", methods=["POST"])
 def web_valid_post():
-    web_spec: WebSpec = json.loads(request.json)
+    ok: bool
+    data: Dict[str, str]
+
+    # 未実装
+    ok = handler.web.web_valid_post.validation(post_data=request.json)
+    if not ok:
+        abort(400, {"message": "Posted value is invalid."})
+
+    web_spec: WebSpec = request.json
+    ok, data = handler.web.web_valid_post.handle(db=db, web_spec=web_spec)
+    if not ok:
+        abort(500, {"message": "Server error."})
+
+    return jsonify(data)
 
 
 @app.route("/web/check", methods=["POST"])
@@ -175,7 +188,20 @@ def mail_valid_get():
 
 @app.route("/mail/valid", methods=["POST"])
 def mail_valid_post():
-    mail_spec: MailSpec = json.loads(request.json)
+    ok: bool
+    data: Dict[str, str]
+
+    # 未実装
+    ok = handler.mail.mail_valid_post.validation(post_data=request.json)
+    if not ok:
+        abort(400, {"message": "Posted value is invalid."})
+
+    mail_spec: MailSpec = request.json
+    ok, data = handler.mail.mail_valid_post.handle(db=db, mail_spec=mail_spec)
+    if not ok:
+        abort(500, {"message": "Server error."})
+
+    return jsonify(data)
 
 
 @app.route("/mail/check", methods=["POST"])
@@ -220,7 +246,20 @@ def other_valid_get():
 
 @app.route("/other/valid", methods=["POST"])
 def other_valid_post():
-    other_spec: OtherSpec = json.loads(request.json)
+    ok: bool
+    data: Dict[str, str]
+
+    # 未実装
+    ok = handler.other.other_valid_post.validation(post_data=request.json)
+    if not ok:
+        abort(400, {"message": "Posted value is invalid."})
+
+    other_spec: OtherSpec = request.json
+    ok, data = handler.other.other_valid_post.handle(db=db, other_spec=other_spec)
+    if not ok:
+        abort(500, {"message": "Server error."})
+
+    return jsonify(data)
 
 
 @app.route("/other/check", methods=["POST"])
