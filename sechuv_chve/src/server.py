@@ -238,7 +238,20 @@ def vuln_get():
 
 @app.route("/vuln", methods=["POST"])
 def vuln_post():
-    vulnerability: Vulnerability = json.loads(request.json)
+    ok: bool
+    data: Dict[str, str]
+
+    # 未実装
+    ok = handler.vuln.vuln_post.validation(post_data=request.json)
+    if not ok:
+        abort(400, {"message": "Posted value is invalid."})
+
+    vulnerability: Vulnerability = request.json
+    ok, data = handler.vuln.vuln_post.handle(db=db, vulnerability=vulnerability)
+    if not ok:
+        abort(500, {"message": "Server error."})
+
+    return jsonify(data)
 
 
 @app.route("/vuln", methods=["DELETE"])
