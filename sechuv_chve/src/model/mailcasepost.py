@@ -5,5 +5,5 @@ from model.vulnerability import Vulnerability
 from model.mailspec import MailSpec
 
 class MailCasePost(TypedDict):
-    vulns: List[Vulnerability]
+    vulntypes: List[str]
     spec: MailSpec

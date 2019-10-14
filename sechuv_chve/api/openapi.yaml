@@ -969,7 +969,7 @@ components:
     WebCasePost:
       type: object
       properties:
-        vulns:
+        vulntypes:
           type: array
           items:
             type: string
@@ -1015,7 +1015,7 @@ components:
     MailCasePost:
       type: object
       properties:
-        vulns:
+        vulntypes:
           type: array
           items:
             type: string
@@ -1088,7 +1088,7 @@ components:
     OtherCasePost:
       type: object
       properties:
-        vulns:
+        vulntypes:
           type: array
           items:
             type: string

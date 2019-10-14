@@ -5,5 +5,5 @@ from model.vulnerability import Vulnerability
 from model.otherspec import OtherSpec
 
 class OtherCasePost(TypedDict):
-    vulns: List[Vulnerability]
+    vulntypes: List[str]
     spec: OtherSpec

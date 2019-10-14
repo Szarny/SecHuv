@@ -108,6 +108,7 @@ def web_case_post():
     ok: bool
     data: Dict[str, str]
 
+    # 未実装
     ok = handler.web.web_case_post.validation(post_data=request.json)
     if not ok:
         abort(400, {"message": "Posted value is invalid."})

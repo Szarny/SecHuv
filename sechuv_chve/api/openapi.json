@@ -1575,7 +1575,7 @@
       "WebCasePost": {
         "type": "object",
         "properties": {
-          "vulns": {
+          "vulntypes": {
             "type": "array",
             "items": {
               "type": "string"
@@ -1644,7 +1644,7 @@
       "MailCasePost": {
         "type": "object",
         "properties": {
-          "vulns": {
+          "vulntypes": {
             "type": "array",
             "items": {
               "type": "string"
@@ -1747,7 +1747,7 @@
       "OtherCasePost": {
         "type": "object",
         "properties": {
-          "vulns": {
+          "vulntypes": {
             "type": "array",
             "items": {
               "type": "string"

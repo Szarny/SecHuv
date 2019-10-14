@@ -5,5 +5,5 @@ from model.vulnerability import Vulnerability
 from model.webspec import WebSpec
 
 class WebCasePost(TypedDict):
-    vulns: List[Vulnerability]
+    vulntypes: List[str]
     spec: WebSpec
