@@ -1,11 +1,9 @@
 from typing import List
+from mypy_extensions import TypedDict
 
 from model.vulnerability import Vulnerability
 from model.mailspec import MailSpec
 
-class MailCasePost:
-    def __init__(self, 
-                 vulns: List[Vulnerability],
-                 spec: MailSpec) -> None:
-        self.vulns: List[Vulnerability] = vulns
-        self.spec: MailSpec = spec
+class MailCasePost(TypedDict):
+    vulns: List[Vulnerability]
+    spec: MailSpec

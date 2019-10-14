@@ -1,8 +1,7 @@
-from typing import Dict, List, Tuple, Union
+from typing import Dict, List, Tuple, Union, Any
 
 from tinydb import TinyDB, Query
 
-from model.case import Case
 from model.webcase import WebCase
 from model.mailcase import MailCase
 from model.othercase import OtherCase
@@ -20,7 +19,7 @@ def validation(db: TinyDB, vulntype: str) -> Tuple[bool, str]:
         return (False, "Not found.")
 
 
-def handle(db: Dict[str, TinyDB], length: int, vulntype: str) -> Dict[str, Union[Vulnerability, Dict[str, List[Case]]]]:
+def handle(db: Dict[str, TinyDB], length: int, vulntype: str) -> Dict[str, Any]:
     query: Query = Query()
     
     vulnerability: Vulnerability = db["vulnerability"].search(query.vulntype == vulntype)[0]
@@ -28,8 +27,7 @@ def handle(db: Dict[str, TinyDB], length: int, vulntype: str) -> Dict[str, Union
     mail_cases: List[MailCase] = db["mail"].search(query.vulns.vulntype.any(vulntype))
     other_cases: List[OtherCase] = db["other"].search(query.vulns.vulntype.any(vulntype))
 
-    result: Dict[str, Union[Vulnerability, Dict[str, List[Case]]]]
-    
+    result: Dict[str, Any]
     if length == -1:
         result = {
             "vulnerability": vulnerability,

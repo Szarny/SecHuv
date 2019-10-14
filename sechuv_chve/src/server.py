@@ -5,8 +5,6 @@ from typing import Optional, Dict, List, Tuple, Union, Any
 
 from tinydb import TinyDB, Query
 
-from model.case import Case
-
 from model.webcase import WebCase
 from model.webvalidcase import WebValidCase
 from model.webcasepost import WebCasePost
@@ -45,7 +43,7 @@ db: Dict[str, TinyDB] = {
 @app.route("/", methods=["GET"])
 def index_get():
     length: int = request.args.get("length", default=-1, type=int)
-    cases: Dict[str, List[Case]] = handler.general.index_get.handle(db=db, length=length)
+    cases: Dict[str, List[Union[WebCase, MailCase, OtherCase]]] = handler.general.index_get.handle(db=db, length=length)
 
     return jsonify(cases)
 
@@ -54,7 +52,7 @@ def index_get():
 def case_get():
     ok: bool
     message: str
-    data: Union[Case, str]
+    data: Union[Union[WebCase, MailCase, OtherCase], str]
 
     uuid: Optional[str] = request.args.get("uuid", None)
     kind: Optional[str] = request.args.get("kind", None)
@@ -242,7 +240,7 @@ def vuln_vulntype_get(vulntype: str):
     if not ok:
         abort(400, {"message": message})
 
-    data: Dict[str, Union[Vulnerability, Dict[str, List[Case]]]] = handler.vuln.vuln_vulntype_get.handle(db=db, length=length, vulntype=vulntype)
+    data: Dict[str, Any] = handler.vuln.vuln_vulntype_get.handle(db=db, length=length, vulntype=vulntype)
 
     return jsonify(data)
 
@@ -276,6 +274,7 @@ def vuln_vulntype_mail_get(vulntype: str):
     data: Dict[str, Union[Vulnerability, List[MailCase]]] = handler.vuln.vuln_vulntype_mail_get.handle(db=db, length=length, vulntype=vulntype)
 
     return jsonify(data)
+
 
 @app.route("/vuln/<vulntype>/other", methods=["GET"])
 def vuln_vulntype_other_get(vulntype: str):

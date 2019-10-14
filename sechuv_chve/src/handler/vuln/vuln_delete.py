@@ -1,8 +1,10 @@
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Union
 
 from tinydb import TinyDB, Query
 
-from model.case import Case
+from model.webcase import WebCase
+from model.mailcase import MailCase
+from model.othercase import OtherCase
 from model.vulnerability import Vulnerability
 
 
@@ -22,9 +24,14 @@ def handle(db: Dict[str, TinyDB], vulntype: str) -> Tuple[bool, str]:
         db["vulnerability"].remove(query.vulntype == vulntype)
 
         for kind in ["web", "mail", "other"]:
-            cases: List[Case] = db[kind].search(query.vulns.vulntype.any(vulntype))
+            cases: List[Union[WebCase, MailCase, OtherCase]] = db[kind].search(query.vulns.vulntype.any(vulntype))
+            
             for case in cases:
-                case["vulns"]["vulntype"].remove(vulntype)
+                for vi in range(len(case["vulns"])):
+                    if case["vulns"][vi]["vulntype"] == vulntype:
+                        case["vulns"].pop(vi)
+                        break
+
             db[kind].write_back(cases)
 
         return (True, "")

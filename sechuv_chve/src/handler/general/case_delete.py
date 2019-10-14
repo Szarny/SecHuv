@@ -1,8 +1,7 @@
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Union
 
 from tinydb import TinyDB, Query
 
-from model.case import Case
 from model.webcase import WebCase
 from model.mailcase import MailCase
 from model.othercase import OtherCase
@@ -49,7 +48,7 @@ def handle(db: Dict[str, TinyDB], uuid: str, kind: str, is_valid: bool) -> Tuple
         else:
             _db = db["other"]
 
-    case: List[Case] = _db.search(query.uuid == uuid)
+    case: List[Union[WebCase, MailCase, OtherCase]] = _db.search(query.uuid == uuid)
 
     if len(case) == 1:
         _db.remove(query.uuid == uuid)

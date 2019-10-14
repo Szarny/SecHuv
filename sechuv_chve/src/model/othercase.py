@@ -1,16 +1,11 @@
 from typing import List
+from mypy_extensions import TypedDict
 
-from model.case import Case
 from model.vulnerability import Vulnerability
 from model.otherspec import OtherSpec
 
-class OtherCase(Case):
-    def __init__(self, 
-                 uuid: str, 
-                 post_date: str, 
-                 vulns: List[Vulnerability], 
-                 spec: OtherSpec) -> None:
-        self.uuid: str = uuid
-        self.post_date: str = post_date
-        self.vulns: List[Vulnerability] = vulns
-        self.spec: OtherSpec = spec
+class OtherCase(TypedDict):
+    uuid: str
+    post_date: str
+    vulns: List[Vulnerability]
+    spec: OtherSpec
