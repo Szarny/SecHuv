@@ -7,7 +7,7 @@ db = {
     "mailvalid": TinyDB("./mailvalid.json"),
     "other": TinyDB("./other.json"),
     "othervalid": TinyDB("./othervalid.json"),
-    "vulnerability": TinyDB("./vulnerability.json"),
+    # "vulnerability": TinyDB("./vulnerability.json"),
 }
 
 for db_name in db.keys():

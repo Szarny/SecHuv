@@ -149,7 +149,20 @@ def mail_case_get():
 
 @app.route("/mail/case", methods=["POST"])
 def mail_case_post():
-    mail_case_post: MailCasePost = json.loads(request.json)
+    ok: bool
+    data: Dict[str, str]
+
+    # 未実装
+    ok = handler.mail.mail_case_post.validation(post_data=request.json)
+    if not ok:
+        abort(400, {"message": "Posted value is invalid."})
+
+    mail_case_post: MailCasePost = request.json
+    ok, data = handler.mail.mail_case_post.handle(db=db, mail_case_post=mail_case_post)
+    if not ok:
+        abort(500, {"message": "Server error."})
+
+    return jsonify(data)
 
 
 @app.route("/mail/valid", methods=["GET"])
@@ -181,7 +194,20 @@ def other_case_get():
 
 @app.route("/other/case", methods=["POST"])
 def other_case_post():
-    other_case_post: OtherCasePost = json.loads(request.json)
+    ok: bool
+    data: Dict[str, str]
+
+    # 未実装
+    ok = handler.other.other_case_post.validation(post_data=request.json)
+    if not ok:
+        abort(400, {"message": "Posted value is invalid."})
+
+    other_case_post: OtherCasePost = request.json
+    ok, data = handler.other.other_case_post.handle(db=db, other_case_post=other_case_post)
+    if not ok:
+        abort(500, {"message": "Server error."})
+
+    return jsonify(data)
 
 
 @app.route("/other/valid", methods=["GET"])
