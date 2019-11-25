@@ -1029,6 +1029,7 @@ components:
         spf_status:
           type: string
           enum:
+            - none
             - pass
             - fail
             - softfail
@@ -1118,6 +1119,8 @@ components:
       type: object
       properties:
         vulntype:
+          type: string
+        vulnname:
           type: string
         description:
           type: string

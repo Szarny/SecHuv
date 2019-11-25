@@ -1,0 +1,13 @@
+{
+    "vulntypes": [""],
+    "spec": {
+        "from_addr": "",
+        "spf_status": "",
+        "dkim_status": "",
+        "is_html": "",
+        "subject": "",
+        "body": "",
+        "raw_body": "",
+        "webcase_ptrs": []
+    }
+}

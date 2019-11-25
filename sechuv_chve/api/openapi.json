@@ -1664,6 +1664,7 @@
           "spf_status": {
             "type": "string",
             "enum": [
+              "none",
               "pass",
               "fail",
               "softfail",
@@ -1792,6 +1793,9 @@
         "type": "object",
         "properties": {
           "vulntype": {
+            "type": "string"
+          },
+          "vulnname": {
             "type": "string"
           },
           "description": {
