@@ -23,3 +23,13 @@ services:
     command: "python3 /project/server.py"
     links:
       - api_server
+
+  swagger:
+    image: swaggerapi/swagger-ui
+    container_name: "swagger-ui"
+    ports:
+      - "5000:8080"
+    volumes:
+      - ../sechuv_chve/api/openapi.json:/openapi.json
+    environment:
+      SWAGGER_JSON: /openapi.json
