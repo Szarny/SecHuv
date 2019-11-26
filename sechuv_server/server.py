@@ -95,6 +95,23 @@ def vuln(vulntype):
     return render_template("vuln.html", vuln=get_vuln(vulntype),
                                         vulns=get_vulns())
 
+
+@app.route("/vuln/<vulntype>/cases")
+def vuln_cases(vulntype):
+    def get_vuln(vulntype):
+        vulns = json.loads(requests.get(api_url.format("vuln")).text)
+
+        for vuln in vulns:
+            if vuln["vulntype"] == vulntype:
+                return vuln
+
+    def get_cases(vulntype):
+        cases = json.loads(requests.get(api_url.format("vuln/{}".format(vulntype))).text)
+        return cases
+
+    return render_template("vulncases.html", vuln=get_vuln(vulntype),
+                                             cases=get_cases(vulntype))
+
                             
 
 app.run(host="0.0.0.0", port=8000)
