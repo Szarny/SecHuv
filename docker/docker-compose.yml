@@ -1,0 +1,25 @@
+version: "3"
+services:
+  api_server:
+    image: "flask_app"
+    container_name: "api_server"
+    ports:
+      - "8080:8080"
+    environment:
+      FLASK_ENV: "development"
+    volumes:
+      - "../sechuv_chve/src:/project"
+    command: "python3 /project/server.py"
+
+  web_server:
+    image: "flask_app"
+    container_name: "web_server"
+    ports:
+      - "8000:8000"
+    environment:
+      FLASK_ENV: "development"
+    volumes:
+      - "../sechuv_server:/project"
+    command: "python3 /project/server.py"
+    links:
+      - api_server

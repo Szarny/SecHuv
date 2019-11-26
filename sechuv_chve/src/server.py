@@ -29,13 +29,13 @@ app: Flask = Flask(__name__)
 
 
 db: Dict[str, TinyDB] = {
-    "web": TinyDB("db/web.json"),
-    "webvalid": TinyDB("db/webvalid.json"),
-    "mail": TinyDB("db/mail.json"),
-    "mailvalid": TinyDB("db/mailvalid.json"),
-    "other": TinyDB("db/other.json"),
-    "othervalid": TinyDB("db/othervalid.json"),
-    "vulnerability": TinyDB("db/vulnerability.json"),
+    "web": TinyDB("/project/db/web.json"),
+    "webvalid": TinyDB("/project/db/webvalid.json"),
+    "mail": TinyDB("/project/db/mail.json"),
+    "mailvalid": TinyDB("/project/db/mailvalid.json"),
+    "other": TinyDB("/project/db/other.json"),
+    "othervalid": TinyDB("/project/db/othervalid.json"),
+    "vulnerability": TinyDB("/project/db/vulnerability.json"),
 }
 
 

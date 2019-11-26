@@ -3,7 +3,7 @@ import requests
 import json
 
 app = Flask(__name__)
-api_url = "http://localhost:8080/{}"
+api_url = "http://api_server:8080/{}"
 
 
 def get_vulns():
