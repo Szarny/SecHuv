@@ -25,3 +25,5 @@ Security Hub for Human-vulnerabilities.
 
 ## Server
 - `0.0.0.0:8080`: API Server
+- `0.0.0.0:8000`: Web Server
+- `0.0.0.0:5000`: Swagger-ui
