@@ -223,6 +223,8 @@ def other_case_post():
     ok: bool
     data: Dict[str, str]
 
+    print("HGOHGOE")
+
     # 未実装
     ok = handler.other.other_case_post.validation(post_data=request.json)
     if not ok:
@@ -230,6 +232,7 @@ def other_case_post():
 
     other_case_post: OtherCasePost = request.json
     ok, data = handler.other.other_case_post.handle(db=db, other_case_post=other_case_post)
+    print(ok)
     if not ok:
         abort(500, {"message": "Server error."})
 
@@ -379,4 +382,4 @@ def error_handler(error):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host="0.0.0.0", port=8080)

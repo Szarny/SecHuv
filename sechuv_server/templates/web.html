@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="columns is-centered">
+    <div class="column is-8">
+        {% for case in cases %}
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">
+                    <span class="tag is-info">Web</span>{{ case["spec"]["url"] }}
+                </p>
+                <time class="card-header-icon">
+                    {{ "{}/{}/{} {}:{}:{}".format(case["post_date"][0:4], case["post_date"][4:6], case["post_date"][6:8], case["post_date"][8:10], case["post_date"][10:12], case["post_date"][12:14]) }}
+                </time>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
+                </div>
+            </div>
+            <footer class="card-footer">
+                <a href="#" class="card-footer-item">詳しく見る</a>
+            </footer>
+        </div>
+        <br>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

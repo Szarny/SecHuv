@@ -1,0 +1,13 @@
+{
+    "vulntypes": [""],
+    "spec": {
+        "from_addr": "laptoprusak27@temangatoraw.com",
+        "spf_status": "none",
+        "dkim_status": "neutral",
+        "is_html": "false",
+        "subject": "支払いの問題でApple IDがロックされました。【警告】",
+        "body": "",
+        "raw_body": "登録の請求は Apple payment gateway によって拒否されました。サービスへのアクセスを失わないようにするには、お支払い方法を更新してください。アカウントのステータス：最後に同期が成功したのは2019年6月20日です。よくお問い合わせいただく質問 (FAQ) とその回答については、Appleサポート にアクセスしてください。",
+        "webcase_ptrs": []
+    }
+}

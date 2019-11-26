@@ -22,3 +22,6 @@ Security Hub for Human-vulnerabilities.
 |🐳|Docker関連|
 |🔧|コンフィグファイルの追加|
 |📦|外部モジュールの追加|
+
+## Server
+- `0.0.0.0:8080`: API Server

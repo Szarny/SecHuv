@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SecHuv</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
+
+<body>
+    <section class="hero is-light is-small">
+        <div class="hero-head">
+            <nav class="navbar">
+                <div class="container">
+                    <div class="navbar-brand">
+                        <a class="navbar-item">
+                            <img src="{{url_for('static', filename='logo/logo.002.png')}}" alt="Logo">
+                        </a>
+                    </div>
+                    <div id="navbarMenuHeroB" class="navbar-menu">
+                        <div class="navbar-end">
+                            <a class="navbar-item is-active" href="/">
+                                Home
+                            </a>
+                            <a class="navbar-item" href="/about">
+                                About
+                            </a>
+                            <div class="navbar-item has-dropdown is-hoverable">
+                                <a class="navbar-link">
+                                    Case
+                                </a>
+                                <div class="navbar-dropdown">
+                                    <a class="navbar-item" href="/web">Web</a>
+                                    <a class="navbar-item" href="/mail">Mail</a>
+                                    <a class="navbar-item" href="/other">Other</a>
+                                </div>
+                            </div>
+
+                            <div class="navbar-item has-dropdown is-hoverable">
+                                <a class="navbar-link">
+                                    Vulns
+                                </a>
+                                <div class="navbar-dropdown">
+                                    {%  for vuln in vulns %}
+                                    <a class="navbar-item" href="/vuln/{{ vuln['vulntype'] }}">{{ vuln["vulnname"] }}</a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <p class="title is-large">
+                    SecHuv:CHVE
+                </p>
+                <p class="subtitle">
+                    Security Hub for Human-Vulnerabilities.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <br>
+
+    {% block content %}
+    {% endblock %}
+    
+</body>
+
+</html>
