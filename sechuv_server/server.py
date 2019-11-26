@@ -35,6 +35,16 @@ def web():
     return render_template("web.html", cases=get_web_cases(), 
                                          vulns=get_vulns())
 
+
+@app.route("/web/<uuid>")
+def web_case(uuid):
+    def get_web_case(uuid):
+        case = json.loads(requests.get(api_url.format("case"), params={"uuid": uuid, "kind": "web", "is_valid": "false"}).text)
+        return case
+
+    return render_template("webcase.html", case=get_web_case(uuid))
+
+
 @app.route("/mail")
 def mail():
     def get_mail_cases():
@@ -44,6 +54,16 @@ def mail():
     return render_template("mail.html", cases=get_mail_cases(), 
                                          vulns=get_vulns())
 
+
+@app.route("/mail/<uuid>")
+def mail_case(uuid):
+    def get_mail_case(uuid):
+        case = json.loads(requests.get(api_url.format("case"), params={"uuid": uuid, "kind": "mail", "is_valid": "false"}).text)
+        return case
+
+    return render_template("mailcase.html", case=get_mail_case(uuid))
+
+
 @app.route("/other")
 def other():
     def get_other_cases():
@@ -52,6 +72,16 @@ def other():
 
     return render_template("other.html", cases=get_other_cases(), 
                                          vulns=get_vulns())
+
+
+@app.route("/other/<uuid>")
+def other_case(uuid):
+    def get_other_case(uuid):
+        case = json.loads(requests.get(api_url.format("case"), params={"uuid": uuid, "kind": "other", "is_valid": "false"}).text)
+        return case
+
+    return render_template("othercase.html", case=get_other_case(uuid))
+
 
 @app.route("/vuln/<vulntype>")
 def vuln(vulntype):
