@@ -9,7 +9,7 @@
     </header>
     <div class="card-content">
         {% for vulntype in case["vulntypes"] %}
-        <a href="vuln/{{ vulntype }}"><span class="tag is-danger is-light">{{ vulntype }}</span></a>
+        <a href="/vuln/{{ vulntype }}"><span class="tag is-danger is-light">{{ vulntype }}</span></a>
         {% endfor %}
         <hr>
         <div class="content">
