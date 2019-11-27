@@ -15,7 +15,7 @@ def get_vulns():
 @app.route("/")
 def index():
     def get_top():
-        cases = json.loads(requests.get(api_url.format(""), params={"length": 2}).text)
+        cases = json.loads(requests.get(api_url.format(""), params={"length": 10}).text)
         return cases
 
     return render_template("index.html", cases=get_top(), 
