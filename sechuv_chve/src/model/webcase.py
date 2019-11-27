@@ -7,5 +7,5 @@ from model.webspec import WebSpec
 class WebCase(TypedDict):
     uuid: str
     post_date: str
-    vulns: List[Vulnerability]
+    vulntypes: List[str]
     spec: WebSpec

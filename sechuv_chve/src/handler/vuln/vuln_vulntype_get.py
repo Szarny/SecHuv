@@ -19,32 +19,22 @@ def validation(db: TinyDB, vulntype: str) -> Tuple[bool, str]:
         return (False, "Not found.")
 
 
-def handle(db: Dict[str, TinyDB], length: int, vulntype: str) -> Dict[str, Any]:
+def handle(db: Dict[str, TinyDB], length: int, vulntype: str) -> Dict[str, Union[List[WebCase], List[MailCase], List[OtherCase]]]:
     query: Query = Query()
     
-    vulnerability: Vulnerability = db["vulnerability"].search(query.vulntype == vulntype)[0]
-    web_cases: List[WebCase] = db["web"].search(query.vulns.vulntype.any(vulntype))
-    mail_cases: List[MailCase] = db["mail"].search(query.vulns.vulntype.any(vulntype))
-    other_cases: List[OtherCase] = db["other"].search(query.vulns.vulntype.any(vulntype))
+    web_cases: List[WebCase] = db["web"].search(query.vulntypes.any([vulntype]))
+    mail_cases: List[MailCase] = db["mail"].search(query.vulntypes.any([vulntype]))
+    other_cases: List[OtherCase] = db["other"].search(query.vulntypes.any([vulntype]))
 
-    result: Dict[str, Any]
     if length == -1:
-        result = {
-            "vulnerability": vulnerability,
-            "cases": {
-                "web": web_cases,
-                "mail": mail_cases,
-                "other": other_cases
-            }
+        return {
+            "web": web_cases,
+            "mail": mail_cases,
+            "other": other_cases
         }
     else:
-        result = {
-            "vulnerability": vulnerability,
-            "cases": {
-                "web": web_cases[:length],
-                "mail": mail_cases[:length],
-                "other": other_cases[:length]
-            }
+        return {
+            "web": web_cases[:length],
+            "mail": mail_cases[:length],
+            "other": other_cases[:length]
         }
-        
-    return result

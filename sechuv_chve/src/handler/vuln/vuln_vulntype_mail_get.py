@@ -17,23 +17,12 @@ def validation(db: TinyDB, vulntype: str) -> Tuple[bool, str]:
         return (False, "Not found.")
 
 
-def handle(db: Dict[str, TinyDB], length: int, vulntype: str) -> Dict[str, Union[Vulnerability, List[MailCase]]]:
+def handle(db: Dict[str, TinyDB], length: int, vulntype: str) -> List[MailCase]:
     query: Query = Query()
     
-    vulnerability: Vulnerability = db["vulnerability"].search(query.vulntype == vulntype)[0]
     mail_cases: List[MailCase] = db["mail"].search(query.vulns.vulntype.any(vulntype))
 
-    result: Dict[str, Union[Vulnerability, List[MailCase]]]
-
     if length == -1:
-        result = {
-            "vulnerability": vulnerability,
-            "cases": mail_cases
-        }
+        return mail_cases
     else:
-        result = {
-            "vulnerability": vulnerability,
-            "cases": mail_cases[:length]
-        }
-
-    return result
+        return mail_cases[:length]

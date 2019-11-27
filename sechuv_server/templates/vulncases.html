@@ -4,6 +4,7 @@
     <div class="column is-8">
         <div class="card">
             <header class="card-header has-text-centered">
+                <hr>
                 <p class="card-header-title is-centered">
                     {{ vuln["vulnname"] }}
                 </p>
@@ -14,6 +15,7 @@
                 </div>
             </div>
         </div>
+        <hr>
 
         {% for case in cases["web"] %}
         <div class="card">
@@ -26,6 +28,10 @@
                 </time>
             </header>
             <div class="card-content">
+                    {% for vulntype in case["vulntypes"] %}
+                    <a href="vuln/{{ vulntype }}"><span class="tag is-danger is-light">{{ vulntype }}</span></a>
+                    {% endfor %}
+                    <hr>
                 <div class="content">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
                 </div>
@@ -47,6 +53,10 @@
                 </time>
             </header>
             <div class="card-content">
+                    {% for vulntype in case["vulntypes"] %}
+                    <a href="vuln/{{ vulntype }}"><span class="tag is-danger is-light">{{ vulntype }}</span></a>
+                    {% endfor %}
+                    <hr>
                 <div class="content">
                     {{ case["spec"]["raw_body"] }}
                 </div>
@@ -68,6 +78,10 @@
                 </time>
             </header>
             <div class="card-content">
+                    {% for vulntype in case["vulntypes"] %}
+                    <a href="vuln/{{ vulntype }}"><span class="tag is-danger is-light">{{ vulntype }}</span></a>
+                    {% endfor %}
+                    <hr>
                 <div class="content">
                     {{ case["spec"]["payload"] }}
                 </div>

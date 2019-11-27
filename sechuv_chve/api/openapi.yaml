@@ -960,10 +960,10 @@ components:
         post_date:
           type: string
           format: yyyymmddhhmmss
-        vulns:
+        vulntypes:
           type: array
           items:
-            $ref: '#/components/schemas/Vulnerability'
+            type: string
         spec:
           $ref: '#/components/schemas/WebSpec'
     WebCasePost:
@@ -1006,10 +1006,10 @@ components:
         post_date:
           type: string
           format: yyyymmddhhmmss
-        vulns:
+        vulntypes:
           type: array
           items:
-            $ref: '#/components/schemas/Vulnerability'
+            type: string
         spec:
           $ref: '#/components/schemas/MailSpec'
     MailCasePost:
@@ -1080,10 +1080,10 @@ components:
         post_date:
           type: string
           format: yyyymmddhhmmss
-        vulns:
+        vulntypes:
           type: array
           items:
-            $ref: '#/components/schemas/Vulnerability'
+            type: string
         spec:
           $ref: '#/components/schemas/OtherSpec'
     OtherCasePost:

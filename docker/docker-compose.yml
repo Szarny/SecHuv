@@ -32,4 +32,10 @@ services:
     volumes:
       - ../sechuv_chve/api/openapi.json:/openapi.json
     environment:
-      SWAGGER_JSON: /openapi.json
+      SWAGGER_JSON: "/openapi.json"
+  
+  swagger-editor:
+    image: swaggerapi/swagger-editor
+    container_name: "swagger-editor"
+    ports:
+      - "5001:8080"

@@ -1561,10 +1561,10 @@
             "type": "string",
             "format": "yyyymmddhhmmss"
           },
-          "vulns": {
+          "vulntypes": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Vulnerability"
+              "type": "string"
             }
           },
           "spec": {
@@ -1630,10 +1630,10 @@
             "type": "string",
             "format": "yyyymmddhhmmss"
           },
-          "vulns": {
+          "vulntypes": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Vulnerability"
+              "type": "string"
             }
           },
           "spec": {
@@ -1734,10 +1734,10 @@
             "type": "string",
             "format": "yyyymmddhhmmss"
           },
-          "vulns": {
+          "vulntypes": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Vulnerability"
+              "type": "string"
             }
           },
           "spec": {

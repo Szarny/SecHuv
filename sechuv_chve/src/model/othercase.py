@@ -7,5 +7,5 @@ from model.otherspec import OtherSpec
 class OtherCase(TypedDict):
     uuid: str
     post_date: str
-    vulns: List[Vulnerability]
+    vulntypes: List[str]
     spec: OtherSpec

@@ -7,5 +7,5 @@ from model.mailspec import MailSpec
 class MailCase(TypedDict):
     uuid: str
     post_date: str
-    vulns: List[Vulnerability]
+    vulntypes: List[str]
     spec: MailSpec

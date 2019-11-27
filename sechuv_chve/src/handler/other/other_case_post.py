@@ -18,8 +18,7 @@ def handle(db: Dict[str, TinyDB], other_case_post: OtherCasePost) -> Tuple[bool,
     post_date: str = util.datetime.get_current()
 
     ok: bool
-    vulns: List[Vulnerability]
-    ok, vulns = util.vulnmapper.map_vulntype_to_vuln(db=db, vulntypes=other_case_post["vulntypes"])
+    ok = util.vulnchecker.check_corresponding_vuln(db=db, vulntypes=other_case_post["vulntypes"])
 
     if not ok:
         return (False, {})
@@ -27,7 +26,7 @@ def handle(db: Dict[str, TinyDB], other_case_post: OtherCasePost) -> Tuple[bool,
     otehr_case: OtherCase = {
         "uuid": uuid,
         "post_date": post_date,
-        "vulns": vulns,
+        "vulntypes": other_case_post["vulntypes"],
         "spec": other_case_post["spec"]
     }
 

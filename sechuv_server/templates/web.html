@@ -12,8 +12,8 @@
                 </time>
             </header>
             <div class="card-content">
-                    {% for vuln in case["vulns"] %}
-                    <a href="vuln/{{ vuln['vulntype'] }}"><span class="tag is-danger is-light">{{ vuln["vulnname"] }}</span></a>
+                    {% for vulntype in case["vulntypes"] %}
+                    <a href="vuln/{{ vulntype }}"><span class="tag is-danger is-light">{{ vulntype }}</span></a>
                     {% endfor %}
                     <hr>
                 <div class="content">

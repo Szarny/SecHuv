@@ -3,6 +3,7 @@ import requests
 import json
 
 app = Flask(__name__)
+app.data = {}
 api_url = "http://api_server:8080/{}"
 
 
@@ -18,7 +19,7 @@ def index():
         return cases
 
     return render_template("index.html", cases=get_top(), 
-                                         vulns=get_vulns())
+                                         vulns=app.data["vulns"])
 
 
 @app.route("/about")
@@ -33,7 +34,7 @@ def web():
         return cases
 
     return render_template("web.html", cases=get_web_cases(), 
-                                         vulns=get_vulns())
+                                         vulns=app.data["vulns"])
 
 
 @app.route("/web/<uuid>")
@@ -42,7 +43,8 @@ def web_case(uuid):
         case = json.loads(requests.get(api_url.format("case"), params={"uuid": uuid, "kind": "web", "is_valid": "false"}).text)
         return case
 
-    return render_template("webcase.html", case=get_web_case(uuid))
+    return render_template("webcase.html", case=get_web_case(uuid), 
+                                         vulns=app.data["vulns"])
 
 
 @app.route("/mail")
@@ -52,7 +54,7 @@ def mail():
         return cases
 
     return render_template("mail.html", cases=get_mail_cases(), 
-                                         vulns=get_vulns())
+                                         vulns=app.data["vulns"])
 
 
 @app.route("/mail/<uuid>")
@@ -61,7 +63,8 @@ def mail_case(uuid):
         case = json.loads(requests.get(api_url.format("case"), params={"uuid": uuid, "kind": "mail", "is_valid": "false"}).text)
         return case
 
-    return render_template("mailcase.html", case=get_mail_case(uuid))
+    return render_template("mailcase.html", case=get_mail_case(uuid), 
+                                         vulns=app.data["vulns"])
 
 
 @app.route("/other")
@@ -71,7 +74,7 @@ def other():
         return cases
 
     return render_template("other.html", cases=get_other_cases(), 
-                                         vulns=get_vulns())
+                                         vulns=app.data["vulns"])
 
 
 @app.route("/other/<uuid>")
@@ -80,23 +83,11 @@ def other_case(uuid):
         case = json.loads(requests.get(api_url.format("case"), params={"uuid": uuid, "kind": "other", "is_valid": "false"}).text)
         return case
 
-    return render_template("othercase.html", case=get_other_case(uuid))
+    return render_template("othercase.html", case=get_other_case(uuid), 
+                                         vulns=app.data["vulns"])
 
 
 @app.route("/vuln/<vulntype>")
-def vuln(vulntype):
-    def get_vuln(vulntype):
-        vulns = json.loads(requests.get(api_url.format("vuln")).text)
-
-        for vuln in vulns:
-            if vuln["vulntype"] == vulntype:
-                return vuln
-
-    return render_template("vuln.html", vuln=get_vuln(vulntype),
-                                        vulns=get_vulns())
-
-
-@app.route("/vuln/<vulntype>/cases")
 def vuln_cases(vulntype):
     def get_vuln(vulntype):
         vulns = json.loads(requests.get(api_url.format("vuln")).text)
@@ -110,8 +101,9 @@ def vuln_cases(vulntype):
         return cases
 
     return render_template("vulncases.html", vuln=get_vuln(vulntype),
+                                             vulns=app.data["vulns"],
                                              cases=get_cases(vulntype))
 
                             
-
+app.data["vulns"] = get_vulns()
 app.run(host="0.0.0.0", port=8000)
