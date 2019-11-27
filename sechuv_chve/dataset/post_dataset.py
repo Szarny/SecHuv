@@ -6,7 +6,7 @@ import json
 URL = "http://localhost:8080/{}"
 
 def main():
-    directories = ["web", "mail", "other", "vuln"]
+    directories = ["vuln", "web", "mail", "other"]
 
     for directory in directories:
         files = glob.glob("{}/*".format(directory))

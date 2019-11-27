@@ -1,5 +1,5 @@
 {
-    "vulntypes": [""],
+    "vulntypes": ["fake_security_alert"],
     "spec": {
         "from_addr": "amazon@amzsszon.com",
         "spf_status": "none",

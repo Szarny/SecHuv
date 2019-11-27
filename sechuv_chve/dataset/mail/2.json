@@ -1,5 +1,5 @@
 {
-    "vulntypes": [""],
+    "vulntypes": ["fake_security_alert", "urgent"],
     "spec": {
         "from_addr": "s02@eagerimari.boyfriend.jp",
         "spf_status": "pass",

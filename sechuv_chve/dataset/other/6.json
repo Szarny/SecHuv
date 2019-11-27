@@ -1,5 +1,5 @@
 {
-    "vulntypes": [""],
+    "vulntypes": ["profit", "scarcity", "urgent"],
     "spec": {
         "media": "SMS",
         "metadata": "",

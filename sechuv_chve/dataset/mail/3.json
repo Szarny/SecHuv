@@ -1,5 +1,5 @@
 {
-    "vulntypes": [""],
+    "vulntypes": ["fake_security_alert", "urgent"],
     "spec": {
         "from_addr": "gayahk@rpp.co",
         "spf_status": "none",

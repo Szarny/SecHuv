@@ -40,9 +40,7 @@
         {% for case in cases["mail"] %}
         <div class="card">
             <header class="card-header">
-                <p class="card-header-title">
-                    <span
-                        class="tag is-info">Mail</span>{{ case["spec"]["subject"] if case["spec"]["subject"] else "No Subject" }}
+                <p class="card-header-title">{{ case["spec"]["subject"] if case["spec"]["subject"] else "No Subject" }}
                 </p>
                 <time class="card-header-icon">
                     {{ "{}/{}/{} {}:{}:{}".format(case["post_date"][0:4], case["post_date"][4:6], case["post_date"][6:8], case["post_date"][8:10], case["post_date"][10:12], case["post_date"][12:14]) }}
@@ -63,9 +61,7 @@
         {% for case in cases["other"] %}
         <div class="card">
             <header class="card-header">
-                <p class="card-header-title">
-                    <span
-                        class="tag is-info">Other</span>{{ case["spec"]["metadata"] if case["spec"]["metadata"] else "No Title" }}
+                <p class="card-header-title">{{ case["spec"]["metadata"] if case["spec"]["metadata"] else "No Title" }}
                 </p>
                 <time class="card-header-icon">
                     {{ "{}/{}/{} {}:{}:{}".format(case["post_date"][0:4], case["post_date"][4:6], case["post_date"][6:8], case["post_date"][8:10], case["post_date"][10:12], case["post_date"][12:14]) }}

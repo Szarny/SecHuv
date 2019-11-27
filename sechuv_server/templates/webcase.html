@@ -4,14 +4,17 @@
     <div class="column is-8">
         <div class="card">
             <header class="card-header">
-                <p class="card-header-title">
-                    <span class="tag is-info">Web</span>{{ case["spec"]["url"] }}
+                <p class="card-header-title">{{ case["spec"]["url"] }}
                 </p>
                 <time class="card-header-icon">
                     {{ "{}/{}/{} {}:{}:{}".format(case["post_date"][0:4], case["post_date"][4:6], case["post_date"][6:8], case["post_date"][8:10], case["post_date"][10:12], case["post_date"][12:14]) }}
                 </time>
             </header>
             <div class="card-content">
+                    {% for vuln in case["vulns"] %}
+                    <a href="vuln/{{ vuln['vulntype'] }}"><span class="tag is-danger is-light">{{ vuln["vulnname"] }}</span></a>
+                    {% endfor %}
+                    <hr>
                 <div class="content">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
                 </div>

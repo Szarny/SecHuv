@@ -1,5 +1,5 @@
 {
-    "vulntypes": [""],
+    "vulntypes": ["fake_security_alert"],
     "spec": {
         "from_addr": "laptoprusak27@temangatoraw.com",
         "spf_status": "none",
