@@ -7,6 +7,7 @@
     <title>SecHuv</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 
 <body>
@@ -20,7 +21,7 @@
                         </a>
                     </div>
                     <div id="navbarMenuHeroB" class="navbar-menu">
-                        <div class="navbar-end">
+                        <div class="navbar">
                             <a class="navbar-item" href="/">
                                 Home
                             </a>
@@ -44,13 +45,22 @@
                                 </a>
                                 <div class="navbar-dropdown">
                                     {%  for vuln in vulns %}
-                                    <a class="navbar-item" href="/vuln/{{ vuln['vulntype'] }}">{{ vuln["vulnname"] }}</a>
+                                    <a class="navbar-item"
+                                        href="/vuln/{{ vuln['vulntype'] }}">{{ vuln["vulnname"] }}</a>
                                     {% endfor %}
                                 </div>
                             </div>
                         </div>
+                        <div class="navbar-end">
+                            <div class="navbar-item">
+                                <div class="buttons">
+                                    <a class="button is-danger" href="/heart">
+                                        <strong>SecHuv:Heart</strong>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
             </nav>
         </div>
 
@@ -70,7 +80,7 @@
 
     {% block content %}
     {% endblock %}
-    
+
 </body>
 
 </html>
