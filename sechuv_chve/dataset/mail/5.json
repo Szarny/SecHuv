@@ -1,0 +1,13 @@
+{
+    "vulntypes": ["fake_security_alert"],
+    "spec": {
+        "from_addr": "amazon@amzsszon.com",
+        "spf_status": "none",
+        "dkim_status": "neutral",
+        "is_html": "false",
+        "subject": "ここでお支払い情報を更新してください。 ",
+        "body": "",
+        "raw_body": "amazon.comをご利用いただきありがとうございます。 Amazonの通常のフライトサービス（製品名：「AmazonBasics Volume Limited On-Ear Headphones for Kids-Blue business」）で注文した注文については、指定されたクレジットカードの有効期限が間もなく切れることをお知らせします。 以下のURLで登録済みのクレジットカード情報を確認してください。個人情報を更新する 代引きも選択できます。代金引換を選択した場合、発送ごとに2.8564ドル（税込）の送料が請求されます。 クレジットカード情報は、次の方法で変更できます。    1.「一般的な特急エクスプレス」リストから該当する注文を確認します。    2. [受信者のアドレス]リンクをクリックします    3. [お支払い方法]の右側にある[変更]をクリックします    4.クレジットカード情報を確認し、入力するか選択して変更します このメールアドレスは送信専用です。ご質問がある場合は、次のURLのカスタマーサービスにご連絡ください。 https://www.amazon.com/gp/css/contact-us-access  Amazon.comのご利用をお待ちしております。再び",
+        "webcase_ptrs": []
+    }
+}
