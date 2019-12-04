@@ -150,7 +150,6 @@ def web_valid_post():
 
 @app.route("/web/check", methods=["POST"])
 def web_check_post():
-    print(request.json)
     web_spec: WebSpec = request.json
 
     result: List[Dict[str, str]] = []

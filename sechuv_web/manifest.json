@@ -1,0 +1,30 @@
+{
+    "manifest_version": 2,
+    "name": "SecHuv:Web",
+    "version": "1.0.0",
+    "description": "Security Hub for Human-vulnerabilities.",
+    "author": "Tsubasa Umeuchi",
+
+    "browser_action": {
+        "default_icon": "static/sechuv_web_icon.png",
+        "default_title": "Popup Window",
+        "default_popup": "ui/popup.html"
+    },
+
+    "background": {
+        "scripts": [
+            "js/background.js"
+        ]
+    },
+
+    "content_scripts": [{
+        "matches": ["http://*/*", "https://*/*"],
+        "js": ["js/content.js"],
+        "run_at": "document_end"
+    }],
+
+    "permissions": [
+        "tabs",
+        "activeTab"
+    ]
+}
