@@ -74,30 +74,30 @@ other_spec = {
     "payload": "string"
 }
 
-# requests.post("http://127.0.0.1:5000/vuln", 
-#               data=json.dumps(vuln1),
-#               headers={'content-type': 'application/json'})
-
-# requests.post("http://127.0.0.1:5000/vuln", 
-#               data=json.dumps(vuln2),
-#               headers={'content-type': 'application/json'})
-
-# requests.post("http://127.0.0.1:5000/web/case", 
-#               data=json.dumps(web_case_post),
-#               headers={'content-type': 'application/json'})
-# requests.post("http://127.0.0.1:5000/mail/case", 
-#               data=json.dumps(mail_case_post),
-#               headers={'content-type': 'application/json'})
-# requests.post("http://127.0.0.1:5000/other/case", 
-#               data=json.dumps(other_case_post),
-#               headers={'content-type': 'application/json'})
-
-requests.post("http://127.0.0.1:5000/web/valid", 
-              data=json.dumps(web_spec),
+requests.post("http://127.0.0.1:8080/vuln", 
+              data=json.dumps(vuln1),
               headers={'content-type': 'application/json'})
-requests.post("http://127.0.0.1:5000/mail/valid", 
-              data=json.dumps(mail_spec),
+
+requests.post("http://127.0.0.1:8080/vuln", 
+              data=json.dumps(vuln2),
               headers={'content-type': 'application/json'})
-requests.post("http://127.0.0.1:5000/other/valid", 
-              data=json.dumps(other_spec),
+
+requests.post("http://127.0.0.1:8080/web/case", 
+              data=json.dumps(web_case_post),
               headers={'content-type': 'application/json'})
+requests.post("http://127.0.0.1:8080/mail/case", 
+              data=json.dumps(mail_case_post),
+              headers={'content-type': 'application/json'})
+requests.post("http://127.0.0.1:8080/other/case", 
+              data=json.dumps(other_case_post),
+              headers={'content-type': 'application/json'})
+
+# requests.post("http://127.0.0.1:8080/web/valid", 
+#               data=json.dumps(web_spec),
+#               headers={'content-type': 'application/json'})
+# requests.post("http://127.0.0.1:8080/mail/valid", 
+#               data=json.dumps(mail_spec),
+#               headers={'content-type': 'application/json'})
+# requests.post("http://127.0.0.1:8080/other/valid", 
+#               data=json.dumps(other_spec),
+#               headers={'content-type': 'application/json'})

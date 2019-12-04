@@ -23,6 +23,7 @@ from model.otherspec import OtherSpec
 from model.vulnerability import Vulnerability
 
 import handler
+import engine
 
 
 app: Flask = Flask(__name__)
@@ -128,6 +129,7 @@ def web_valid_get():
 
     return jsonify(web_valid_cases)
 
+
 @app.route("/web/valid", methods=["POST"])
 def web_valid_post():
     ok: bool
@@ -148,7 +150,20 @@ def web_valid_post():
 
 @app.route("/web/check", methods=["POST"])
 def web_check_post():
-    web_spec: WebSpec = json.loads(request.json)
+    print(request.json)
+    web_spec: WebSpec = request.json
+
+    result: List[Dict[str, str]] = []
+
+    # fake_urlの検査
+    is_detect, message = engine.fake_url.check(web_spec["url"])
+    if is_detect:
+        result.append({
+            "vulntype": "fake_url",
+            "message": message
+        })
+
+    return jsonify(result)
     
 
 # mail
@@ -265,6 +280,8 @@ def other_valid_post():
 @app.route("/other/check", methods=["POST"])
 def other_check_post():
     other_spec: OtherSpec = json.loads(request.json)
+
+    
 
 
 # vuln

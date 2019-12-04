@@ -103,7 +103,6 @@ def show_welcome() -> None:
  ___) |  __/ (__|  _  | |_| |\ V / _| |  | | (_| | | |
 |____/ \___|\___|_| |_|\__,_| \_/ (_)_|  |_|\__,_|_|_|
 =======================================================
-
 """)
     console.info("SecHuv:Mailを起動しました")
 
@@ -112,6 +111,7 @@ def main() -> None:
     show_welcome()
 
     mail = MailParser("input/example.eml")
+    # print(mail.summarize)
 
 if __name__ == '__main__':
     main()
