@@ -54,7 +54,7 @@ def parse_url_to_longest_section(url: str) -> str:
     e.g. http://www.foobar.com/baz?qux=qux -> (foobar, foobar.com)
     """
 
-    netloc: str = urlparse(url).netloc
+    netloc: str = urlparse(url).netloc if "://" in url else url
     splitted_netloc: List[str] = netloc.split(".")
     longest_section_index: int = splitted_netloc.index(sorted(splitted_netloc, key=lambda e: len(e), reverse=True)[0])
 
@@ -65,9 +65,9 @@ def parse_url_to_longest_section(url: str) -> str:
 def check(url: str) -> Tuple[bool, str]:
     global g
 
-    with open("/project/engine/data/top_domains.pickle", "rb") as f:
+    with open("/project/engine/core/data/top_domains.pickle", "rb") as f:
         g["top_domains"] = pickle.load(f)
-    with open("/project/engine/data/top_longest_sections.pickle", "rb") as f:
+    with open("/project/engine/core/data/top_longest_sections.pickle", "rb") as f:
         g["top_longest_sections"] = pickle.load(f)
 
     longest_section, domain_after_longest_section = parse_url_to_longest_section(url)
@@ -80,8 +80,12 @@ def check(url: str) -> Tuple[bool, str]:
 
     if typosquatting_domain == "" and combosquatting_domain == "":
         return False, ""
-    else:
-        return True, "Typosquatting:{} Combosquatting:{}".format(typosquatting_domain, combosquatting_domain)
+    
+    if combosquatting_domain != "":
+        return True, "Combosquatting:{}".format(combosquatting_domain)
+    if typosquatting_domain != "":
+        return True, "Typosquatting:{}".format(typosquatting_domain)
+
 
 
 if __name__ == '__main__':
