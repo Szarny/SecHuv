@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <title>Popup Window</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <div class="columns">
+        <div class="column">
+            <div class="field">
+                <div class="control">
+                    <input class="input" id="url_input" type="text" placeholder="http://example.com">
+                </div>
+                <br>
+                <div class="control">
+                    <button id="current_url_button" class="button is-info">Use Current URL</button>
+                    <button id="check_button" class="button is-success">Check</button>
+                </div>
+            </div>
+            
+            <p>Result</p>
+            <pre id="result"></pre>
+
+            <!-- hidden -->
+            <input type="hidden" id="body_innerHTML">
+            <input type="hidden" id="body_outerHTML">
+        </div>
+    </div>
+
+    <script src="../js/jquery.js"></script>
+    <script src="../js/popup.js"></script>
+</body>
+
+</html>

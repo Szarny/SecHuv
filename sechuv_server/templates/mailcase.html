@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="columns is-centered">
+    <div class="column is-8">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">{{ case["spec"]["subject"] if case["spec"]["subject"] else "No Subject" }}
+                </p>
+                <time class="card-header-icon">
+                    {{ "{}/{}/{} {}:{}:{}".format(case["post_date"][0:4], case["post_date"][4:6], case["post_date"][6:8], case["post_date"][8:10], case["post_date"][10:12], case["post_date"][12:14]) }}
+                </time>
+            </header>
+            <div class="card-content">
+                    {% for vulntype in case["vulntypes"] %}
+                    <a href="/vuln/{{ vulntype }}"><span class="tag is-danger is-light">{{ vulntype }}</span></a>
+                    {% endfor %}
+                    <hr>
+                <div class="content">
+                    <table class="table is-fullwidth">
+                        <thead>
+                            <tr>
+                                <th>項目</th>
+                                <th>内容</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>From Address</td>
+                                <td>{{ case["spec"]["from_addr"] }}</td>
+                            </tr>
+                            <tr>
+                                <td>SPF Status</td>
+                                <td>{{ case["spec"]["spf_status"] }}</td>
+                            </tr>
+                            <tr>
+                                <td>DKIM Status</td>
+                                <td>{{ case["spec"]["dkim_status"] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Subject</td>
+                                <td>{{ case["spec"]["subject"] }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr>
+                    <p>{{ case["spec"]["raw_body"] }}</p>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+</div>
+
+{% endblock %}

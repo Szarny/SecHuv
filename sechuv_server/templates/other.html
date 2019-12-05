@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="columns is-centered">
+    <div class="column is-8">
+        {% for case in cases %}
+            {% include "other_item.html" %}
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
