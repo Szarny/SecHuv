@@ -16,7 +16,7 @@ const check = () => {
     fetch(url, {method, headers, body}).then(res => {
         return res.json()
     }).then(json => {
-        alert(JSON.stringify(json));
+        $("#result").text(JSON.stringify(json));
     })
 }
 
