@@ -82,9 +82,9 @@ def check(url: str) -> Tuple[bool, str]:
         return False, ""
     
     if combosquatting_domain != "":
-        return True, "Combosquatting:{}".format(combosquatting_domain)
+        return True, "Combosquatting:{} ({})".format(url, combosquatting_domain)
     if typosquatting_domain != "":
-        return True, "Typosquatting:{}".format(typosquatting_domain)
+        return True, "Typosquatting:{} ({})".format(url, typosquatting_domain)
 
 
 
