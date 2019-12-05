@@ -1,5 +1,3 @@
-import json
-
 from flask import Flask, jsonify, request, abort
 from typing import Optional, Dict, List, Tuple, Union, Any
 
@@ -152,16 +150,8 @@ def web_valid_post():
 def web_check_post():
     web_spec: WebSpec = request.json
 
-    result: List[Dict[str, str]] = []
-
-    # fake_urlの検査
-    is_detect, message = engine.fake_url.check(web_spec["url"])
-    if is_detect:
-        result.append({
-            "vulntype": "fake_url",
-            "message": message
-        })
-
+    result: List[Dict[str, str]] = engine.web_engine.run(web_spec=web_spec)
+    
     return jsonify(result)
     
 
@@ -220,7 +210,12 @@ def mail_valid_post():
 
 @app.route("/mail/check", methods=["POST"])
 def mail_check_post():
-    mail_spec: MailSpec = json.loads(request.json)
+    mail_spec: MailSpec = request.json
+
+    result: List[Dict[str, str]] = engine.mail_engine.run(mail_spec=mail_spec)
+
+    return jsonify(result)
+
 
 
 # other
@@ -278,9 +273,12 @@ def other_valid_post():
 
 @app.route("/other/check", methods=["POST"])
 def other_check_post():
-    other_spec: OtherSpec = json.loads(request.json)
+    other_spec: OtherSpec = request.json
 
-    
+    result: List[Dict[str, str]] = engine.other_engine.run(other_spec=other_spec)
+
+    return jsonify(result)
+
 
 
 # vuln
