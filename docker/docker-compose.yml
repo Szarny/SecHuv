@@ -7,6 +7,7 @@ services:
       - "8080:8080"
     environment:
       FLASK_ENV: "development"
+      TZ: "Asia/Tokyo"
     volumes:
       - "../sechuv_chve/src:/project"
     command: "python3 /project/server.py"
@@ -18,6 +19,7 @@ services:
       - "8000:8000"
     environment:
       FLASK_ENV: "development"
+      TZ: "Asia/Tokyo"
     volumes:
       - "../sechuv_server:/project"
     command: "python3 /project/server.py"
