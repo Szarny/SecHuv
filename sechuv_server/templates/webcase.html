@@ -16,7 +16,8 @@
                     {% endfor %}
                     <hr>
                 <div class="content">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
+                    <img src="data:image/png;base64,{{ case['spec']['screenshot'] }}" style="border: 1px solid gray" />
+                    {{ case["spec"]["body"] }}
                 </div>
             </div>
         </div>

@@ -23,6 +23,13 @@ def handle(db: Dict[str, TinyDB], web_case_post: WebCasePost) -> Tuple[bool, Dic
     if not ok:
         return (False, {})
 
+    ok, screenshot = util.screenshot.take_screenshot(web_case_post["spec"]["url"])
+
+    if not ok:
+        return (False, {})
+    
+    web_case_post["spec"]["screenshot"] = screenshot
+
     web_case: WebCase = {
         "uuid": uuid,
         "post_date": post_date,

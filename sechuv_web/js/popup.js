@@ -2,8 +2,7 @@ const check = () => {
     const webspec = {
         url: $("#url_input").val(),
         body: $("#body_innerHTML").val(),
-        raw_body: $("#body_outerHTML").val(),
-        screenshot: ""
+        raw_body: $("#body_outerHTML").val()
     }
 
     const url = "http://localhost:8080/web/check";
