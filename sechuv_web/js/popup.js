@@ -1,10 +1,33 @@
+const configureUI = checkResult => {
+    if (checkResult.length === 0) {
+        $("#result").html(`<span class="tag is-success is-medium">人的脆弱性は検出されませんでした。</span>`);
+        $("#report_button").prop("disabled", true);
+        return;
+    }
+
+    window.alert(`${checkResult.length}件の人的脆弱性が検出されました。`)
+    $("#report_button").prop("disabled", false);
+    for (let vuln of checkResult) {
+        $("#result").html(`<button class="tag is-danger is-medium" id="tag-${vuln.vulntype}">${vuln.vulntype}</button>`);
+        $(`#tag-${vuln.vulntype}`).on("click", {
+            url: `http://localhost:8000/vuln/${vuln.vulntype}`
+        }, e => {
+            chrome.windows.create({
+                url: e.data.url
+            });
+        });
+    }
+}
+
 const check = () => {
+    $("#result").html(`<progress class="progress is-small is-primary" max="100">15%</progress>`);
+
     const webspec = {
         url: $("#url_input").val(),
         body: $("#body_innerHTML").val(),
         raw_body: $("#body_outerHTML").val(),
         screenshot: ""
-    }
+    };
 
     const url = "http://localhost:8080/web/check";
     const method = "POST";
@@ -13,10 +36,14 @@ const check = () => {
     };
     const body = JSON.stringify(webspec);
 
-    fetch(url, {method, headers, body}).then(res => {
-        return res.json()
+    fetch(url, {
+        method,
+        headers,
+        body
+    }).then(res => {
+        return res.json();
     }).then(json => {
-        $("#result").text(JSON.stringify(json));
+        configureUI(json);
     })
 }
 
