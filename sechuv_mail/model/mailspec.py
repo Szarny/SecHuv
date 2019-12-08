@@ -9,4 +9,3 @@ class MailSpec(TypedDict):
     subject: str
     body: Optional[str]
     raw_body: str
-    webcase_ptrs: List[str]
