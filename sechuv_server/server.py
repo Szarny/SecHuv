@@ -109,6 +109,12 @@ def vuln_cases(vulntype):
 def heart():
     return render_template("heart.html", vulns=app.data["vulns"])
 
+
+@app.route("/update")
+def update():
+    app.data["vulns"] = get_vulns()
+    return redirect("/")
+
                             
 app.data["vulns"] = get_vulns()
 app.run(host="0.0.0.0", port=8000)
