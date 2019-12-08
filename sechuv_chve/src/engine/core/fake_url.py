@@ -81,8 +81,10 @@ def check(url: str) -> Tuple[bool, str]:
     if typosquatting_domain == "" and combosquatting_domain == "":
         return False, ""
     
+    # Combosquattingを優先的に処理する
     if combosquatting_domain != "":
         return True, "Combosquatting:{} ({})".format(url, combosquatting_domain)
+
     if typosquatting_domain != "":
         return True, "Typosquatting:{} ({})".format(url, typosquatting_domain)
 
