@@ -22,7 +22,7 @@ const add_chat = (from, message) => {
     }
 }
 const chat_engine = () => {
-    add_chat(FROM.BOT, "ふ〜ん");
+    add_chat(FROM.BOT, "分かりました。チェックを行うので受信したメッセージ本文を送信してください。");
 }
 
 const input_chat = (e) => {
