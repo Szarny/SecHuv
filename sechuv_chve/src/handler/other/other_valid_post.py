@@ -14,7 +14,7 @@ def validation(post_data: Any) -> bool:
 
 def handle(db: Dict[str, TinyDB], other_spec: OtherSpec) -> Tuple[bool, Dict[str, str]]:
     uuid: str = util.uuid.get_uuid()
-    post_date: str = util.datetime.get_current()
+    post_date: str = util.dt.get_current()
 
     other_valid_case: OtherValidCase = {
         "uuid": uuid,

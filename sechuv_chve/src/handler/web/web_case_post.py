@@ -3,6 +3,7 @@ from tinydb import TinyDB, Query
 
 from model.webcasepost import WebCasePost
 from model.webcase import WebCase
+from model.webspec import WebSpec
 from model.vulnerability import Vulnerability
 
 import util
@@ -15,26 +16,37 @@ def validation(post_data: Any) -> bool:
 
 def handle(db: Dict[str, TinyDB], web_case_post: WebCasePost) -> Tuple[bool, Dict[str, str]]:
     uuid: str = util.uuid.get_uuid()
-    post_date: str = util.datetime.get_current()
+    post_date: str = util.dt.get_current()
 
     ok: bool
     ok = util.vulnchecker.check_corresponding_vuln(db=db, vulntypes=web_case_post["vulntypes"])
-
     if not ok:
         return (False, {})
 
-    ok, screenshot = util.screenshot.take_screenshot(web_case_post["spec"]["url"])
+    
+    ok, body, raw_body = util.html.get_html(web_case_post["spec"]["url"])
+    if not ok:
+        return (False, {})
 
+
+    ok, screenshot = util.screenshot.take_screenshot(web_case_post["spec"]["url"])
     if not ok:
         return (False, {})
     
     web_case_post["spec"]["screenshot"] = screenshot
 
+    web_spec: WebSpec = {
+        "url": web_case_post["spec"]["url"],
+        "body": body,
+        "raw_body": raw_body,
+        "screenshot": screenshot
+    }
+
     web_case: WebCase = {
         "uuid": uuid,
         "post_date": post_date,
         "vulntypes": web_case_post["vulntypes"],
-        "spec": web_case_post["spec"]
+        "spec": web_spec
     }
 
     # TODO: DB登録時のエラーハンドリングを実装する
