@@ -25,11 +25,8 @@ const configureUI = checkResult => {
 const check = () => {
     $("#result").html(`<progress class="progress is-small is-primary" max="100">15%</progress>`);
 
-    const webspec = {
-        url: $("#url_input").val(),
-        body: $("#body_html").val(),
-        raw_body: $("#body_text").val(),
-        screenshot: ""
+    const webcheck = {
+        url: $("#url_input").val()
     };
 
     const url = "http://localhost:8080/web/check";
@@ -37,7 +34,7 @@ const check = () => {
     const headers = {
         'Content-Type': 'application/json'
     };
-    const body = JSON.stringify(webspec);
+    const body = JSON.stringify(webcheck);
 
     fetch(url, {
         method,
@@ -57,27 +54,5 @@ $("#current_url_button").on("click", e => {
 })
 
 $("#check_button").on("click", e => {
-    chrome.tabs.query({
-        active: true,
-        currentWindow: true
-    }, tabs => {
-        const tab = tabs[0];
-        chrome.tabs.executeScript(tab.id, {
-            code: 'document.body.innerHTML'
-        }, result => {
-            $("#body_html").val(result);
-            chrome.tabs.query({
-                active: true,
-                currentWindow: true
-            }, tabs => {
-                const tab = tabs[0];
-                chrome.tabs.executeScript(tab.id, {
-                    code: 'document.body.innerText'
-                }, result => {
-                    $("#body_text").val(result);
-                    check();
-                });
-            });
-        });
-    });
+    check();
 })
