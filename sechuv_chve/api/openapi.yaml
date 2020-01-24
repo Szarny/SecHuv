@@ -297,7 +297,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/WebSpec'
+              $ref: '#/components/schemas/WebPostSpec'
         required: true
       responses:
         '200':
@@ -459,7 +459,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MailSpec'
+              $ref: '#/components/schemas/MailPostSpec'
         required: true
       responses:
         '200':
@@ -621,7 +621,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OtherSpec'
+              $ref: '#/components/schemas/OtherPostSpec'
         required: true
       responses:
         '200':
@@ -974,7 +974,7 @@ components:
           items:
             type: string
         spec:
-          $ref: '#/components/schemas/WebSpec'
+          $ref: '#/components/schemas/WebPostSpec'
     WebSpec:
       type: object
       properties:
@@ -997,6 +997,11 @@ components:
           format: yyyymmddhhmmss
         spec:
           $ref: '#/components/schemas/WebSpec'
+    WebPostSpec:
+      type: object
+      properties:
+        url:
+          type: string
     MailCase:
       type: object
       properties:
@@ -1020,7 +1025,7 @@ components:
           items:
             type: string
         spec:
-          $ref: '#/components/schemas/MailSpec'
+          $ref: '#/components/schemas/MailPostSpec'
     MailSpec:
       type: object
       properties:
@@ -1066,6 +1071,35 @@ components:
           format: yyyymmddhhmmss
         spec:
           $ref: '#/components/schemas/MailSpec'
+    MailPostSpec:
+      type: object
+      properties:
+        from_addr:
+          type: string
+        spf_status:
+          type: string
+          enum:
+            - none
+            - pass
+            - fail
+            - softfail
+            - neutral
+            - unknown
+        dkim_status:
+          type: string
+          enum:
+            - none
+            - neutral
+            - pass
+            - policy
+            - hardfail
+            - temperror
+            - permerror
+            - unknown
+        subject:
+          type: string
+        body:
+          type: string
     OtherCase:
       type: object
       properties:
@@ -1089,8 +1123,17 @@ components:
           items:
             type: string
         spec:
-          $ref: '#/components/schemas/OtherSpec'
+          $ref: '#/components/schemas/OtherPostSpec'
     OtherSpec:
+      type: object
+      properties:
+        media:
+          type: string
+        metadata:
+          type: string
+        payload:
+          type: string
+    OtherPostSpec:
       type: object
       properties:
         media:

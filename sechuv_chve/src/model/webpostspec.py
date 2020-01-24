@@ -1,4 +1,4 @@
 from mypy_extensions import TypedDict
 
-class WebCheck(TypedDict):
+class WebPostSpec(TypedDict):
     url: str

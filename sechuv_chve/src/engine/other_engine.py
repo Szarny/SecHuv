@@ -1,6 +1,6 @@
 from typing import List, Dict
 
-from model.othercheck import OtherCheck
+from model.otherpostspec import OtherPostSpec
 
 import util
 
@@ -19,11 +19,11 @@ def check_fake_url(url: str) -> Dict[str, str]:
         return {}
 
 
-def run(other_check: OtherSpec) -> List[Dict[str, str]]:
+def run(other_post_spec: OtherPostSpec) -> List[Dict[str, str]]:
     result: List[Dict[str, str]] = []
 
     # fake_url
-    urls: List[str] = util.url.extract(other_check["payload"])
+    urls: List[str] = util.url.extract(other_post_spec["payload"])
     for url in urls:
         fake_url_result: Dict[str, str] = check_fake_url(url)
         if fake_url_result:

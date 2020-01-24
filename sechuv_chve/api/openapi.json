@@ -479,7 +479,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/WebSpec"
+                "$ref": "#/components/schemas/WebPostSpec"
               }
             }
           },
@@ -742,7 +742,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/MailSpec"
+                "$ref": "#/components/schemas/MailPostSpec"
               }
             }
           },
@@ -1005,7 +1005,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/OtherSpec"
+                "$ref": "#/components/schemas/OtherPostSpec"
               }
             }
           },
@@ -1582,7 +1582,7 @@
             }
           },
           "spec": {
-            "$ref": "#/components/schemas/WebSpec"
+            "$ref": "#/components/schemas/WebPostSpec"
           }
         }
       },
@@ -1619,7 +1619,7 @@
           }
         }
       },
-      "WebCheck": {
+      "WebPostSpec": {
         "type": "object",
         "properties": {
           "url": {
@@ -1659,7 +1659,7 @@
             }
           },
           "spec": {
-            "$ref": "#/components/schemas/MailSpec"
+            "$ref": "#/components/schemas/MailPostSpec"
           }
         }
       },
@@ -1724,7 +1724,7 @@
           }
         }
       },
-      "MailCheck": {
+      "MailPostSpec": {
         "type": "object",
         "properties": {
           "from_addr": {
@@ -1794,7 +1794,7 @@
             }
           },
           "spec": {
-            "$ref": "#/components/schemas/OtherSpec"
+            "$ref": "#/components/schemas/OtherPostSpec"
           }
         }
       },
@@ -1812,7 +1812,7 @@
           }
         }
       },
-      "OtherCheck": {
+      "OtherPostSpec": {
         "type": "object",
         "properties": {
           "media": {
