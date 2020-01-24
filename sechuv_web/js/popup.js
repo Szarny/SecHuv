@@ -7,6 +7,7 @@ const configureUI = checkResult => {
 
     window.alert(`${checkResult.length}件の人的脆弱性が検出されました。`)
     $("#report_button").prop("disabled", false);
+    
     for (let vuln of checkResult) {
         $("#result").html(`<button class="tag is-danger is-medium" id="tag-${vuln.vulntype}">${vuln.vulntype}</button>`);
         $(`#tag-${vuln.vulntype}`).on("click", {
@@ -24,8 +25,8 @@ const check = () => {
 
     const webspec = {
         url: $("#url_input").val(),
-        body: $("#body_innerHTML").val(),
-        raw_body: $("#body_outerHTML").val(),
+        body: $("#body_html").val(),
+        raw_body: $("#body_text").val(),
         screenshot: ""
     };
 
@@ -62,16 +63,16 @@ $("#check_button").on("click", e => {
         chrome.tabs.executeScript(tab.id, {
             code: 'document.body.innerHTML'
         }, result => {
-            $("#body_innerHTML").val(result);
+            $("#body_html").val(result);
             chrome.tabs.query({
                 active: true,
                 currentWindow: true
             }, tabs => {
                 const tab = tabs[0];
                 chrome.tabs.executeScript(tab.id, {
-                    code: 'document.body.outerHTML'
+                    code: 'document.body.innerText'
                 }, result => {
-                    $("#body_outerHTML").val(result);
+                    $("#body_text").val(result);
                     check();
                 });
             });
