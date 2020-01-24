@@ -18,6 +18,8 @@ const configureUI = checkResult => {
             });
         });
     }
+
+    // TODO: 報告時の機能を実装する
 }
 
 const check = () => {
