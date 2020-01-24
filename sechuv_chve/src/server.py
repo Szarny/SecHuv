@@ -7,16 +7,19 @@ from model.webcase import WebCase
 from model.webvalidcase import WebValidCase
 from model.webcasepost import WebCasePost
 from model.webspec import WebSpec
+from model.webcheck import WebCheck
 
 from model.mailcase import MailCase
 from model.mailvalidcase import MailValidCase
 from model.mailcasepost import MailCasePost
 from model.mailspec import MailSpec
+from model.mailcheck import MailCheck
 
 from model.othercase import OtherCase
 from model.othervalidcase import OtherValidCase
 from model.othercasepost import OtherCasePost
 from model.otherspec import OtherSpec
+from model.othercheck import OtherCheck
 
 from model.vulnerability import Vulnerability
 
@@ -148,9 +151,9 @@ def web_valid_post():
 
 @app.route("/web/check", methods=["POST"])
 def web_check_post():
-    web_spec: WebSpec = request.json
+    web_check: WebCheck = request.json
 
-    result: List[Dict[str, str]] = engine.web_engine.run(web_spec=web_spec)
+    result: List[Dict[str, str]] = engine.web_engine.run(web_check=web_check)
     
     return jsonify(result)
     
@@ -210,9 +213,9 @@ def mail_valid_post():
 
 @app.route("/mail/check", methods=["POST"])
 def mail_check_post():
-    mail_spec: MailSpec = request.json
+    mail_check: MailCheck = request.json
 
-    result: List[Dict[str, str]] = engine.mail_engine.run(mail_spec=mail_spec)
+    result: List[Dict[str, str]] = engine.mail_engine.run(mail_check=mail_check)
 
     return jsonify(result)
 
@@ -273,15 +276,13 @@ def other_valid_post():
 
 @app.route("/other/check", methods=["POST"])
 def other_check_post():
-    other_spec: OtherSpec = request.json
+    other_check: OtherCheck = request.json
 
-    result: List[Dict[str, str]] = engine.other_engine.run(other_spec=other_spec)
+    result: List[Dict[str, str]] = engine.other_engine.run(other_check=other_check)
 
     return jsonify(result)
 
 
-
-# vuln
 @app.route("/vuln", methods=["GET"])
 def vuln_get():
     vulnerabilities: List[Vulnerability] = handler.vuln.vuln_get.handle(db=db)

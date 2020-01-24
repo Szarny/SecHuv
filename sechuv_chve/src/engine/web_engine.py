@@ -1,11 +1,11 @@
 from typing import List, Dict
 
-from model.webspec import WebSpec
+from model.web_check import WebCheck
 
 from . import core
 
-def check_fake_url(web_spec: WebSpec) -> Dict[str, str]:
-    is_detect, message = core.fake_url.check(web_spec["url"])
+def check_fake_url(web_check: WebCheck) -> Dict[str, str]:
+    is_detect, message = core.fake_url.check(web_check["url"])
 
     if is_detect:
         return {
@@ -16,11 +16,10 @@ def check_fake_url(web_spec: WebSpec) -> Dict[str, str]:
         return {}
 
 
-def run(web_spec: WebSpec) -> List[Dict[str, str]]:
+def run(web_check: WebCheck) -> List[Dict[str, str]]:
     result: List[Dict[str, str]] = []
 
-    # fake_url
-    fake_url_result: Dict[str, str] = check_fake_url(web_spec)
+    fake_url_result: Dict[str, str] = check_fake_url(web_check)
     if fake_url_result:
         result.append(fake_url_result)
 
