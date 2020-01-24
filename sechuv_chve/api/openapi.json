@@ -1619,6 +1619,14 @@
           }
         }
       },
+      "WebCheck": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string"
+          }
+        }
+      },
       "MailCase": {
         "type": "object",
         "properties": {
@@ -1685,17 +1693,10 @@
               "unknown"
             ]
           },
-          "is_html": {
-            "type": "boolean"
-          },
           "subject": {
             "type": "string"
           },
           "body": {
-            "type": "string",
-            "description": "HTML形式の場合のみ"
-          },
-          "raw_body": {
             "type": "string"
           },
           "webcase_ptrs": {
@@ -1720,6 +1721,44 @@
           },
           "spec": {
             "$ref": "#/components/schemas/MailSpec"
+          }
+        }
+      },
+      "MailCheck": {
+        "type": "object",
+        "properties": {
+          "from_addr": {
+            "type": "string"
+          },
+          "spf_status": {
+            "type": "string",
+            "enum": [
+              "none",
+              "pass",
+              "fail",
+              "softfail",
+              "neutral",
+              "unknown"
+            ]
+          },
+          "dkim_status": {
+            "type": "string",
+            "enum": [
+              "none",
+              "neutral",
+              "pass",
+              "policy",
+              "hardfail",
+              "temperror",
+              "permerror",
+              "unknown"
+            ]
+          },
+          "subject": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
           }
         }
       },
@@ -1760,6 +1799,20 @@
         }
       },
       "OtherSpec": {
+        "type": "object",
+        "properties": {
+          "media": {
+            "type": "string"
+          },
+          "metadata": {
+            "type": "string"
+          },
+          "payload": {
+            "type": "string"
+          }
+        }
+      },
+      "OtherCheck": {
         "type": "object",
         "properties": {
           "media": {

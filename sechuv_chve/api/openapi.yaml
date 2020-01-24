@@ -1046,14 +1046,9 @@ components:
             - temperror
             - permerror
             - unknown
-        is_html:
-          type: boolean
         subject:
           type: string
         body:
-          type: string
-          description: HTML形式の場合のみ
-        raw_body:
           type: string
         webcase_ptrs:
           type: array
