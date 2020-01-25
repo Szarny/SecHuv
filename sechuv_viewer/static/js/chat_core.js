@@ -65,7 +65,7 @@ class ChatEngine {
     gen_web_url(user_input) {
         const url = user_input.match(/(https?:\/\/[\x21-\x7e]+)/);
 
-        if (url.length === 0) {
+        if (!url) {
             return "URLが検出できませんでした。お手数ですが、再度送信してください。";
         }
 
@@ -137,21 +137,23 @@ class ChatEngine {
                 break;
         }
 
+        let result;
+
         fetch(url, {
             method,
             headers,
             body
         }).then(res => {
-            return JSON.parse(res.json());
-        }).then(result => {
-            alert(result);
-        })
+            return res.text();
+        }).then(text => {
+            result = JSON.parse(text);
 
-        if (true /* 結果 */) {
-            this.gen_valid();
-        } else {
-            this.gen_vuln();
-        }
+            if (result.length === 0) {
+                this.gen_valid();
+            } else {
+                this.gen_vuln(result);
+            }
+        })
     }
 
     gen_valid() {
@@ -159,9 +161,12 @@ class ChatEngine {
         add_chat(FROM.BOT, "もし不安な点があれば、第三者に相談してみたり、<a href='/'>SecHuvの情報</a>を参考にして、慎重に行動してください。");
     }
 
-    gen_vuln() {
+    gen_vuln(result) {
         add_chat(FROM.BOT, "検査の結果、送信された内容から人的脆弱性をついた攻撃と思わしき兆候が検出されました。検出された項目は以下の通りです。");
-        // TODO: ほげほげ
+        
+        for (let vuln of result) {
+            add_chat(FROM.BOT, `${vuln.vulntype} - <a href="/vuln/${vuln.vulntype}">詳しくはこちら</a>`);
+        }
 
         switch(this.type) {
             case types.web:
