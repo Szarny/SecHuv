@@ -3,6 +3,8 @@
 # SecHuv
 Security Hub for Human-vulnerabilities.
 
+[![](http://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+
 ## システム構成
 - SecHuv
     - SecHuv:CHVE

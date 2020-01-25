@@ -1,4 +1,8 @@
+import requests
+import json
+
 from typing import List, Tuple, Optional
+
 import glob
 import re
 import email
@@ -10,8 +14,12 @@ from model.mailcase import MailCase
 from model.mailcasepost import MailCasePost
 from model.mailspec import MailSpec
 from model.mailvalidcase import MailValidCase
+from model.mailpostspec import MailPostSpec
 from model.vulnerability import Vulnerability
 
+
+check_url: str = "http://localhost:8080/mail/check"
+post_url: str = "http://localhost:8080/mail/case"
 
 class MailParser(object):
     def __init__(self, mail_file_path):
@@ -24,7 +32,7 @@ class MailParser(object):
         self.spf_status = None
         self.dkim_status = None
         self.body = ""
-        # self.attach_file_list = {}
+        self.attach_file_list = []
 
         self.parse()
 
@@ -33,12 +41,14 @@ class MailParser(object):
         self.subject = self.get_decoded_header("Subject")
         self.from_addr = self.get_decoded_header("From")
         self.parse_from_addr()
+        
         self.auth_result = self.get_decoded_header("Authentication-Results")
         self.parse_authentication_result()
 
         for part in self.email_message.walk():
             if part.get_content_maintype() == 'multipart':
                 continue
+
             attach_fname = part.get_filename()
             if not attach_fname:
                 charset = str(part.get_content_charset())
@@ -46,17 +56,21 @@ class MailParser(object):
                     self.body += part.get_payload(decode=True).decode(charset, errors="replace")
                 else:
                     self.body += part.get_payload(decode=True)
-            # else:
-            #     print(part)
-            #     self.attach_file_list.append({
-            #         "name": attach_fname,
-            #         "data": part.get_payload()
-            #     })
+            else:
+                self.attach_file_list.append({
+                    "name": decode_header(attach_fname)[0][0],
+                    "data": part.get_payload(decode=True)
+                })
 
     def parse_from_addr(self):
         self.from_addr = re.match("^.*\<(.+)\>.*$", self.from_addr).group(1)
 
     def parse_authentication_result(self):
+        if self.auth_result is None:
+            self.spf_status = "unknown"
+            self.dkim_status = "unknown"
+            return
+
         for row in self.auth_result.split("\n"):
             if self.spf_status is None and "spf=" in row:
                 self.spf_status = re.match("^.*spf=([a-z]+).*$", row).group(1)
@@ -90,8 +104,7 @@ class MailParser(object):
             "dkim_status": self.dkim_status,
             "is_html": False,
             "body": None,
-            "raw_body": self.body,
-            "webcase_ptrs": []
+            "raw_body": self.body
         }
 
 
@@ -111,7 +124,61 @@ def main() -> None:
     show_welcome()
 
     mail = MailParser("input/example.eml")
-    # print(mail.summarize)
+
+    for attach_file in mail.attach_file_list:
+        with open("attachment/{}".format(attach_file["name"].decode()), "wb") as f:
+            f.write(attach_file["data"])
+
+    console.info("メールを読み込みました")
+    print(mail.summarize())
+    print()
+
+    mail_post_spec: MailPostSpec = {
+        "from_addr": mail.from_addr,
+        "spf_status": mail.spf_status,
+        "dkim_status": mail.dkim_status,
+        "subject": mail.subject,
+        "body": mail.body
+    }
+
+    headers = {"Content-Type" : "application/json"}
+    data = json.dumps(mail_post_spec)
+    response = requests.post(check_url, data=data, headers=headers)
+
+    if response.status_code != 200:
+        console.error("メールの検査中にエラーが発生しました")
+        print(response.text)
+        exit()
+
+    vulntypes: List[str] = []
+    console.warn("本メールから、以下の人的脆弱性をついた攻撃と思わしき兆候が検出されました。")
+    for vuln in json.loads(response.text):
+        console.warn(vuln["vulntype"])
+        vulntypes.append(vuln["vulntype"])
+    
+    print()
+    is_report = console.ask("本メールを報告しますか？")
+
+    if is_report != "y" and is_report != "いいえ":
+        console.info("SecHuv:Mailを終了します")
+
+
+    mail_case_post: MailCasePost = {
+        "vulntypes": vulntypes,
+        "spec": mail_post_spec
+    }
+
+    headers = {"Content-Type" : "application/json"}
+    data = json.dumps(mail_case_post)
+    response = requests.post(post_url, data=data, headers=headers)
+
+    if response.status_code != 200:
+        console.error("報告中にエラーが発生しました")
+        print(response.text)
+        exit()
+
+    console.info("報告が完了しました。報告された情報は以下のURLで閲覧できます。")
+    console.info(f"http://localhost:8000/mail/{json.loads(response.text)['uuid']}")
 
 if __name__ == '__main__':
     main()

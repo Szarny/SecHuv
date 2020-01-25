@@ -479,7 +479,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/WebSpec"
+                "$ref": "#/components/schemas/WebPostSpec"
               }
             }
           },
@@ -742,7 +742,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/MailSpec"
+                "$ref": "#/components/schemas/MailPostSpec"
               }
             }
           },
@@ -1005,7 +1005,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/OtherSpec"
+                "$ref": "#/components/schemas/OtherPostSpec"
               }
             }
           },
@@ -1582,7 +1582,7 @@
             }
           },
           "spec": {
-            "$ref": "#/components/schemas/WebSpec"
+            "$ref": "#/components/schemas/WebPostSpec"
           }
         }
       },
@@ -1619,6 +1619,14 @@
           }
         }
       },
+      "WebPostSpec": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string"
+          }
+        }
+      },
       "MailCase": {
         "type": "object",
         "properties": {
@@ -1651,7 +1659,7 @@
             }
           },
           "spec": {
-            "$ref": "#/components/schemas/MailSpec"
+            "$ref": "#/components/schemas/MailPostSpec"
           }
         }
       },
@@ -1685,17 +1693,10 @@
               "unknown"
             ]
           },
-          "is_html": {
-            "type": "boolean"
-          },
           "subject": {
             "type": "string"
           },
           "body": {
-            "type": "string",
-            "description": "HTML形式の場合のみ"
-          },
-          "raw_body": {
             "type": "string"
           },
           "webcase_ptrs": {
@@ -1720,6 +1721,44 @@
           },
           "spec": {
             "$ref": "#/components/schemas/MailSpec"
+          }
+        }
+      },
+      "MailPostSpec": {
+        "type": "object",
+        "properties": {
+          "from_addr": {
+            "type": "string"
+          },
+          "spf_status": {
+            "type": "string",
+            "enum": [
+              "none",
+              "pass",
+              "fail",
+              "softfail",
+              "neutral",
+              "unknown"
+            ]
+          },
+          "dkim_status": {
+            "type": "string",
+            "enum": [
+              "none",
+              "neutral",
+              "pass",
+              "policy",
+              "hardfail",
+              "temperror",
+              "permerror",
+              "unknown"
+            ]
+          },
+          "subject": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
           }
         }
       },
@@ -1755,11 +1794,25 @@
             }
           },
           "spec": {
-            "$ref": "#/components/schemas/OtherSpec"
+            "$ref": "#/components/schemas/OtherPostSpec"
           }
         }
       },
       "OtherSpec": {
+        "type": "object",
+        "properties": {
+          "media": {
+            "type": "string"
+          },
+          "metadata": {
+            "type": "string"
+          },
+          "payload": {
+            "type": "string"
+          }
+        }
+      },
+      "OtherPostSpec": {
         "type": "object",
         "properties": {
           "media": {

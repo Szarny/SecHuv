@@ -1,5 +1,5 @@
  {
-    "vulntypes": ["fake_security_alert"],
+    "vulntypes": ["fake_alert"],
     "spec": {
         "media": "SMS",
         "metadata": "+852 64506814919804",

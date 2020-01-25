@@ -1,5 +1,3 @@
-import json
-
 from flask import Flask, jsonify, request, abort
 from typing import Optional, Dict, List, Tuple, Union, Any
 
@@ -9,16 +7,19 @@ from model.webcase import WebCase
 from model.webvalidcase import WebValidCase
 from model.webcasepost import WebCasePost
 from model.webspec import WebSpec
+from model.webpostspec import WebPostSpec
 
 from model.mailcase import MailCase
 from model.mailvalidcase import MailValidCase
 from model.mailcasepost import MailCasePost
 from model.mailspec import MailSpec
+from model.mailpostspec import MailPostSpec
 
 from model.othercase import OtherCase
 from model.othervalidcase import OtherValidCase
 from model.othercasepost import OtherCasePost
 from model.otherspec import OtherSpec
+from model.otherpostspec import OtherPostSpec
 
 from model.vulnerability import Vulnerability
 
@@ -150,18 +151,10 @@ def web_valid_post():
 
 @app.route("/web/check", methods=["POST"])
 def web_check_post():
-    web_spec: WebSpec = request.json
+    web_post_spec: WebPostSpec = request.json
 
-    result: List[Dict[str, str]] = []
-
-    # fake_urlの検査
-    is_detect, message = engine.fake_url.check(web_spec["url"])
-    if is_detect:
-        result.append({
-            "vulntype": "fake_url",
-            "message": message
-        })
-
+    result: List[Dict[str, str]] = engine.web_engine.run(web_post_spec=web_post_spec)
+    
     return jsonify(result)
     
 
@@ -220,7 +213,12 @@ def mail_valid_post():
 
 @app.route("/mail/check", methods=["POST"])
 def mail_check_post():
-    mail_spec: MailSpec = json.loads(request.json)
+    mail_post_spec: MailPostSpec = request.json
+
+    result: List[Dict[str, str]] = engine.mail_engine.run(mail_post_spec=mail_post_spec)
+
+    return jsonify(result)
+
 
 
 # other
@@ -278,12 +276,13 @@ def other_valid_post():
 
 @app.route("/other/check", methods=["POST"])
 def other_check_post():
-    other_spec: OtherSpec = json.loads(request.json)
+    other_post_spec: OtherPostSpec = request.json
 
-    
+    result: List[Dict[str, str]] = engine.other_engine.run(other_post_spec=other_post_spec)
+
+    return jsonify(result)
 
 
-# vuln
 @app.route("/vuln", methods=["GET"])
 def vuln_get():
     vulnerabilities: List[Vulnerability] = handler.vuln.vuln_get.handle(db=db)

@@ -15,7 +15,7 @@ def validation(post_data: Any) -> bool:
 
 def handle(db: Dict[str, TinyDB], other_case_post: OtherCasePost) -> Tuple[bool, Dict[str, str]]:
     uuid: str = util.uuid.get_uuid()
-    post_date: str = util.datetime.get_current()
+    post_date: str = util.dt.get_current()
 
     ok: bool
     ok = util.vulnchecker.check_corresponding_vuln(db=db, vulntypes=other_case_post["vulntypes"])

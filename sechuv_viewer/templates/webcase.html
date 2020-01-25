@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="columns is-centered">
+    <div class="column is-8">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">{{ case["spec"]["url"] }}
+                </p>
+                <time class="card-header-icon">
+                    {{ "{}/{}/{} {}:{}:{}".format(case["post_date"][0:4], case["post_date"][4:6], case["post_date"][6:8], case["post_date"][8:10], case["post_date"][10:12], case["post_date"][12:14]) }}
+                </time>
+            </header>
+            <div class="card-content">
+                    {% for vulntype in case["vulntypes"] %}
+                    <a href="/vuln/{{ vulntype }}"><span class="tag is-danger is-light">{{ vulntype }}</span></a>
+                    {% endfor %}
+                    <hr>
+                <div class="content">
+                    <img src="data:image/png;base64,{{ case['spec']['screenshot'] }}" style="border: 1px solid gray" />
+                    <code>
+                    {{ case["spec"]["body"] }}
+                </code>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

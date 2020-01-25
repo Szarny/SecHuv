@@ -1,3 +1,5 @@
+from typing import List
+
 import re
 
 def extract(data: str) -> List[str]:
