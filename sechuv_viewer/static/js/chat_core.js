@@ -72,18 +72,9 @@ class ChatEngine {
         this.web_post_spec.url = url[0];
         this.phase = phases.check;
 
-        this.check(); 
+        setTimeout(() => this.check(), 1000);
 
         return `${url[0]}ですね。ありがとうございます。検査を行いますので、結果が出るまで少々お待ちください。`;
-    }
-
-    gen_emlget(user_input) {
-        this.mail_post_spec.eml = user_input;
-        this.phase = phases.check;
-
-        this.check();
-
-        return "ありがとうございます。検査を行いますので、結果が出るまで少々お待ちください。";
     }
 
     gen_mail_fromaddr(user_input) {
@@ -102,7 +93,7 @@ class ChatEngine {
         this.mail_post_spec.body = user_input;
         this.phase = phases.check;
 
-        this.check();
+        setTimeout(() => this.check(), 1000);
 
         return "ありがとうございます。検査を行いますので、結果が出るまで少々お待ちください。";
     }
@@ -117,7 +108,7 @@ class ChatEngine {
         this.other_post_spec.body = user_input;
         this.phase = phases.check;
 
-        this.check();
+        setTimeout(() => this.check(), 1000);
 
         return "ありがとうございます。検査を行いますので、結果が出るまで少々お待ちください。";
     }
@@ -133,16 +124,16 @@ class ChatEngine {
         switch(this.type) {
             case types.web:
                 url = "http://localhost:8080/web/check";
-                body = JSON.stringify(web_post_spec);
+                body = JSON.stringify(this.web_post_spec);
                 break;
 
             case types.mail:
                 url = "http://localhost:8080/mail/check";
-                body = JSON.stringify(mail_post_spec);
+                body = JSON.stringify(this.mail_post_spec);
                 break;
             case types.other:
                 url = "http://localhost:8080/other/check";
-                body = JSON.stringify(other_post_spec);
+                body = JSON.stringify(this.other_post_spec);
                 break;
         }
 
@@ -153,7 +144,7 @@ class ChatEngine {
         }).then(res => {
             return JSON.parse(res.json());
         }).then(result => {
-
+            alert(result);
         })
 
         if (true /* 結果 */) {
