@@ -27,7 +27,7 @@ const configureUI = checkResult => {
 const check = () => {
     $("#result").html(`<progress class="progress is-small is-primary" max="100">15%</progress>`);
 
-    const webpostspec = {
+    const web_post_spec = {
         url: $("#url_input").val()
     };
 
@@ -36,7 +36,7 @@ const check = () => {
     const headers = {
         'Content-Type': 'application/json'
     };
-    const body = JSON.stringify(webpostspec);
+    const body = JSON.stringify(web_post_spec);
 
     fetch(url, {
         method,

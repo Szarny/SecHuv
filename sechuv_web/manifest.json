@@ -10,6 +10,10 @@
         "default_title": "Popup Window",
         "default_popup": "ui/popup.html"
     },
+    
+    "icons": {
+        "128": "static/sechuv_web_icon.png"
+    },
 
     "background": {
         "scripts": [
