@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request, abort
+from flask_cors import CORS
 from typing import Optional, Dict, List, Tuple, Union, Any
 
 from tinydb import TinyDB, Query
@@ -28,6 +29,7 @@ import engine
 
 
 app: Flask = Flask(__name__)
+CORS(app)
 
 
 db: Dict[str, TinyDB] = {
