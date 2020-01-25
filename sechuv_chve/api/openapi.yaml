@@ -305,16 +305,15 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  vulns:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Vulnerability'
-                  samples:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/WebCase'
+                type: array
+                items:
+                  type: object
+                  properties:
+                    vulntype:
+                      type: string
+                    message:
+                      type: string
+                  
         '500':
           description: Server error
           content:
@@ -467,16 +466,14 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  vulns:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Vulnerability'
-                  samples:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/MailCase'
+                type: array
+                items:
+                  type: object
+                  properties:
+                    vulntype:
+                      type: string
+                    message:
+                      type: string
         '500':
           description: Server error
           content:
@@ -629,16 +626,14 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  vulns:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Vulnerability'
-                  samples:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/OtherCase'
+                type: array
+                items:
+                  type: object
+                  properties:
+                    vulntype:
+                      type: string
+                    message:
+                      type: string
         '500':
           description: Server error
           content:
