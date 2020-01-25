@@ -1,4 +1,8 @@
+import requests
+import json
+
 from typing import List, Tuple, Optional
+
 import glob
 import re
 import email
@@ -10,8 +14,12 @@ from model.mailcase import MailCase
 from model.mailcasepost import MailCasePost
 from model.mailspec import MailSpec
 from model.mailvalidcase import MailValidCase
+from model.mailpostspec import MailPostSpec
 from model.vulnerability import Vulnerability
 
+
+check_url: str = "http://localhost:8080/mail/check"
+post_url: str = "http://localhost:8080/mail/case"
 
 class MailParser(object):
     def __init__(self, mail_file_path):
@@ -116,12 +124,61 @@ def main() -> None:
     show_welcome()
 
     mail = MailParser("input/example.eml")
-    print(mail.summarize())
 
     for attach_file in mail.attach_file_list:
         with open("attachment/{}".format(attach_file["name"].decode()), "wb") as f:
             f.write(attach_file["data"])
 
+    console.info("メールを読み込みました")
+    print(mail.summarize())
+    print()
+
+    mail_post_spec: MailPostSpec = {
+        "from_addr": mail.from_addr,
+        "spf_status": mail.spf_status,
+        "dkim_status": mail.dkim_status,
+        "subject": mail.subject,
+        "body": mail.body
+    }
+
+    headers = {"Content-Type" : "application/json"}
+    data = json.dumps(mail_post_spec)
+    response = requests.post(check_url, data=data, headers=headers)
+
+    if response.status_code != 200:
+        console.error("メールの検査中にエラーが発生しました")
+        print(response.text)
+        exit()
+
+    vulntypes: List[str] = []
+    console.warn("本メールから、以下の人的脆弱性をついた攻撃と思わしき兆候が検出されました。")
+    for vuln in json.loads(response.text):
+        console.warn(vuln["vulntype"])
+        vulntypes.append(vuln["vulntype"])
+    
+    print()
+    is_report = console.ask("本メールを報告しますか？")
+
+    if is_report != "y" and is_report != "いいえ":
+        console.info("SecHuv:Mailを終了します")
+
+
+    mail_case_post: MailCasePost = {
+        "vulntypes": vulntypes,
+        "spec": mail_post_spec
+    }
+
+    headers = {"Content-Type" : "application/json"}
+    data = json.dumps(mail_case_post)
+    response = requests.post(post_url, data=data, headers=headers)
+
+    if response.status_code != 200:
+        console.error("報告中にエラーが発生しました")
+        print(response.text)
+        exit()
+
+    console.info("報告が完了しました。報告された情報は以下のURLで閲覧できます。")
+    console.info(f"http://localhost:8000/mail/{json.loads(response.text)['uuid']}")
 
 if __name__ == '__main__':
     main()
