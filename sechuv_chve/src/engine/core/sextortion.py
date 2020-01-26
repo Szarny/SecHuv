@@ -14,7 +14,7 @@ from typing import Tuple, List
 CHVE = "sextortion"
 url = f"http://localhost:8080/vuln/{CHVE}"
 
-THRESHOLD = 0.2
+THRESHOLD = 0.3
 
 
 def extract_words(text: str) -> List[str]:
@@ -68,6 +68,7 @@ def check(summarized: str) -> Tuple[bool, str]:
         S += similarity
 
     if True:
+    # if S / 10 > THRESHOLD:
         return (True, str(S / 10))
     else:
         return (False, "")
