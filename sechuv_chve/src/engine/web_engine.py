@@ -4,7 +4,8 @@ from model.webpostspec import WebPostSpec
 
 from . import core
 
-def check_fake_url(url: str) -> Dict[str, str]:
+def check_fake_url(web_post_spec: WebPostSpec) -> Dict[str, str]:
+    urls: List[str] = util.url.extract(web_post_spec["url"]) 
     is_detect, message = core.fake_url.check(url)
 
     if is_detect:
@@ -19,8 +20,10 @@ def check_fake_url(url: str) -> Dict[str, str]:
 def run(web_post_spec: WebPostSpec) -> List[Dict[str, str]]:
     result: List[Dict[str, str]] = []
 
-    fake_url_result: Dict[str, str] = check_fake_url(web_post_spec["url"])
-    if fake_url_result:
-        result.append(fake_url_result)
+    # fake_url
+    check_fake_url_result: Dict[str, str] = check_fake_url(web_post_spec)
+    if check_fake_url:
+        result.append(check_fake_url_result)
+
 
     return result

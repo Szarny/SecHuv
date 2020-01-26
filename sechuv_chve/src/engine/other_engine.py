@@ -7,7 +7,8 @@ import util
 from . import core
 
 
-def check_fake_url(url: str) -> Dict[str, str]:
+def check_fake_url(other_post_spec: OtherPostSpec) -> Dict[str, str]:
+    urls: List[str] = util.url.extract(other_post_spec["payload"]) 
     is_detect, message = core.fake_url.check(url)
 
     if is_detect:
@@ -23,11 +24,9 @@ def run(other_post_spec: OtherPostSpec) -> List[Dict[str, str]]:
     result: List[Dict[str, str]] = []
 
     # fake_url
-    urls: List[str] = util.url.extract(other_post_spec["payload"])
-    for url in urls:
-        fake_url_result: Dict[str, str] = check_fake_url(url)
-        if fake_url_result:
-            result.append(fake_url_result)
-            break
+    check_fake_url_result: Dict[str, str] = check_fake_url(other_post_spec)
+    if check_fake_url:
+        result.append(check_fake_url_result)
+
 
     return result
