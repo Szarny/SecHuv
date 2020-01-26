@@ -36,7 +36,7 @@ class ChatEngine {
         this.other_post_spec = {
             media: "SMS",
             metadata: undefined,
-            body: undefined
+            payload: undefined
         }
     }
 
@@ -105,7 +105,7 @@ class ChatEngine {
     }
 
     gen_other_body(user_input) {
-        this.other_post_spec.body = user_input;
+        this.other_post_spec.payload = user_input;
         this.phase = phases.check;
 
         setTimeout(() => this.check(), 1000);
