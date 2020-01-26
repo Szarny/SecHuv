@@ -18,6 +18,9 @@ def index():
         cases = json.loads(requests.get(api_url.format(""), params={"length": 10}).text)
         return cases
 
+    if app.data == {}:
+        return redirect("/update")
+
     return render_template("index.html", cases=get_top(), 
                                          vulns=app.data["vulns"])
 
@@ -116,5 +119,5 @@ def update():
     return redirect("/")
 
                             
-app.data["vulns"] = get_vulns()
+# app.data["vulns"] = get_vulns()
 app.run(host="0.0.0.0", port=8000)

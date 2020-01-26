@@ -26,6 +26,7 @@ from model.vulnerability import Vulnerability
 
 import handler
 import engine
+import time
 
 
 app: Flask = Flask(__name__)
@@ -396,4 +397,5 @@ def error_handler(error):
 
 
 if __name__ == '__main__':
+    time.sleep(1)
     app.run(host="0.0.0.0", port=8080)
