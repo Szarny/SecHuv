@@ -1217,30 +1217,22 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "vulnerability": {
-                      "$ref": "#/components/schemas/Vulnerability"
+                    "web": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/WebCase"
+                      }
                     },
-                    "cases": {
-                      "type": "object",
-                      "properties": {
-                        "web": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/WebCase"
-                          }
-                        },
-                        "mail": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/MailCase"
-                          }
-                        },
-                        "other": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/OtherCase"
-                          }
-                        }
+                    "mail": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MailCase"
+                      }
+                    },
+                    "other": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/OtherCase"
                       }
                     }
                   }

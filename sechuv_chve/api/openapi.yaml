@@ -753,23 +753,18 @@ paths:
               schema:
                 type: object
                 properties:
-                  vulnerability:
-                    $ref: '#/components/schemas/Vulnerability'
-                  cases:
-                    type: object
-                    properties:
-                      web:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/WebCase'
-                      mail:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/MailCase'
-                      other:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/OtherCase'
+                  web:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WebCase'
+                  mail:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MailCase'
+                  other:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/OtherCase'
         '400':
           description: Parameter error
           content:
