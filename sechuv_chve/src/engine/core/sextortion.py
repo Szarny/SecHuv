@@ -26,7 +26,7 @@ def extract_words(text: str) -> List[str]:
 
     while node:
         word_type = node.feature.split(",")[0]
-        if word_type in ["名詞"]:
+        if word_type in ["名詞", "動詞-自立", "形容詞"]:
             words.append(node.surface)
 
         node = node.next
@@ -52,11 +52,11 @@ def get_documents() -> List[str]:
     return documents[:10]
 
 
-def check(summarized: str) -> Tuple[bool, str]:
+def check(summary: str) -> Tuple[bool, str]:
     documents: List[str] = get_documents()
     documents_for_train = []
 
-    documents_for_train.append(TaggedDocument(words=extract_words(summarized), tags=["target"]))
+    documents_for_train.append(TaggedDocument(words=extract_words(summary), tags=["target"]))
 
     for idx, doc in enumerate(documents):
         documents_for_train.append(TaggedDocument(words=extract_words(doc), tags=[f"id-{str(idx)}"]))
@@ -67,8 +67,7 @@ def check(summarized: str) -> Tuple[bool, str]:
     for tags, similarity in model.docvecs.most_similar("target"):
         S += similarity
 
-    if True:
-    # if S / 10 > THRESHOLD:
+    if S / 10 > THRESHOLD:
         return (True, str(S / 10))
     else:
         return (False, "")

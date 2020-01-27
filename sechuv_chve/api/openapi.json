@@ -1583,6 +1583,9 @@
           },
           "screenshot": {
             "type": "string"
+          },
+          "summary": {
+            "type": "string"
           }
         }
       },
@@ -1680,6 +1683,9 @@
             "type": "string"
           },
           "body": {
+            "type": "string"
+          },
+          "summary": {
             "type": "string"
           },
           "webcase_ptrs": {
@@ -1791,6 +1797,9 @@
             "type": "string"
           },
           "payload": {
+            "type": "string"
+          },
+          "summary": {
             "type": "string"
           }
         }

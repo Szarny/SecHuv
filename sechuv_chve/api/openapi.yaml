@@ -976,6 +976,8 @@ components:
           type: string
         screenshot:
           type: string
+        summary:
+          type: string
     WebValidCase:
       type: object
       properties:
@@ -1044,6 +1046,8 @@ components:
         subject:
           type: string
         body:
+          type: string
+        summary:
           type: string
         webcase_ptrs:
           type: array
@@ -1122,6 +1126,8 @@ components:
         metadata:
           type: string
         payload:
+          type: string
+        summary:
           type: string
     OtherPostSpec:
       type: object

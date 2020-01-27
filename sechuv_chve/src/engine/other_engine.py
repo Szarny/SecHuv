@@ -158,8 +158,8 @@ def check_fake_url(other_post_spec: OtherPostSpec) -> Dict[str, str]:
     return {}
 
 
-def check_sextortion(summarized: str) -> Dict[str, str]:
-    is_detect, message = core.sextortion.check(summarized)
+def check_sextortion(summary: str) -> Dict[str, str]:
+    is_detect, message = core.sextortion.check(summary)
     
     if is_detect:
         return {
@@ -172,8 +172,6 @@ def check_sextortion(summarized: str) -> Dict[str, str]:
 
 
 def run(other_post_spec: OtherPostSpec) -> List[Dict[str, str]]:
-    summarized: str = summarize(other_post_spec["payload"])
-
     result: List[Dict[str, str]] = []
 
     # fake_url
@@ -181,8 +179,11 @@ def run(other_post_spec: OtherPostSpec) -> List[Dict[str, str]]:
     if check_fake_url_result != {}:
         result.append(check_fake_url_result)
 
+
+    summary: str = summarize(other_post_spec["payload"])
+
     # sextortion
-    check_sextortion_result: Dict[str, str] = check_sextortion(summarized)
+    check_sextortion_result: Dict[str, str] = check_sextortion(summary)
     if check_sextortion_result != {}:
         result.append(check_sextortion_result)
 
