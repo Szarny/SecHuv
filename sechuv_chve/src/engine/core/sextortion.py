@@ -41,21 +41,21 @@ def get_documents() -> List[str]:
     cases = json.loads(response.text)
 
     for web_case in cases["web"]:
-        documents.append(web_case["spec"]["raw_body"])
+        documents.append(web_case["spec"]["summary"])
 
     for mail_case in cases["mail"]:
-        documents.append(mail_case["spec"]["body"])
+        documents.append(mail_case["spec"]["summary"])
 
     for other_case in cases["other"]:
-        documents.append(other_case["spec"]["payload"])
+        documents.append(other_case["spec"]["summary"])
     
     return documents[:10]
 
 
 def check(summary: str) -> Tuple[bool, str]:
     documents: List[str] = get_documents()
-    documents_for_train = []
 
+    documents_for_train = []
     documents_for_train.append(TaggedDocument(words=extract_words(summary), tags=["target"]))
 
     for idx, doc in enumerate(documents):

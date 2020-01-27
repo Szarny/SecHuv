@@ -19,18 +19,6 @@ def check_fake_url(web_post_spec: WebPostSpec) -> Dict[str, str]:
         return {}
 
 
-def summarize(text: str) -> str:
-    text = re.sub(r"《[^》]*》", "", text)
-    text = text.replace("\u3000", "")
-    text = re.sub(r"\n\n［.*\n\n", "。", text)
-    text = re.sub(r"[\n]", "。", text)
-    text = re.sub("[。]+", "。", text)
-
-    sv = SemanticVolume()
-    sv.execute(text, 200)
-    return " ".join(sv.summarized_sentence)
-
-
 def run(web_post_spec: WebPostSpec) -> List[Dict[str, str]]:
     result: List[Dict[str, str]] = []
 
