@@ -11,7 +11,7 @@ class SemanticVolume:
         self.tokenizer = MeCab.Tagger("-Ochasen")
 
 
-        self.model_name = "/project/engine/word2vec.gensim.model"
+        self.model_name = "/project/util/gensim_model/word2vec.gensim.model"
         self.model = Word2Vec.load(self.model_name)
         self.features = self.model.vector_size
 
