@@ -64,7 +64,7 @@ const report = () => {
     const headers = {
         'Content-Type': 'application/json',
         'SECHUV-Token': token
-    }
+    };
     const body = JSON.stringify(webcasepost);
 
     fetch(url, {
