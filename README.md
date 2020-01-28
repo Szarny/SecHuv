@@ -24,6 +24,7 @@ $ docker-compose up
 
 
 Then, the server starts with the following `IP:port`.
+
 |Server|`IP:port`|
 |:-:|:-:|
 |SecHuv:CHVE|`http://localhost:8080/*`|
