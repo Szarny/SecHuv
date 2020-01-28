@@ -1,6 +1,10 @@
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, make_response
 from flask_cors import CORS
 from typing import Optional, Dict, List, Tuple, Union, Any
+
+import json
+import time
+import base64
 
 from tinydb import TinyDB, Query
 
@@ -26,7 +30,7 @@ from model.vulnerability import Vulnerability
 
 import handler
 import engine
-import time
+import util
 
 
 app: Flask = Flask(__name__)
@@ -162,8 +166,13 @@ def web_check_post():
     web_post_spec["url"] = ":".join(web_post_spec["url"].split(":")[:2])
 
     result: List[Dict[str, str]] = engine.web_engine.run(web_post_spec=web_post_spec)
+
+    response = make_response(jsonify(result))
+
+    if len(result) != 0:
+        response.headers["SECHUV-Token"] = util.digisign.sign(base64.b64encode(json.dumps(web_post_spec).encode()).decode())
     
-    return jsonify(result)
+    return response
     
 
 # mail
@@ -225,7 +234,12 @@ def mail_check_post():
 
     result: List[Dict[str, str]] = engine.mail_engine.run(mail_post_spec=mail_post_spec)
 
-    return jsonify(result)
+    response = make_response(jsonify(result))
+
+    if len(result) != 0:
+        response.headers["SECHUV-Token"] = util.digisign.sign(base64.b64encode(json.dumps(mail_post_spec).encode()).decode())
+    
+    return response
 
 
 
@@ -288,7 +302,12 @@ def other_check_post():
 
     result: List[Dict[str, str]] = engine.other_engine.run(other_post_spec=other_post_spec)
 
-    return jsonify(result)
+    response = make_response(jsonify(result))
+
+    if len(result) != 0:
+        response.headers["SECHUV-Token"] = util.digisign.sign(base64.b64encode(json.dumps(other_post_spec).encode()).decode())
+    
+    return response
 
 
 @app.route("/vuln", methods=["GET"])

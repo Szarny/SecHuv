@@ -8,7 +8,7 @@ import sys
 
 
 def sign(data, passphrase="SecHuv"):
-    secret_key = open("key/secret.key", "rb").read()
+    secret_key = open("/project/util/key/secret.key", "rb").read()
 
     try:
         rsakey = RSA.importKey(secret_key, passphrase=passphrase)
@@ -20,11 +20,12 @@ def sign(data, passphrase="SecHuv"):
     digest = SHA256.new()
     digest.update(b64decode(data))
     sign = signer.sign(digest)
+
     return b64encode(sign)
 
 
 def verify(signature, data):
-    pub_key = open("key/public.key", "rb").read()
+    pub_key = open("/project/util/key/public.key", "rb").read()
 
     rsakey = RSA.importKey(pub_key)
     signer = PKCS1_v1_5.new(rsakey)
