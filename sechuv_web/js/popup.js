@@ -1,4 +1,5 @@
 let vulntypes = [];
+let token = undefined;
 
 const configureUI = checkResult => {
     if (checkResult.length === 0) {
@@ -43,6 +44,8 @@ const check = () => {
         headers,
         body
     }).then(res => {
+        token = res.headers.get('SECHUV-Token');
+        alert(token);
         return res.json();
     }).then(json => {
         configureUI(json);
@@ -60,7 +63,8 @@ const report = () => {
     const url = "http://localhost:8080/web/case";
     const method = "POST";
     const headers = {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'SECHUV-Token': token
     }
     const body = JSON.stringify(webcasepost);
 
