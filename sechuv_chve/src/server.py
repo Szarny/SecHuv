@@ -177,6 +177,7 @@ def web_check_post():
 
     if len(result) != 0:
         response.headers["SECHUV-Token"] = util.digisign.sign(base64.b64encode(json.dumps(web_post_spec).encode()).decode())
+        response.headers["Access-Control-Expose-Headers"] = "SECHUV-Token"
     
     return response
     
@@ -251,7 +252,8 @@ def mail_check_post():
 
     if len(result) != 0:
         response.headers["SECHUV-Token"] = util.digisign.sign(base64.b64encode(json.dumps(mail_post_spec).encode()).decode())
-    
+        response.headers["Access-Control-Expose-Headers"] = "SECHUV-Token"
+
     return response
 
 
@@ -326,6 +328,7 @@ def other_check_post():
 
     if len(result) != 0:
         response.headers["SECHUV-Token"] = util.digisign.sign(base64.b64encode(json.dumps(other_post_spec).encode()).decode())
+        response.headers["Access-Control-Expose-Headers"] = "SECHUV-Token"
     
     return response
 
