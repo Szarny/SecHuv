@@ -2,8 +2,10 @@ let vulntypes = [];
 let token = undefined;
 
 const configureUI = checkResult => {
+    $("#result").html("");
+    
     if (checkResult.length === 0) {
-        $("#result").html(`<span class="tag is-success is-medium">人的脆弱性は検出されませんでした。</span>`);
+        $("#result").append(`<span class="tag is-success is-medium">人的脆弱性は検出されませんでした。</span>`);
         $("#report_button").prop("disabled", true);
         return;
     }
@@ -14,7 +16,7 @@ const configureUI = checkResult => {
     for (let vuln of checkResult) {
         vulntypes.push(vuln.vulntype);
 
-        $("#result").html(`<button class="tag is-danger is-medium" id="tag-${vuln.vulntype}">${vuln.vulntype}</button>`);
+        $("#result").append(`<button class="tag is-danger is-medium" id="tag-${vuln.vulntype}">${vuln.vulntype}</button>`);
         $(`#tag-${vuln.vulntype}`).on("click", {
             url: `http://localhost:8000/vuln/${vuln.vulntype}`
         }, e => {
@@ -91,5 +93,7 @@ $("#check_button").on("click", e => {
 })
 
 $("#report_button").on("click", e => {
+    $("#progress").css("visibility", "visible");
+    $("#report_button").css("visibility", "hidden");
     report();
 })
