@@ -22,9 +22,7 @@ def handle(db: Dict[str, TinyDB], other_case_post: OtherCasePost) -> Tuple[bool,
 
     if not ok:
         return (False, {})
-
-    summary: str = util.semantic_volume.summarize(other_case_post["spec"]["payload"])
-    other_case_post["spec"]["summary"] = summary if len(summary) <= len(other_case_post["spec"]["payload"]) else other_case_post["spec"]["payload"]
+        
 
     otehr_case: OtherCase = {
         "uuid": uuid,

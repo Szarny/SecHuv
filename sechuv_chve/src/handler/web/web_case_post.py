@@ -35,14 +35,11 @@ def handle(db: Dict[str, TinyDB], web_case_post: WebCasePost) -> Tuple[bool, Dic
     
     web_case_post["spec"]["screenshot"] = screenshot
 
-    summary: str = util.semantic_volume.summarize(raw_body)
-
     web_spec: WebSpec = {
         "url": web_case_post["spec"]["url"],
         "body": body,
         "raw_body": raw_body,
-        "screenshot": screenshot,
-        "summary": summary if len(summary) <= len(raw_body) else raw_body
+        "screenshot": screenshot
     }
 
     web_case: WebCase = {

@@ -41,13 +41,13 @@ def get_documents() -> List[str]:
     cases = json.loads(response.text)
 
     for web_case in cases["web"]:
-        documents.append(web_case["spec"]["summary"])
+        documents.append(web_case["spec"]["raw_body"])
 
     for mail_case in cases["mail"]:
-        documents.append(mail_case["spec"]["summary"])
+        documents.append(mail_case["spec"]["body"])
 
     for other_case in cases["other"]:
-        documents.append(other_case["spec"]["summary"])
+        documents.append(other_case["spec"]["payload"])
     
     return documents[:10]
 

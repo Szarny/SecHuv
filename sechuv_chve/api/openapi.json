@@ -1583,9 +1583,6 @@
           },
           "screenshot": {
             "type": "string"
-          },
-          "summary": {
-            "type": "string"
           }
         }
       },
@@ -1685,14 +1682,10 @@
           "body": {
             "type": "string"
           },
-          "summary": {
-            "type": "string"
-          },
-          "webcase_ptrs": {
+          "attach_files": {
             "type": "array",
             "items": {
-              "type": "string",
-              "format": "uuid"
+              "type": "string"
             }
           }
         }
@@ -1748,6 +1741,12 @@
           },
           "body": {
             "type": "string"
+          },
+          "attach_files": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
@@ -1797,9 +1796,6 @@
             "type": "string"
           },
           "payload": {
-            "type": "string"
-          },
-          "summary": {
             "type": "string"
           }
         }
