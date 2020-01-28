@@ -8,7 +8,7 @@ Security Hub for Human-vulnerabilities.
 ## System Configuration
 |System|Description|
 |:-:|:-|
-|SecHuv:CHVE|Common Human Vulnerabilities and Exposures; The central intelligence repository for the SecHuv system.|
+|SecHuv:CHVE|Common Human Vulnerabilities and Exposures; <br>The central intelligence repository for the SecHuv system.|
 |SecHuv:Viewer|Web system for viewing cases stored in the SecHuv system.|
 |SecHuv:Web|Browser extension to detect malicious web sites.|
 |SecHuv:Mail|Tool to detect malicious e-mails.|
