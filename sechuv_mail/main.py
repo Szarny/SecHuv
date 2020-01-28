@@ -102,9 +102,8 @@ class MailParser(object):
             "from_addr": self.from_addr,
             "spf_status": self.spf_status,
             "dkim_status": self.dkim_status,
-            "is_html": False,
-            "body": None,
-            "raw_body": self.body
+            "body": self.body,
+            "attach_files": [attach_file["name"] for attach_file in self.attach_file_list]
         }
 
 
@@ -138,7 +137,8 @@ def main() -> None:
         "spf_status": mail.spf_status,
         "dkim_status": mail.dkim_status,
         "subject": mail.subject,
-        "body": mail.body
+        "body": mail.body,
+        "attach_files": [attach_file["name"] for attach_file in mail.attach_file_list]
     }
 
     headers = {"Content-Type" : "application/json"}
@@ -152,6 +152,7 @@ def main() -> None:
 
     vulntypes: List[str] = []
     console.warn("本メールから、以下の人的脆弱性をついた攻撃と思わしき兆候が検出されました。")
+    
     for vuln in json.loads(response.text):
         console.warn(vuln["vulntype"])
         vulntypes.append(vuln["vulntype"])
