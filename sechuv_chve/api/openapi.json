@@ -491,18 +491,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "vulns": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Vulnerability"
-                      }
-                    },
-                    "samples": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/WebCase"
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "vulntype": {
+                        "type": "string"
+                      },
+                      "message": {
+                        "type": "string"
                       }
                     }
                   }
@@ -754,18 +751,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "vulns": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Vulnerability"
-                      }
-                    },
-                    "samples": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/MailCase"
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "vulntype": {
+                        "type": "string"
+                      },
+                      "message": {
+                        "type": "string"
                       }
                     }
                   }
@@ -1017,18 +1011,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "vulns": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Vulnerability"
-                      }
-                    },
-                    "samples": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/OtherCase"
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "vulntype": {
+                        "type": "string"
+                      },
+                      "message": {
+                        "type": "string"
                       }
                     }
                   }
@@ -1226,30 +1217,22 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "vulnerability": {
-                      "$ref": "#/components/schemas/Vulnerability"
+                    "web": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/WebCase"
+                      }
                     },
-                    "cases": {
-                      "type": "object",
-                      "properties": {
-                        "web": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/WebCase"
-                          }
-                        },
-                        "mail": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/MailCase"
-                          }
-                        },
-                        "other": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/OtherCase"
-                          }
-                        }
+                    "mail": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MailCase"
+                      }
+                    },
+                    "other": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/OtherCase"
                       }
                     }
                   }
@@ -1699,11 +1682,10 @@
           "body": {
             "type": "string"
           },
-          "webcase_ptrs": {
+          "attach_files": {
             "type": "array",
             "items": {
-              "type": "string",
-              "format": "uuid"
+              "type": "string"
             }
           }
         }
@@ -1759,6 +1741,12 @@
           },
           "body": {
             "type": "string"
+          },
+          "attach_files": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },

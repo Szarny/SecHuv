@@ -102,9 +102,8 @@ class MailParser(object):
             "from_addr": self.from_addr,
             "spf_status": self.spf_status,
             "dkim_status": self.dkim_status,
-            "is_html": False,
-            "body": None,
-            "raw_body": self.body
+            "body": self.body,
+            "attach_files": [attach_file["name"] for attach_file in self.attach_file_list]
         }
 
 
@@ -138,7 +137,8 @@ def main() -> None:
         "spf_status": mail.spf_status,
         "dkim_status": mail.dkim_status,
         "subject": mail.subject,
-        "body": mail.body
+        "body": mail.body,
+        "attach_files": [attach_file["name"] for attach_file in mail.attach_file_list]
     }
 
     headers = {"Content-Type" : "application/json"}
@@ -150,9 +150,16 @@ def main() -> None:
         print(response.text)
         exit()
 
+    vulns = json.loads(response.text)
+
+    if len(vulns) == 0:
+        console.info("本メールから、人的脆弱性を突いた攻撃と思わしき兆候は検出されませんでした。")
+        exit()
+
     vulntypes: List[str] = []
-    console.warn("本メールから、以下の人的脆弱性をついた攻撃と思わしき兆候が検出されました。")
-    for vuln in json.loads(response.text):
+    console.warn("本メールから、以下の人的脆弱性を突いた攻撃と思わしき兆候が検出されました。")
+    
+    for vuln in vulns:
         console.warn(vuln["vulntype"])
         vulntypes.append(vuln["vulntype"])
     
@@ -162,13 +169,15 @@ def main() -> None:
     if is_report != "y" and is_report != "いいえ":
         console.info("SecHuv:Mailを終了します")
 
-
     mail_case_post: MailCasePost = {
         "vulntypes": vulntypes,
         "spec": mail_post_spec
     }
 
-    headers = {"Content-Type" : "application/json"}
+    headers = {
+        "Content-Type" : "application/json",
+        "SECHUV-Token": response.headers.get("SECHUV-Token")
+    }
     data = json.dumps(mail_case_post)
     response = requests.post(post_url, data=data, headers=headers)
 

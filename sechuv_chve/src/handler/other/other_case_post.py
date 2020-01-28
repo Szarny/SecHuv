@@ -22,6 +22,7 @@ def handle(db: Dict[str, TinyDB], other_case_post: OtherCasePost) -> Tuple[bool,
 
     if not ok:
         return (False, {})
+        
 
     otehr_case: OtherCase = {
         "uuid": uuid,

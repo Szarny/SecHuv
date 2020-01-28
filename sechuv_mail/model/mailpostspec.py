@@ -7,3 +7,4 @@ class MailPostSpec(TypedDict):
     dkim_status: str
     subject: str
     body: str
+    attach_files: List[str]

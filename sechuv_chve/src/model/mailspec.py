@@ -7,4 +7,4 @@ class MailSpec(TypedDict):
     dkim_status: str
     subject: str
     body: str
-    webcase_ptrs: List[str]
+    attach_files: List[str]

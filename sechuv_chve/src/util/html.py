@@ -1,3 +1,4 @@
+import requests
 from selenium import webdriver
 
 from typing import Tuple
@@ -5,6 +6,8 @@ from typing import Tuple
 
 def get_html(url: str) -> Tuple[bool, str, str]:
     try:
+        _ = requests.get(url)
+        
         driver: webdriver.PhantomJS = webdriver.PhantomJS("/project/util/selenium/phantomjs")
         driver.get(url)
 

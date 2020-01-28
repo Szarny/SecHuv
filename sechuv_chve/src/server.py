@@ -1,5 +1,10 @@
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, make_response
+from flask_cors import CORS
 from typing import Optional, Dict, List, Tuple, Union, Any
+
+import json
+import time
+import base64
 
 from tinydb import TinyDB, Query
 
@@ -25,9 +30,11 @@ from model.vulnerability import Vulnerability
 
 import handler
 import engine
+import util
 
 
 app: Flask = Flask(__name__)
+CORS(app)
 
 
 db: Dict[str, TinyDB] = {
@@ -116,6 +123,15 @@ def web_case_post():
         abort(400, {"message": "Posted value is invalid."})
 
     web_case_post: WebCasePost = request.json
+
+    web_case_post["spec"]["url"] = ":".join(web_case_post["spec"]["url"].split(":")[:2])
+
+    signature: str = request.headers.get("SECHUV-Token")
+    data: str = base64.b64encode(json.dumps(web_case_post["spec"]).encode()).decode()
+
+    if signature is None or (not util.digisign.verify(signature, data)):
+        abort(500, {"message": "Sign is invalid."})
+    
     ok, data = handler.web.web_case_post.handle(db=db, web_case_post=web_case_post)
     if not ok:
         abort(500, {"message": "Server error."})
@@ -153,9 +169,17 @@ def web_valid_post():
 def web_check_post():
     web_post_spec: WebPostSpec = request.json
 
+    web_post_spec["url"] = ":".join(web_post_spec["url"].split(":")[:2])
+
     result: List[Dict[str, str]] = engine.web_engine.run(web_post_spec=web_post_spec)
+
+    response = make_response(jsonify(result))
+
+    if len(result) != 0:
+        response.headers["SECHUV-Token"] = util.digisign.sign(base64.b64encode(json.dumps(web_post_spec).encode()).decode())
+        response.headers["Access-Control-Expose-Headers"] = "SECHUV-Token"
     
-    return jsonify(result)
+    return response
     
 
 # mail
@@ -178,6 +202,13 @@ def mail_case_post():
         abort(400, {"message": "Posted value is invalid."})
 
     mail_case_post: MailCasePost = request.json
+
+    signature: str = request.headers.get("SECHUV-Token")
+    data: str = base64.b64encode(json.dumps(mail_case_post["spec"]).encode()).decode()
+
+    if signature is None or (not util.digisign.verify(signature, data)):
+        abort(500, {"message": "Sign is invalid."})
+
     ok, data = handler.mail.mail_case_post.handle(db=db, mail_case_post=mail_case_post)
     if not ok:
         abort(500, {"message": "Server error."})
@@ -217,7 +248,13 @@ def mail_check_post():
 
     result: List[Dict[str, str]] = engine.mail_engine.run(mail_post_spec=mail_post_spec)
 
-    return jsonify(result)
+    response = make_response(jsonify(result))
+
+    if len(result) != 0:
+        response.headers["SECHUV-Token"] = util.digisign.sign(base64.b64encode(json.dumps(mail_post_spec).encode()).decode())
+        response.headers["Access-Control-Expose-Headers"] = "SECHUV-Token"
+
+    return response
 
 
 
@@ -241,6 +278,13 @@ def other_case_post():
         abort(400, {"message": "Posted value is invalid."})
 
     other_case_post: OtherCasePost = request.json
+
+    signature: str = request.headers.get("SECHUV-Token")
+    data: str = base64.b64encode(json.dumps(other_case_post["spec"]).encode()).decode()
+
+    if signature is None or (not util.digisign.verify(signature, data)):
+        abort(500, {"message": "Sign is invalid."})
+
     ok, data = handler.other.other_case_post.handle(db=db, other_case_post=other_case_post)
     if not ok:
         abort(500, {"message": "Server error."})
@@ -280,7 +324,13 @@ def other_check_post():
 
     result: List[Dict[str, str]] = engine.other_engine.run(other_post_spec=other_post_spec)
 
-    return jsonify(result)
+    response = make_response(jsonify(result))
+
+    if len(result) != 0:
+        response.headers["SECHUV-Token"] = util.digisign.sign(base64.b64encode(json.dumps(other_post_spec).encode()).decode())
+        response.headers["Access-Control-Expose-Headers"] = "SECHUV-Token"
+    
+    return response
 
 
 @app.route("/vuln", methods=["GET"])
@@ -394,4 +444,5 @@ def error_handler(error):
 
 
 if __name__ == '__main__':
+    time.sleep(1)
     app.run(host="0.0.0.0", port=8080)

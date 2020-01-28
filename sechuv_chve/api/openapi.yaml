@@ -305,16 +305,15 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  vulns:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Vulnerability'
-                  samples:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/WebCase'
+                type: array
+                items:
+                  type: object
+                  properties:
+                    vulntype:
+                      type: string
+                    message:
+                      type: string
+                  
         '500':
           description: Server error
           content:
@@ -467,16 +466,14 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  vulns:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Vulnerability'
-                  samples:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/MailCase'
+                type: array
+                items:
+                  type: object
+                  properties:
+                    vulntype:
+                      type: string
+                    message:
+                      type: string
         '500':
           description: Server error
           content:
@@ -629,16 +626,14 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  vulns:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Vulnerability'
-                  samples:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/OtherCase'
+                type: array
+                items:
+                  type: object
+                  properties:
+                    vulntype:
+                      type: string
+                    message:
+                      type: string
         '500':
           description: Server error
           content:
@@ -758,23 +753,18 @@ paths:
               schema:
                 type: object
                 properties:
-                  vulnerability:
-                    $ref: '#/components/schemas/Vulnerability'
-                  cases:
-                    type: object
-                    properties:
-                      web:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/WebCase'
-                      mail:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/MailCase'
-                      other:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/OtherCase'
+                  web:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WebCase'
+                  mail:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MailCase'
+                  other:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/OtherCase'
         '400':
           description: Parameter error
           content:
@@ -1055,11 +1045,10 @@ components:
           type: string
         body:
           type: string
-        webcase_ptrs:
+        attach_files:
           type: array
           items:
             type: string
-            format: uuid
     MailValidCase:
       type: object
       properties:
@@ -1100,6 +1089,10 @@ components:
           type: string
         body:
           type: string
+        attach_files:
+          type: array
+          items:
+            type: string
     OtherCase:
       type: object
       properties:

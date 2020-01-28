@@ -12,8 +12,12 @@ const phases = {
     mail_body: "mail_body",
     other_metadata: "other_metadata",
     other_body: "other_body",
-    check: "check"
+    check: "check",
+    report: "report"
 };
+
+let vulntypes = [];
+let token = undefined;
 
 
 class ChatEngine { 
@@ -36,7 +40,7 @@ class ChatEngine {
         this.other_post_spec = {
             media: "SMS",
             metadata: undefined,
-            body: undefined
+            payload: undefined
         }
     }
 
@@ -65,25 +69,16 @@ class ChatEngine {
     gen_web_url(user_input) {
         const url = user_input.match(/(https?:\/\/[\x21-\x7e]+)/);
 
-        if (url.length === 0) {
+        if (!url) {
             return "URLが検出できませんでした。お手数ですが、再度送信してください。";
         }
 
         this.web_post_spec.url = url[0];
         this.phase = phases.check;
 
-        this.check(); 
+        setTimeout(() => this.check(), 1000);
 
         return `${url[0]}ですね。ありがとうございます。検査を行いますので、結果が出るまで少々お待ちください。`;
-    }
-
-    gen_emlget(user_input) {
-        this.mail_post_spec.eml = user_input;
-        this.phase = phases.check;
-
-        this.check();
-
-        return "ありがとうございます。検査を行いますので、結果が出るまで少々お待ちください。";
     }
 
     gen_mail_fromaddr(user_input) {
@@ -102,7 +97,7 @@ class ChatEngine {
         this.mail_post_spec.body = user_input;
         this.phase = phases.check;
 
-        this.check();
+        setTimeout(() => this.check(), 1000);
 
         return "ありがとうございます。検査を行いますので、結果が出るまで少々お待ちください。";
     }
@@ -114,10 +109,10 @@ class ChatEngine {
     }
 
     gen_other_body(user_input) {
-        this.other_post_spec.body = user_input;
+        this.other_post_spec.payload = user_input;
         this.phase = phases.check;
 
-        this.check();
+        setTimeout(() => this.check(), 1000);
 
         return "ありがとうございます。検査を行いますので、結果が出るまで少々お待ちください。";
     }
@@ -133,34 +128,38 @@ class ChatEngine {
         switch(this.type) {
             case types.web:
                 url = "http://localhost:8080/web/check";
-                body = JSON.stringify(web_post_spec);
+                body = JSON.stringify(this.web_post_spec);
                 break;
 
             case types.mail:
                 url = "http://localhost:8080/mail/check";
-                body = JSON.stringify(mail_post_spec);
+                body = JSON.stringify(this.mail_post_spec);
                 break;
             case types.other:
                 url = "http://localhost:8080/other/check";
-                body = JSON.stringify(other_post_spec);
+                body = JSON.stringify(this.other_post_spec);
                 break;
         }
+
+        let result;
 
         fetch(url, {
             method,
             headers,
             body
         }).then(res => {
-            return JSON.parse(res.json());
-        }).then(result => {
+            token = res.headers.get('SECHUV-Token');
+            alert(token);
+            return res.text();
+        }).then(text => {
+            result = JSON.parse(text);
 
+            if (result.length === 0) {
+                this.gen_valid();
+            } else {
+                this.gen_vuln(result);
+            }
         })
-
-        if (true /* 結果 */) {
-            this.gen_valid();
-        } else {
-            this.gen_vuln();
-        }
     }
 
     gen_valid() {
@@ -168,9 +167,15 @@ class ChatEngine {
         add_chat(FROM.BOT, "もし不安な点があれば、第三者に相談してみたり、<a href='/'>SecHuvの情報</a>を参考にして、慎重に行動してください。");
     }
 
-    gen_vuln() {
+    gen_vuln(result) {
+        this.phase = phases.report;
+
         add_chat(FROM.BOT, "検査の結果、送信された内容から人的脆弱性をついた攻撃と思わしき兆候が検出されました。検出された項目は以下の通りです。");
-        // TODO: ほげほげ
+        
+        for (let vuln of result) {
+            vulntypes.push(vuln.vulntype);
+            add_chat(FROM.BOT, `${vuln.vulntype} - <a href="/vuln/${vuln.vulntype}">詳しくはこちら</a>`);
+        }
 
         switch(this.type) {
             case types.web:
@@ -183,6 +188,71 @@ class ChatEngine {
                 add_chat(FROM.BOT, "本メッセージは上記の人的脆弱性を狙ったものである恐れがあります。本メッセージに関連するデータを開いたり、本文に記載されているURLにアクセスしたりしないでください。");
                 break;
         }
+
+        add_chat(FROM.BOT, "本件をSecHuv:CHVEに登録しますか？");
+    }
+
+    gen_report(user_input) { 
+        if (user_input.indexOf("はい") === -1 && user_input.indexOf("y") === -1) {
+            return "承知しました。これにて終了します。"
+        }
+
+        let post_spec;
+        let url;
+        switch(this.type) { 
+            case types.web:
+                post_spec = {
+                    vulntypes: vulntypes,
+                    spec: this.web_post_spec
+                };
+                url = "http://localhost:8080/web/case";
+                break;
+            
+            case types.mail:
+                post_spec = {
+                    vulntypes: vulntypes,
+                    spec: this.mail_post_spec
+                };
+                url = "http://localhost:8080/mail/case";
+                break;
+
+            case types.other:
+                post_spec = {
+                    vulntypes: vulntypes,
+                    spec: this.other_post_spec
+                };
+                url = "http://localhost:8080/other/case";
+                break;
+        }
+
+
+        const method = "POST";
+        const headers = {
+            'Content-Type': 'application/json',
+            'SECHUV-Token': token
+        };
+        const body = JSON.stringify(post_spec);
+
+        fetch(url, {
+            method,
+            headers,
+            body
+        }).then(res => {
+            return res.json();
+        }).then(json => {
+            return json.uuid;
+        }).then(uuid => {  
+            switch(this.type) {
+                case types.web:
+                    add_chat(FROM.BOT, `登録が完了しました。<a href="http://localhost:8000/web/${uuid}">http://localhost:8000/web/${uuid}</a>にて閲覧可能です。`);
+                case types.mail:
+                    add_chat(FROM.BOT, `登録が完了しました。<a href="http://localhost:8000/mail/${uuid}">http://localhost:8000/mail/${uuid}</a>にて閲覧可能です。`);
+                case types.other:
+                    add_chat(FROM.BOT, `登録が完了しました。<a href="http://localhost:8000/other/${uuid}">http://localhost:8000/other/${uuid}</a>にて閲覧可能です。`);
+            }
+        })
+
+        return "少々お待ちください。";
     }
 
     generate_message(user_input) {
@@ -199,10 +269,6 @@ class ChatEngine {
 
             case phases.is_eml:
                 return_message = this.gen_is_eml(user_input);
-                break;
-
-            case phases.is_emlget:
-                return_message = this.gen_emlget(user_input);
                 break;
 
             case phases.mail_fromaddr:
@@ -223,6 +289,10 @@ class ChatEngine {
 
             case phases.other_body:
                 return_message = this.gen_other_body(user_input);
+                break;
+
+            case phases.report:
+                return_message = this.gen_report(user_input);
                 break;
         }
 
