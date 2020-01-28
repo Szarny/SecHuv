@@ -1,8 +1,3 @@
-import re
-import MeCab
-import numpy as np
-from gensim.models import Word2Vec
-
 from typing import List, Dict
 
 from model.otherpostspec import OtherPostSpec
@@ -141,11 +136,3 @@ def run(other_post_spec: OtherPostSpec) -> List[Dict[str, str]]:
 
 
     return result
-
-
-if __name__ == '__main__':
-    run({
-        "media": "SMS",
-        "metadata": "hoge",
-        "payload": "あなたを撮影しました。"
-    })
