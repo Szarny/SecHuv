@@ -15,6 +15,8 @@ const phases = {
     check: "check"
 };
 
+let token = undefined;
+
 
 class ChatEngine { 
     constructor() {
@@ -144,6 +146,7 @@ class ChatEngine {
             headers,
             body
         }).then(res => {
+            token = res.headers.get('SECHUV-Token');
             return res.text();
         }).then(text => {
             result = JSON.parse(text);

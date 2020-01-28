@@ -45,7 +45,6 @@ const check = () => {
         body
     }).then(res => {
         token = res.headers.get('SECHUV-Token');
-        alert(token);
         return res.json();
     }).then(json => {
         configureUI(json);
