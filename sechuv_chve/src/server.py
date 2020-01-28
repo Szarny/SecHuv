@@ -119,6 +119,9 @@ def web_case_post():
         abort(400, {"message": "Posted value is invalid."})
 
     web_case_post: WebCasePost = request.json
+
+    web_post_spec["url"] = ":".join(web_post_spec["url"].split(":")[:2])
+    
     ok, data = handler.web.web_case_post.handle(db=db, web_case_post=web_case_post)
     if not ok:
         abort(500, {"message": "Server error."})
@@ -155,6 +158,8 @@ def web_valid_post():
 @app.route("/web/check", methods=["POST"])
 def web_check_post():
     web_post_spec: WebPostSpec = request.json
+
+    web_post_spec["url"] = ":".join(web_post_spec["url"].split(":")[:2])
 
     result: List[Dict[str, str]] = engine.web_engine.run(web_post_spec=web_post_spec)
     
