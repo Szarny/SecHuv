@@ -150,10 +150,16 @@ def main() -> None:
         print(response.text)
         exit()
 
+    vulns = json.loads(response.text)
+
+    if len(vulns) == 0:
+        console.info("本メールから、人的脆弱性を突いた攻撃と思わしき兆候は検出されませんでした。")
+        exit()
+
     vulntypes: List[str] = []
-    console.warn("本メールから、以下の人的脆弱性をついた攻撃と思わしき兆候が検出されました。")
+    console.warn("本メールから、以下の人的脆弱性を突いた攻撃と思わしき兆候が検出されました。")
     
-    for vuln in json.loads(response.text):
+    for vuln in vulns:
         console.warn(vuln["vulntype"])
         vulntypes.append(vuln["vulntype"])
     
@@ -163,13 +169,15 @@ def main() -> None:
     if is_report != "y" and is_report != "いいえ":
         console.info("SecHuv:Mailを終了します")
 
-
     mail_case_post: MailCasePost = {
         "vulntypes": vulntypes,
         "spec": mail_post_spec
     }
 
-    headers = {"Content-Type" : "application/json"}
+    headers = {
+        "Content-Type" : "application/json",
+        "SECHUV-Token": response.headers.get("SECHUV-Token")
+    }
     data = json.dumps(mail_case_post)
     response = requests.post(post_url, data=data, headers=headers)
 
