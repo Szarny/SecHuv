@@ -5,3 +5,5 @@ from . import url
 from . import screenshot
 from . import html
 from . import semantic_volume
+from . import digisign
+from . import keygen
