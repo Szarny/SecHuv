@@ -124,7 +124,13 @@ def web_case_post():
 
     web_case_post: WebCasePost = request.json
 
-    web_post_spec["url"] = ":".join(web_post_spec["url"].split(":")[:2])
+    web_case_post["url"] = ":".join(web_post_spec["url"].split(":")[:2])
+
+    signature: str = request.headers.get("SECHUV-Token")
+    data: str = base64.b64encode(json.dumps(web_case_post["spec"]).encode()).decode()
+
+    if not util.digisign.verify(signature, data):
+        abort(500, {"message": "Sign is invalid."})
     
     ok, data = handler.web.web_case_post.handle(db=db, web_case_post=web_case_post)
     if not ok:
@@ -195,6 +201,13 @@ def mail_case_post():
         abort(400, {"message": "Posted value is invalid."})
 
     mail_case_post: MailCasePost = request.json
+
+    signature: str = request.headers.get("SECHUV-Token")
+    data: str = base64.b64encode(json.dumps(mail_case_post["spec"]).encode()).decode()
+
+    if not util.digisign.verify(signature, data):
+        abort(500, {"message": "Sign is invalid."})
+
     ok, data = handler.mail.mail_case_post.handle(db=db, mail_case_post=mail_case_post)
     if not ok:
         abort(500, {"message": "Server error."})
@@ -263,6 +276,13 @@ def other_case_post():
         abort(400, {"message": "Posted value is invalid."})
 
     other_case_post: OtherCasePost = request.json
+
+    signature: str = request.headers.get("SECHUV-Token")
+    data: str = base64.b64encode(json.dumps(other_case_post["spec"]).encode()).decode()
+
+    if not util.digisign.verify(signature, data):
+        abort(500, {"message": "Sign is invalid."})
+
     ok, data = handler.other.other_case_post.handle(db=db, other_case_post=other_case_post)
     if not ok:
         abort(500, {"message": "Server error."})
