@@ -100,8 +100,11 @@ def run(web_post_spec: WebPostSpec) -> List[Dict[str, str]]:
         result.append(check_fake_url_result)
 
 
-    summary: str = util.semantic_volume.summarize(web_post_spec["raw_body"])
+    ok, body, raw_body = util.html.get_html(web_post_spec["url"])
+    if not ok:
+        return result
 
+    summary: str = util.semantic_volume.summarize(raw_body)
 
     check_authority_result: Dict[str, str] = check_authority(summary)
     if check_authority_result != {}:

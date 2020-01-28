@@ -124,7 +124,7 @@ def web_case_post():
 
     web_case_post: WebCasePost = request.json
 
-    web_case_post["url"] = ":".join(web_post_spec["url"].split(":")[:2])
+    web_case_post["spec"]["url"] = ":".join(web_case_post["spec"]["url"].split(":")[:2])
 
     signature: str = request.headers.get("SECHUV-Token")
     data: str = base64.b64encode(json.dumps(web_case_post["spec"]).encode()).decode()
