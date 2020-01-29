@@ -14,7 +14,7 @@ from typing import Tuple, List
 CHVE = "scarcity"
 url = f"http://localhost:8080/vuln/{CHVE}"
 
-THRESHOLD = 0.3
+THRESHOLD = 0.2
 
 
 def contain_keyword(body: str, vuln: str):
@@ -41,7 +41,7 @@ def extract_words(text: str) -> List[str]:
 
         node = node.next
 
-    return words
+    return list(set(words))
 
 
 def get_documents() -> List[str]:

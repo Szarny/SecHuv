@@ -14,7 +14,7 @@ from typing import Tuple, List
 CHVE = "sextortion"
 url = f"http://localhost:8080/vuln/{CHVE}"
 
-THRESHOLD = 0.3
+THRESHOLD = 0.2
 
 
 def contain_keyword(body: str, vuln: str):
@@ -41,7 +41,7 @@ def extract_words(text: str) -> List[str]:
 
         node = node.next
 
-    return words
+    return list(set(words))
 
 
 def get_documents() -> List[str]:
@@ -80,5 +80,5 @@ def check(summary: str, body: str) -> Tuple[bool, str]:
     if S > THRESHOLD and contain_keyword(body, "sextortion"):
         return (True, str(S))
     else:
-        return (False, str(S))
+        return (False, "")
 
