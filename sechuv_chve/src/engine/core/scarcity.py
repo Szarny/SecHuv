@@ -36,7 +36,7 @@ def extract_words(text: str) -> List[str]:
 
     while node:
         word_type = node.feature.split(",")[0]
-        if word_type in ["名詞", "動詞-自立", "形容詞"]:
+        if word_type in ["名詞"]:
             words.append(node.surface)
 
         node = node.next
@@ -52,26 +52,30 @@ def get_documents() -> List[str]:
 
     for web_case in cases["web"]:
         documents.append(web_case["spec"]["summary"])
+        documents.append(web_case["spec"]["raw_body"])
 
     for mail_case in cases["mail"]:
-        documents.append(mail_case["spec"]["summary"])
+        documents.append(mail_case["spec"]["summary"]) 
+        documents.append(mail_case["spec"]["body"])
 
     for other_case in cases["other"]:
         documents.append(other_case["spec"]["summary"])
+        documents.append(other_case["spec"]["payload"])
     
-    return documents[:10]
+    return documents
 
 
 def check(summary: str, body: str) -> Tuple[bool, str]:
     documents: List[str] = get_documents()
 
     documents_for_train = []
-    documents_for_train.append(TaggedDocument(words=extract_words(summary), tags=["target"]))
+    documents_for_train.append(TaggedDocument(words=summary, tags=["target"]))
+    
 
     for idx, doc in enumerate(documents):
-        documents_for_train.append(TaggedDocument(words=extract_words(doc), tags=[f"id-{str(idx)}"]))
+        documents_for_train.append(TaggedDocument(words=doc, tags=[f"id-{str(idx)}"]))
             
-    model = Doc2Vec(documents=documents_for_train, min_count=1, dm=1)
+    model = Doc2Vec(documents=documents_for_train, min_count=1, dm=0)
 
     S = -1.0
     for tags, similarity in model.docvecs.most_similar("target"):

@@ -6,7 +6,7 @@ from gensim.models import Word2Vec
 
 class SemanticVolume:
     def __init__(self):
-        self.available_pos = ["名詞", "動詞-自立", "形容詞"]
+        self.available_pos = ["名詞"]
         self.not_available_pos = ["名詞-数"]
         self.tokenizer = MeCab.Tagger("-Ochasen")
 
