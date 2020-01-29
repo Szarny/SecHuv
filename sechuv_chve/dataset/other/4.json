@@ -1,8 +1,0 @@
-{
-    "vulntypes": ["fake_alert"],
-    "spec": {
-        "media": "SMS",
-        "metadata": "100-001",
-        "payload": "預金の引き出しが行われました。あなたの口座かどうか確認してください。"
-    }
-}
