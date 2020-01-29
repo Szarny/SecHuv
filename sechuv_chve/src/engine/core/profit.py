@@ -73,12 +73,12 @@ def check(summary: str, body: str) -> Tuple[bool, str]:
             
     model = Doc2Vec(documents=documents_for_train, min_count=1, dm=1)
 
-    S = 0
+    S = -1
     for tags, similarity in model.docvecs.most_similar("target"):
-        S += similarity
+        S = max(S, similarity)
 
-    if S / 10 > THRESHOLD and contain_keyword(body, "profit"):
-        return (True, str(S / 10))
+    if S > THRESHOLD and contain_keyword(body, "profit"):
+        return (True, str(S))
     else:
-        return (False, "")
+        return (False, str(S))
 
