@@ -8,15 +8,17 @@ from . import core
 
 def check_fake_url(mail_post_spec: MailPostSpec) -> Dict[str, str]:
     urls: List[str] = util.url.extract(mail_post_spec["body"]) + [mail_post_spec["from_addr"].split("@")[1]]
-    is_detect, message = core.fake_url.check(url)
 
-    if is_detect:
-        return {
-            "vulntype": "fake_url",
-            "message": message
-        }
-    else:
-        return {}
+    for url in urls:
+        is_detect, message = core.fake_url.check(url)
+
+        if is_detect:
+            return {
+                "vulntype": "fake_url",
+                "message": message
+            }
+
+    return {}
 
 
 def check_authority(summary:str, mail_post_spec: MailPostSpec) -> Dict[str, str]:
@@ -97,11 +99,10 @@ def run(mail_post_spec: MailPostSpec) -> List[Dict[str, str]]:
 
     # fake_url
     check_fake_url_result: Dict[str, str] = check_fake_url(mail_post_spec)
-    if check_fake_url:
+    if check_fake_url_result:
         result.append(check_fake_url_result)
 
     summary: str = util.semantic_volume.summarize(mail_post_spec["body"])
-
 
     check_authority_result: Dict[str, str] = check_authority(summary, mail_post_spec)
     if check_authority_result != {}:

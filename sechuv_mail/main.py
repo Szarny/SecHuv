@@ -122,14 +122,13 @@ def show_welcome() -> None:
 def main() -> None:
     show_welcome()
 
-    mail = MailParser("input/example.eml")
+    mail = MailParser(input("emlファイルのパスを入力してください >> "))
 
     for attach_file in mail.attach_file_list:
         with open("attachment/{}".format(attach_file["name"].decode()), "wb") as f:
             f.write(attach_file["data"])
 
-    console.info("メールを読み込みました")
-    print(mail.summarize())
+    console.info("メールを読み込みました。検査を行います。")
     print()
 
     mail_post_spec: MailPostSpec = {
@@ -158,15 +157,15 @@ def main() -> None:
 
     vulntypes: List[str] = []
     console.warn("本メールから、以下の人的脆弱性を突いた攻撃と思わしき兆候が検出されました。")
-    
+
     for vuln in vulns:
-        console.warn(vuln["vulntype"])
+        console.warn(f"{vuln['vulntype']} - 詳しくはこちら:http://localhost:8000/vuln/{vuln['vulntype']}")
         vulntypes.append(vuln["vulntype"])
     
     print()
     is_report = console.ask("本メールを報告しますか？")
 
-    if is_report != "y" and is_report != "いいえ":
+    if "y" not in is_report and "はい" not in is_report:
         console.info("SecHuv:Mailを終了します")
 
     mail_case_post: MailCasePost = {
