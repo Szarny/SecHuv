@@ -51,13 +51,13 @@ def get_documents() -> List[str]:
     cases = json.loads(response.text)
 
     for web_case in cases["web"]:
-        documents.append(web_case["spec"]["raw_body"])
+        documents.append(web_case["spec"]["summary"])
 
     for mail_case in cases["mail"]:
-        documents.append(mail_case["spec"]["body"])
+        documents.append(mail_case["spec"]["summary"])
 
     for other_case in cases["other"]:
-        documents.append(other_case["spec"]["payload"])
+        documents.append(other_case["spec"]["summary"])
     
     return documents[:10]
 
@@ -73,12 +73,12 @@ def check(summary: str, body: str) -> Tuple[bool, str]:
             
     model = Doc2Vec(documents=documents_for_train, min_count=1, dm=1)
 
-    S = 0
+    S = -1.0
     for tags, similarity in model.docvecs.most_similar("target"):
-        S += similarity
+        S = max(S, similarity)
 
-    if S / 10 > THRESHOLD and contain_keyword(body, "urgent"):
-        return (True, str(S / 10))
+    if S > THRESHOLD and contain_keyword(body, "urgent"):
+        return (True, str(S))
     else:
-        return (False, "")
+        return (False, str(S))
 

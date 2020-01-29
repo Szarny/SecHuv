@@ -8,3 +8,4 @@ class MailSpec(TypedDict):
     subject: str
     body: str
     attach_files: List[str]
+    summary: str

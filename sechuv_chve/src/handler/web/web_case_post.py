@@ -35,6 +35,8 @@ def handle(db: Dict[str, TinyDB], web_case_post: WebCasePost) -> Tuple[bool, Dic
     
     web_case_post["spec"]["screenshot"] = screenshot
 
+    web_case_post["spec"]["summary"] = util.semantic_volume.summarize(web_case_post["spec"]["raw_body"])
+
     web_spec: WebSpec = {
         "url": web_case_post["spec"]["url"],
         "body": body,

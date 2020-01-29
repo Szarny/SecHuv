@@ -23,6 +23,8 @@ def handle(db: Dict[str, TinyDB], mail_case_post: MailCasePost) -> Tuple[bool, D
     if not ok:
         return (False, {})
 
+    mail_case_post["spec"]["summary"] = util.semantic_volume.summarize(mail_case_post["spec"]["body"])
+
     mail_case: MailCase = {
         "uuid": uuid,
         "post_date": post_date,

@@ -5,3 +5,4 @@ class WebSpec(TypedDict):
     body: str
     raw_body: str
     screenshot: str
+    summary: str

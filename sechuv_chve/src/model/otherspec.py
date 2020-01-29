@@ -4,3 +4,4 @@ class OtherSpec(TypedDict):
     media: str
     metadata: str
     payload: str
+    summary: str

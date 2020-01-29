@@ -22,6 +22,8 @@ def handle(db: Dict[str, TinyDB], other_case_post: OtherCasePost) -> Tuple[bool,
 
     if not ok:
         return (False, {})
+
+    other_case_post["spec"]["summary"] = util.semantic_volume.summarize(other_case_post["spec"]["payload"])
         
 
     otehr_case: OtherCase = {
