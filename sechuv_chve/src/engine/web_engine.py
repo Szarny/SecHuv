@@ -19,8 +19,8 @@ def check_fake_url(web_post_spec: WebPostSpec) -> Dict[str, str]:
         return {}
 
         
-def check_authority(summary: str) -> Dict[str, str]:
-    is_detect, message = core.authority.check(summary)
+def check_authority(summary: str, web_post_spec: WebPostSpec) -> Dict[str, str]:
+    is_detect, message = core.authority.check(summary, web_post_spec["raw_body"])
     
     if is_detect:
         return {
@@ -31,8 +31,8 @@ def check_authority(summary: str) -> Dict[str, str]:
         return {}
 
 
-def check_fake_alert(summary: str) -> Dict[str, str]:
-    is_detect, message = core.fake_alert.check(summary)
+def check_fake_alert(summary: str, web_post_spec: WebPostSpec) -> Dict[str, str]:
+    is_detect, message = core.fake_alert.check(summary, web_post_spec["raw_body"])
     
     if is_detect:
         return {
@@ -43,8 +43,8 @@ def check_fake_alert(summary: str) -> Dict[str, str]:
         return {}
 
 
-def check_profit(summary: str) -> Dict[str, str]:
-    is_detect, message = core.profit.check(summary)
+def check_profit(summary: str, web_post_spec: WebPostSpec) -> Dict[str, str]:
+    is_detect, message = core.profit.check(summary, web_post_spec["raw_body"])
     
     if is_detect:
         return {
@@ -55,8 +55,8 @@ def check_profit(summary: str) -> Dict[str, str]:
         return {}
 
 
-def check_scarcity(summary: str) -> Dict[str, str]:
-    is_detect, message = core.scarcity.check(summary)
+def check_scarcity(summary: str, web_post_spec: WebPostSpec) -> Dict[str, str]:
+    is_detect, message = core.scarcity.check(summary, web_post_spec["raw_body"])
     
     if is_detect:
         return {
@@ -67,8 +67,8 @@ def check_scarcity(summary: str) -> Dict[str, str]:
         return {}
 
 
-def check_sextortion(summary: str) -> Dict[str, str]:
-    is_detect, message = core.sextortion.check(summary)
+def check_sextortion(summary: str, web_post_spec: WebPostSpec) -> Dict[str, str]:
+    is_detect, message = core.sextortion.check(summary, web_post_spec["raw_body"])
     
     if is_detect:
         return {
@@ -79,8 +79,8 @@ def check_sextortion(summary: str) -> Dict[str, str]:
         return {}
 
 
-def check_urgent(summary: str) -> Dict[str, str]:
-    is_detect, message = core.urgent.check(summary)
+def check_urgent(summary: str, web_post_spec: WebPostSpec) -> Dict[str, str]:
+    is_detect, message = core.urgent.check(summary, web_post_spec["raw_body"])
     
     if is_detect:
         return {
@@ -106,32 +106,32 @@ def run(web_post_spec: WebPostSpec) -> List[Dict[str, str]]:
 
     summary: str = util.semantic_volume.summarize(raw_body)
 
-    check_authority_result: Dict[str, str] = check_authority(summary)
+    check_authority_result: Dict[str, str] = check_authority(summary, web_post_spec)
     if check_authority_result != {}:
         result.append(check_authority_result)
 
 
-    check_fake_alert_result: Dict[str, str] = check_fake_alert(summary)
+    check_fake_alert_result: Dict[str, str] = check_fake_alert(summary, web_post_spec)
     if check_fake_alert_result != {}:
         result.append(check_fake_alert_result)
 
 
-    check_profit_result: Dict[str, str] = check_profit(summary)
+    check_profit_result: Dict[str, str] = check_profit(summary, web_post_spec)
     if check_profit_result != {}:
         result.append(check_profit_result)
 
 
-    check_scarcity_result: Dict[str, str] = check_scarcity(summary)
+    check_scarcity_result: Dict[str, str] = check_scarcity(summary, web_post_spec)
     if check_scarcity_result != {}:
         result.append(check_scarcity_result)
 
 
-    check_sextortion_result: Dict[str, str] = check_sextortion(summary)
+    check_sextortion_result: Dict[str, str] = check_sextortion(summary, web_post_spec)
     if check_sextortion_result != {}:
         result.append(check_sextortion_result)
 
 
-    check_urgent_result: Dict[str, str] = check_urgent(summary)
+    check_urgent_result: Dict[str, str] = check_urgent(summary, web_post_spec)
     if check_urgent_result != {}:
         result.append(check_urgent_result)
 

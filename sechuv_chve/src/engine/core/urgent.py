@@ -17,6 +17,16 @@ url = f"http://localhost:8080/vuln/{CHVE}"
 THRESHOLD = 0.3
 
 
+def contain_keyword(body: str, vuln: str):
+    keywords: List[str] = json.loads(open("/project/engine/core/data/keywords.json").read())[vuln]
+
+    for keyword in keywords:
+        if keyword in body:
+            return True
+
+    return False
+
+
 def extract_words(text: str) -> List[str]:
     tagger = MeCab.Tagger('-Ochasen')
     tagger.parse('')
@@ -52,7 +62,7 @@ def get_documents() -> List[str]:
     return documents[:10]
 
 
-def check(summary: str) -> Tuple[bool, str]:
+def check(summary: str, body: str) -> Tuple[bool, str]:
     documents: List[str] = get_documents()
 
     documents_for_train = []
@@ -67,7 +77,7 @@ def check(summary: str) -> Tuple[bool, str]:
     for tags, similarity in model.docvecs.most_similar("target"):
         S += similarity
 
-    if S / 10 > THRESHOLD:
+    if S / 10 > THRESHOLD and contain_keyword(body, "urgent"):
         return (True, str(S / 10))
     else:
         return (False, "")
