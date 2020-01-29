@@ -14,7 +14,7 @@ from typing import Tuple, List
 CHVE = "urgent"
 url = f"http://localhost:8080/vuln/{CHVE}"
 
-THRESHOLD = 0.2
+THRESHOLD = 0.15
 
 
 def contain_keyword(body: str, vuln: str):
