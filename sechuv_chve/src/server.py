@@ -129,8 +129,8 @@ def web_case_post():
     signature: str = request.headers.get("SECHUV-Token")
     data: str = base64.b64encode(json.dumps(web_case_post["spec"]).encode()).decode()
 
-    if signature is None or (not util.digisign.verify(signature, data)):
-        abort(500, {"message": "Sign is invalid."})
+    # if signature is None or (not util.digisign.verify(signature, data)):
+    #     abort(500, {"message": "Sign is invalid."})
     
     ok, data = handler.web.web_case_post.handle(db=db, web_case_post=web_case_post)
     if not ok:
@@ -206,8 +206,8 @@ def mail_case_post():
     signature: str = request.headers.get("SECHUV-Token")
     data: str = base64.b64encode(json.dumps(mail_case_post["spec"]).encode()).decode()
 
-    if signature is None or (not util.digisign.verify(signature, data)):
-        abort(500, {"message": "Sign is invalid."})
+    # if signature is None or (not util.digisign.verify(signature, data)):
+    #     abort(500, {"message": "Sign is invalid."})
 
     ok, data = handler.mail.mail_case_post.handle(db=db, mail_case_post=mail_case_post)
     if not ok:
@@ -282,8 +282,8 @@ def other_case_post():
     signature: str = request.headers.get("SECHUV-Token")
     data: str = base64.b64encode(json.dumps(other_case_post["spec"]).encode()).decode()
 
-    if signature is None or (not util.digisign.verify(signature, data)):
-        abort(500, {"message": "Sign is invalid."})
+    # if signature is None or (not util.digisign.verify(signature, data)):
+    #     abort(500, {"message": "Sign is invalid."})
 
     ok, data = handler.other.other_case_post.handle(db=db, other_case_post=other_case_post)
     if not ok:

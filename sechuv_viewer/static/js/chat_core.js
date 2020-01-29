@@ -149,7 +149,6 @@ class ChatEngine {
             body
         }).then(res => {
             token = res.headers.get('SECHUV-Token');
-            alert(token);
             return res.text();
         }).then(text => {
             result = JSON.parse(text);

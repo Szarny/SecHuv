@@ -14,7 +14,17 @@ from typing import Tuple, List
 CHVE = "sextortion"
 url = f"http://localhost:8080/vuln/{CHVE}"
 
-THRESHOLD = 0.3
+THRESHOLD = 0.1
+
+
+def contain_keyword(body: str, vuln: str):
+    keywords: List[str] = json.loads(open("/project/engine/core/data/keywords.json").read())[vuln]
+
+    for keyword in keywords:
+        if keyword in body:
+            return True
+
+    return False
 
 
 def extract_words(text: str) -> List[str]:
@@ -31,7 +41,7 @@ def extract_words(text: str) -> List[str]:
 
         node = node.next
 
-    return words
+    return list(set(words))
 
 
 def get_documents() -> List[str]:
@@ -52,7 +62,7 @@ def get_documents() -> List[str]:
     return documents[:10]
 
 
-def check(summary: str) -> Tuple[bool, str]:
+def check(summary: str, body: str) -> Tuple[bool, str]:
     documents: List[str] = get_documents()
 
     documents_for_train = []
@@ -63,12 +73,12 @@ def check(summary: str) -> Tuple[bool, str]:
             
     model = Doc2Vec(documents=documents_for_train, min_count=1, dm=1)
 
-    S = 0
+    S = -1
     for tags, similarity in model.docvecs.most_similar("target"):
-        S += similarity
+        S = max(S, similarity)
 
-    if S / 10 > THRESHOLD:
-        return (True, str(S / 10))
+    if S > THRESHOLD and contain_keyword(body, "sextortion"):
+        return (True, str(S))
     else:
         return (False, "")
 
