@@ -48,7 +48,7 @@ def check_fake_alert(summary: str, other_post_spec: OtherPostSpec) -> Dict[str, 
 def check_profit(summary: str, other_post_spec: OtherPostSpec) -> Dict[str, str]:
     is_detect, message = core.profit.check(summary, other_post_spec["payload"])
     
-    if True:
+    if is_detect:
         return {
             "vulntype": "profit",
             "message": message
